@@ -13,4 +13,12 @@
         <put-attribute name="title" value="Trang chủ" />
         <put-attribute name="content" value="/WEB-INF/pages/index.jsp" />
     </definition>
+    <definition name="admins" extends="baseLayout">
+        <put-attribute name="title" value="Quản trị viên" />
+        <put-attribute name="content" value="/WEB-INF/pages/admins.jsp" />
+    </definition>
+    <definition name="admin-details" extends="baseLayout">
+        <put-attribute name="title" value="Thêm Quản trị viên" />
+        <put-attribute name="content" value="/WEB-INF/pages/admin-details.jsp" />
+    </definition>
 </tiles-definitions>

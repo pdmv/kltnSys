@@ -17,12 +17,15 @@ import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -71,6 +74,7 @@ public class Admin implements Serializable {
     private String email;
     @Column(name = "dob")
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dob;
     @Lob
     @Size(max = 65535)
@@ -215,4 +219,15 @@ public class Admin implements Serializable {
         return "com.pdmv.pojo.Admin[ id=" + id + " ]";
     }
     
+    @PrePersist
+    public void prePersist() {
+        createdDate = new Date();
+        updatedDate = createdDate;
+        active = true;
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        updatedDate = new Date();
+    }
 }

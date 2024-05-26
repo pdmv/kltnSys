@@ -5,6 +5,8 @@
 package com.pdmv.repositories;
 
 import com.pdmv.pojo.Admin;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -12,4 +14,5 @@ import com.pdmv.pojo.Admin;
  */
 public interface AdminRepository {
     void addAdmin(Admin admin);
+    List<Admin> getAdmins(Map<String, String> params);
 }

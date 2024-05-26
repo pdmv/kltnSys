@@ -27,6 +27,9 @@
                     </c:when>
                     <c:when test="${pageContext.request.userPrincipal.name != null}">
                         <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="<c:url value="/admins" />">Quản trị viên</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="<c:url value="/" />">Chào ${pageContext.request.userPrincipal.name}!</a>
                         </li>
                     </c:when>

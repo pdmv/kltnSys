@@ -20,6 +20,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -263,4 +265,15 @@ public class Student implements Serializable {
         return "com.pdmv.pojo.Student[ id=" + id + " ]";
     }
     
+    @PrePersist
+    public void prePersist() {
+        createdDate = new Date();
+        updatedDate = createdDate;
+        active = true;
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        updatedDate = new Date();
+    }
 }

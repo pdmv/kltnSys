@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<div class="alert alert-success" role="alert">
-    Thesis Management System &copy; 2024.
-</div>
+<footer class="bg-light text-center text-lg-start">
+    <div class="text-center p-3">
+        <span>Thesis Management System &copy; 2024. Bảo lưu mọi quyền.</span>
+    </div>
+</footer>
