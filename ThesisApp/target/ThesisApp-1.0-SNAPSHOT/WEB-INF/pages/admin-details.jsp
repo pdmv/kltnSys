@@ -11,7 +11,7 @@
 <h2 class="text-center m-2">Thêm <strong>QUẢN TRỊ VIÊN</strong></h2>
 
 <c:url value="/admins/add" var="act"/>
-<form:form method="post" action="${act}" modelAttribute="admin" enctype="multipart/form-data">
+<form:form method="post" action="${act}" modelAttribute="admin" enctype="multipart/form-data" onsubmit="return validatePassword()">
     <form:hidden path="id"/>
     
     <div class="form-floating mb-3">
@@ -78,7 +78,7 @@
         <form:errors path="accountId.file" cssClass="text-danger"/>
     </div>
 
-    <button type="submit" class="btn btn-primary">Lưu</button>
+    <button type="submit" class="btn btn-primary">Thêm</button>
 </form:form>
 
 <script type="text/javascript">
