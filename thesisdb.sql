@@ -3,8 +3,8 @@ CREATE DATABASE IF NOT EXISTS thesisdb;
 
 USE thesisdb;
 
--- Tạo bảng Account
-CREATE TABLE Account (
+-- Tạo bảng account
+CREATE TABLE account (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(255) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
@@ -15,8 +15,8 @@ CREATE TABLE Account (
     active BOOLEAN DEFAULT TRUE
 );
 
--- Tạo bảng Admin
-CREATE TABLE Admin (
+-- Tạo bảng admin
+CREATE TABLE admin (
     id INT AUTO_INCREMENT PRIMARY KEY,
     last_name VARCHAR(255) NOT NULL,
     first_name VARCHAR(255) NOT NULL,
@@ -28,11 +28,11 @@ CREATE TABLE Admin (
     created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     active BOOLEAN DEFAULT TRUE,
-    FOREIGN KEY (account_id) REFERENCES Account(id)
+    FOREIGN KEY (account_id) REFERENCES account(id)
 );
 
--- Tạo bảng Faculty
-CREATE TABLE Faculty (
+-- Tạo bảng faculty
+CREATE TABLE faculty (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -40,19 +40,19 @@ CREATE TABLE Faculty (
     active BOOLEAN DEFAULT TRUE
 );
 
--- Tạo bảng Major
-CREATE TABLE Major (
+-- Tạo bảng major
+CREATE TABLE major (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     faculty_id INT,
     created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     active BOOLEAN DEFAULT TRUE,
-    FOREIGN KEY (faculty_id) REFERENCES Faculty(id)
+    FOREIGN KEY (faculty_id) REFERENCES faculty(id)
 );
 
--- Tạo bảng Class
-CREATE TABLE Class (
+-- Tạo bảng class
+CREATE TABLE class (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     faculty_id INT,
@@ -60,12 +60,12 @@ CREATE TABLE Class (
     created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     active BOOLEAN DEFAULT TRUE,
-    FOREIGN KEY (faculty_id) REFERENCES Faculty(id),
-    FOREIGN KEY (major_id) REFERENCES Major(id)
+    FOREIGN KEY (faculty_id) REFERENCES faculty(id),
+    FOREIGN KEY (major_id) REFERENCES major(id)
 );
 
--- Tạo bảng Student
-CREATE TABLE Student (
+-- Tạo bảng student
+CREATE TABLE student (
     id INT AUTO_INCREMENT PRIMARY KEY,
     last_name VARCHAR(255) NOT NULL,
     first_name VARCHAR(255) NOT NULL,
@@ -81,13 +81,13 @@ CREATE TABLE Student (
     updated_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     active BOOLEAN DEFAULT TRUE,
     FOREIGN KEY (account_id) REFERENCES Account(id),
-    FOREIGN KEY (faculty_id) REFERENCES Faculty(id),
-    FOREIGN KEY (major_id) REFERENCES Major(id),
-    FOREIGN KEY (class_id) REFERENCES Class(id)
+    FOREIGN KEY (faculty_id) REFERENCES faculty(id),
+    FOREIGN KEY (major_id) REFERENCES major(id),
+    FOREIGN KEY (class_id) REFERENCES class(id)
 );
 
--- Tạo bảng Lecturer
-CREATE TABLE Lecturer (
+-- Tạo bảng lecturer
+CREATE TABLE lecturer (
     id INT AUTO_INCREMENT PRIMARY KEY,
     last_name VARCHAR(255) NOT NULL,
     first_name VARCHAR(255) NOT NULL,
@@ -101,12 +101,12 @@ CREATE TABLE Lecturer (
     created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     active BOOLEAN DEFAULT TRUE,
-    FOREIGN KEY (account_id) REFERENCES Account(id),
-    FOREIGN KEY (faculty_id) REFERENCES Faculty(id)
+    FOREIGN KEY (account_id) REFERENCES account(id),
+    FOREIGN KEY (faculty_id) REFERENCES faculty(id)
 );
 
--- Tạo bảng Affair
-CREATE TABLE Affair (
+-- Tạo bảng affair
+CREATE TABLE affair (
     id INT AUTO_INCREMENT PRIMARY KEY,
     last_name VARCHAR(255) NOT NULL,
     first_name VARCHAR(255) NOT NULL,
@@ -120,12 +120,12 @@ CREATE TABLE Affair (
     created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     active BOOLEAN DEFAULT TRUE,
-    FOREIGN KEY (account_id) REFERENCES Account(id),
-    FOREIGN KEY (faculty_id) REFERENCES Faculty(id)
+    FOREIGN KEY (account_id) REFERENCES account(id),
+    FOREIGN KEY (faculty_id) REFERENCES faculty(id)
 );
 
--- Tạo bảng School_Year
-CREATE TABLE School_Year (
+-- Tạo bảng school_year
+CREATE TABLE school_year (
     id INT AUTO_INCREMENT PRIMARY KEY,
     start_year YEAR NOT NULL,
     end_year YEAR NOT NULL,
@@ -134,8 +134,8 @@ CREATE TABLE School_Year (
     active BOOLEAN DEFAULT TRUE
 );
 
--- Tạo bảng Criterion
-CREATE TABLE Criterion (
+-- Tạo bảng criterion
+CREATE TABLE criterion (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description TEXT DEFAULT NULL,
@@ -144,11 +144,11 @@ CREATE TABLE Criterion (
     created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     active BOOLEAN DEFAULT TRUE,
-    FOREIGN KEY (affair_id) REFERENCES Affair(id)
+    FOREIGN KEY (affair_id) REFERENCES affair(id)
 );
 
--- Tạo bảng Thesis
-CREATE TABLE Thesis (
+-- Tạo bảng thesis
+CREATE TABLE thesis (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     report_file VARCHAR(255) DEFAULT NULL,
@@ -164,31 +164,31 @@ CREATE TABLE Thesis (
     created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     active BOOLEAN DEFAULT TRUE,
-    FOREIGN KEY (affair_id) REFERENCES Affair(id),
-    FOREIGN KEY (critical_lecturer_id) REFERENCES Lecturer(id),
-    FOREIGN KEY (school_year_id) REFERENCES School_Year(id)
+    FOREIGN KEY (affair_id) REFERENCES affair(id),
+    FOREIGN KEY (critical_lecturer_id) REFERENCES lecturer(id),
+    FOREIGN KEY (school_year_id) REFERENCES school_year(id)
 );
 
--- Tạo bảng Thesis_Lecturer
-CREATE TABLE Thesis_Lecturer (
+-- Tạo bảng thesis_lecturer
+CREATE TABLE thesis_lecturer (
     id INT AUTO_INCREMENT PRIMARY KEY,
     thesis_id INT,
     lecturer_id INT,
-    FOREIGN KEY (thesis_id) REFERENCES Thesis(id),
-    FOREIGN KEY (lecturer_id) REFERENCES Lecturer(id)
+    FOREIGN KEY (thesis_id) REFERENCES thesis(id),
+    FOREIGN KEY (lecturer_id) REFERENCES lecturer(id)
 );
 
--- Tạo bảng Thesis_Student
-CREATE TABLE Thesis_Student (
+-- Tạo bảng thesis_student
+CREATE TABLE thesis_student (
     id INT AUTO_INCREMENT PRIMARY KEY,
     thesis_id INT,
     student_id INT,
-    FOREIGN KEY (thesis_id) REFERENCES Thesis(id),
-    FOREIGN KEY (student_id) REFERENCES Student(id)
+    FOREIGN KEY (thesis_id) REFERENCES thesis(id),
+    FOREIGN KEY (student_id) REFERENCES student(id)
 );
 
--- Tạo bảng Council
-CREATE TABLE Council (
+-- Tạo bảng council
+CREATE TABLE council (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     status ENUM('pending', 'blocked') DEFAULT 'pending',
@@ -196,38 +196,38 @@ CREATE TABLE Council (
     created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     active BOOLEAN DEFAULT TRUE,
-    FOREIGN KEY (school_year_id) REFERENCES School_Year(id)
+    FOREIGN KEY (school_year_id) REFERENCES school_year(id)
 );
 
--- Tạo bảng Council_Lecturer
-CREATE TABLE Council_Lecturer (
+-- Tạo bảng council_lecturer
+CREATE TABLE council_lecturer (
     id INT AUTO_INCREMENT PRIMARY KEY,
     council_id INT,
     lecturer_id INT,
     position ENUM('president', 'secretary', 'critical') DEFAULT 'critical',
-    FOREIGN KEY (council_id) REFERENCES Council(id),
-    FOREIGN KEY (lecturer_id) REFERENCES Lecturer(id)
+    FOREIGN KEY (council_id) REFERENCES council(id),
+    FOREIGN KEY (lecturer_id) REFERENCES lecturer(id)
 );
 
--- Tạo bảng Council_Criterion
-CREATE TABLE Council_Criterion (
+-- Tạo bảng council_criterion
+CREATE TABLE council_criterion (
     id INT AUTO_INCREMENT PRIMARY KEY,
     council_id INT,
     criterion_id INT,
-    FOREIGN KEY (council_id) REFERENCES Council(id),
-    FOREIGN KEY (criterion_id) REFERENCES Criterion(id)
+    FOREIGN KEY (council_id) REFERENCES council(id),
+    FOREIGN KEY (criterion_id) REFERENCES criterion(id)
 );
 
--- Tạo bảng Score
-CREATE TABLE Score (
+-- Tạo bảng score
+CREATE TABLE score (
     id INT AUTO_INCREMENT PRIMARY KEY,
     score FLOAT DEFAULT NULL,
     council_id INT,
     lecturer_id INT,
     thesis_id INT,
     criterion_id INT,
-    FOREIGN KEY (council_id) REFERENCES Council(id),
-    FOREIGN KEY (lecturer_id) REFERENCES Lecturer(id),
-    FOREIGN KEY (thesis_id) REFERENCES Thesis(id),
-    FOREIGN KEY (criterion_id) REFERENCES Criterion(id)
+    FOREIGN KEY (council_id) REFERENCES council(id),
+    FOREIGN KEY (lecturer_id) REFERENCES lecturer(id),
+    FOREIGN KEY (thesis_id) REFERENCES thesis(id),
+    FOREIGN KEY (criterion_id) REFERENCES criterion(id)
 );
