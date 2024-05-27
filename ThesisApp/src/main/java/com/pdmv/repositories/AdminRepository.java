@@ -13,6 +13,7 @@ import java.util.Map;
  * @author phamdominhvuong
  */
 public interface AdminRepository {
-    void addAdmin(Admin admin);
+    void addOrUpdate(Admin admin);
     List<Admin> getAdmins(Map<String, String> params);
+    Admin getAdminById(int id);
 }

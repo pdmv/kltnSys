@@ -39,4 +39,5 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         resolver.setDefaultEncoding("UTF-8");
         return resolver;
     }
+    
 }

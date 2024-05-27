@@ -27,9 +27,13 @@ public class AccountRepositoryImpl implements AccountRepository {
     private BCryptPasswordEncoder passwordEncoder;
 
     @Override
-    public void addAccount(Account account) {
+    public void addOrUpdate(Account account) {
         Session s = this.factory.getObject().getCurrentSession();
-        s.save(account);
+        if (account.getId() == null) {
+            s.save(account);
+        } else {
+            s.update(account);
+        }
     }
 
     @Override
@@ -46,7 +50,13 @@ public class AccountRepositoryImpl implements AccountRepository {
     public boolean authAccount(String username, String password) {
         Account account = this.getAccountByUsername(username);
         
-        return this.passwordEncoder.matches(password, account.getPassword());
+        return this.passwordEncoder.matches(password, account.getPassword()) && account.getActive() == true;
+    }
+
+    @Override
+    public Account getAccountById(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        return (Account) s.get(Account.class, id);
     }
     
 }

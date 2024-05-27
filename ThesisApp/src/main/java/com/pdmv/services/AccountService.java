@@ -12,7 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  * @author phamdominhvuong
  */
 public interface AccountService extends UserDetailsService {
-    void addAccount(Account account);
+    void addOrUpdate(Account account);
     Account getAccountByUsername(String username);
+    Account getAccountById(int id);
     boolean authAccount(String username, String password);
 }

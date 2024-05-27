@@ -31,9 +31,13 @@ public class AdminRepositoryImpl implements AdminRepository {
     private LocalSessionFactoryBean factory;
 
     @Override
-    public void addAdmin(Admin admin) {
+    public void addOrUpdate(Admin admin) {
         Session s = this.factory.getObject().getCurrentSession();
-        s.save(admin);
+        if (admin.getId() == null) {
+            s.save(admin);
+        } else {
+            s.update(admin);
+        }
     }
 
     @Override
@@ -69,5 +73,11 @@ public class AdminRepositoryImpl implements AdminRepository {
 
         Query<Admin> query = s.createQuery(q);
         return query.getResultList();
+    }
+
+    @Override
+    public Admin getAdminById(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        return (Admin) s.get(Admin.class, id);
     }
 }

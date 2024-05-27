@@ -11,7 +11,8 @@ import com.pdmv.pojo.Account;
  * @author phamdominhvuong
  */
 public interface AccountRepository {
-    void addAccount(Account account);
+    void addOrUpdate(Account account);
     Account getAccountByUsername(String username);
+    Account getAccountById(int id);
     boolean authAccount(String username, String password);
 }

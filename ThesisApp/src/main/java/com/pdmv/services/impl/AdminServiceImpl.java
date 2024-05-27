@@ -26,17 +26,28 @@ public class AdminServiceImpl implements AdminService {
     private AccountService accountService;
 
     @Override
-    public void addAdmin(Admin admin) {
+    public void addOrUpdate(Admin admin) {
         Account account = admin.getAccountId();
         account.setRole("ADMIN");
-        this.accountService.addAccount(account);
+        
+        if (admin.getId() != null) {
+            account.setActive(admin.getActive());
+            admin.setCreatedDate(this.adminRepo.getAdminById(admin.getId()).getCreatedDate());
+        }
+        
+        this.accountService.addOrUpdate(account);
         admin.setAccountId(this.accountService.getAccountByUsername(account.getUsername()));
-        this.adminRepo.addAdmin(admin);
+        this.adminRepo.addOrUpdate(admin);
     }
 
     @Override
     public List<Admin> getAdmins(Map<String, String> params) {
         return this.adminRepo.getAdmins(params);
+    }
+
+    @Override
+    public Admin getAdminById(int id) {
+        return this.adminRepo.getAdminById(id);
     }
     
 }

@@ -5,11 +5,13 @@
 package com.pdmv.services.impl;
 
 import com.cloudinary.Cloudinary;
+import com.cloudinary.api.ApiResponse;
 import com.cloudinary.utils.ObjectUtils;
 import com.pdmv.pojo.Account;
 import com.pdmv.repositories.AccountRepository;
 import com.pdmv.services.AccountService;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -37,21 +39,47 @@ public class AccountServiceImpl implements AccountService {
     private Cloudinary cloudinary;
 
     @Override
-    public void addAccount(Account account) {
-        account.setPassword(this.passwordEncoder.encode(account.getPassword()));
-        
+    public void addOrUpdate(Account account) {
+        if (account.getPassword() != null && !account.getPassword().isEmpty()) {
+            account.setPassword(this.passwordEncoder.encode(account.getPassword()));
+        } else if (account.getId() != null) {
+            account.setPassword(this.accountRepo.getAccountById(account.getId()).getPassword()); 
+        }
+       
         if (account.getFile() != null && !account.getFile().isEmpty()) {
             try {
                 Map res = this.cloudinary.uploader().upload(account.getFile().getBytes(), ObjectUtils.asMap("resource_type", "auto"));
+                
+                if (account.getId() != null) {
+                    Account exist = this.accountRepo.getAccountById(account.getId());
+                    
+                    if (exist.getAvatar() != null && !exist.getAvatar().isEmpty()) {
+                        String publicId = extractPublicId(account.getAvatar());
+                        try {
+                            ApiResponse apiResponse = this.cloudinary.api().deleteResources(Arrays.asList(publicId),
+                                ObjectUtils.asMap("type", "upload", "resource_type", "image"));
+                            System.out.println(apiResponse);
+                        } catch (IOException exception) {
+                            System.out.println(exception.getMessage());
+                        } catch (Exception ex) {
+                            Logger.getLogger(AccountServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
                 
                 account.setAvatar(res.get("secure_url").toString());
             } catch (IOException ex) {
                 Logger.getLogger(AccountServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } else if (account.getId() != null) {
+            account.setAvatar(this.accountRepo.getAccountById(account.getId()).getAvatar());
         }
         
-        this.accountRepo.addAccount(account);
-                
+        if (account.getId() != null) {
+            account.setCreatedDate(this.accountRepo.getAccountById(account.getId()).getCreatedDate());
+        }
+        
+        this.accountRepo.addOrUpdate(account);
     }
 
     @Override
@@ -72,9 +100,24 @@ public class AccountServiceImpl implements AccountService {
             throw new UsernameNotFoundException("Not exists username");
         }
         
+        if (!account.getActive()) {
+            throw new UsernameNotFoundException("Tài khoản bị đình chỉ.");
+        }
+        
         Set<GrantedAuthority> authorities = new HashSet<>();
         authorities.add(new SimpleGrantedAuthority(account.getRole()));
         return new org.springframework.security.core.userdetails.User(account.getUsername(), account.getPassword(), authorities);
     }
+
+    @Override
+    public Account getAccountById(int id) {
+        return this.accountRepo.getAccountById(id);
+    }
     
+    private String extractPublicId(String url) {
+        int lastSlashIndex = url.lastIndexOf('/');
+        int lastDotIndex = url.lastIndexOf('.');
+        
+        return url.substring(lastSlashIndex + 1, lastDotIndex);
+    }
 }
