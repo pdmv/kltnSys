@@ -25,4 +25,28 @@
         <put-attribute name="title" value="Cập nhật Quản trị viên" />
         <put-attribute name="content" value="/WEB-INF/pages/admin/update-admin.jsp" />
     </definition>
+    <definition name="school-years" extends="baseLayout">
+        <put-attribute name="title" value="Niên khoá" />
+        <put-attribute name="content" value="/WEB-INF/pages/admin/school-years.jsp" />
+    </definition>
+    <definition name="add-school-year" extends="baseLayout">
+        <put-attribute name="title" value="Thêm Niên khoá" />
+        <put-attribute name="content" value="/WEB-INF/pages/admin/school-year-details.jsp" />
+    </definition>
+    <definition name="update-school-year" extends="baseLayout">
+        <put-attribute name="title" value="Cập nhật Niên khoá" />
+        <put-attribute name="content" value="/WEB-INF/pages/admin/school-year-details.jsp" />
+    </definition>
+    <definition name="faculties" extends="baseLayout">
+        <put-attribute name="title" value="Khoa đào tạo" />
+        <put-attribute name="content" value="/WEB-INF/pages/admin/faculties.jsp" />
+    </definition>
+    <definition name="add-faculty" extends="baseLayout">
+        <put-attribute name="title" value="Thêm Khoa đào tạo" />
+        <put-attribute name="content" value="/WEB-INF/pages/admin/faculty-details.jsp" />
+    </definition>
+    <definition name="update-faculty" extends="baseLayout">
+        <put-attribute name="title" value="Cập nhật Khoa đào tạo" />
+        <put-attribute name="content" value="/WEB-INF/pages/admin/faculty-details.jsp" />
+    </definition>
 </tiles-definitions>

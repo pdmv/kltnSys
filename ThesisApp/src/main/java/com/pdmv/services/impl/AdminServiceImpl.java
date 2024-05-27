@@ -32,7 +32,6 @@ public class AdminServiceImpl implements AdminService {
         
         if (admin.getId() != null) {
             account.setActive(admin.getActive());
-            admin.setCreatedDate(this.adminRepo.getAdminById(admin.getId()).getCreatedDate());
         }
         
         this.accountService.addOrUpdate(account);

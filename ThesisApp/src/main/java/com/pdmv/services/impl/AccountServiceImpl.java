@@ -75,10 +75,6 @@ public class AccountServiceImpl implements AccountService {
             account.setAvatar(this.accountRepo.getAccountById(account.getId()).getAvatar());
         }
         
-        if (account.getId() != null) {
-            account.setCreatedDate(this.accountRepo.getAccountById(account.getId()).getCreatedDate());
-        }
-        
         this.accountRepo.addOrUpdate(account);
     }
 

@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<footer class="bg-light text-center text-lg-start">
+<footer class="bg-light text-center text-lg-start mt-3">
     <div class="text-center p-3">
         <span>Thesis Management System &copy; 2024. Bảo lưu mọi quyền.</span>
     </div>

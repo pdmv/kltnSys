@@ -17,8 +17,36 @@
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="<c:url value="/?page=1" />">Trang chủ</a>
+                    <a class="nav-link active" aria-current="page" href="<c:url value="/" />">Trang chủ</a>
                 </li>
+                <c:if test="${pageContext.request.userPrincipal.name != null}">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Đào tạo
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" href="<c:url value="/admins/school-years" />">Niên khoá</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="<c:url value="/admins/faculties" />">Khoa đào tạo</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Người dùng
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" href="<c:url value="/admins" />">Quản trị viên</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<c:url value="/" />">Chào ${pageContext.request.userPrincipal.name}!</a>
+                </li>
+                </c:if>
                 <c:choose>
                     <c:when test="${pageContext.request.userPrincipal.name == null}">
                         <li class="nav-item">
@@ -26,12 +54,6 @@
                         </li>
                     </c:when>
                     <c:when test="${pageContext.request.userPrincipal.name != null}">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="<c:url value="/admins" />">Quản trị viên</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="<c:url value="/" />">Chào ${pageContext.request.userPrincipal.name}!</a>
-                        </li>
                     </c:when>
                 </c:choose>
             </ul>

@@ -4,17 +4,23 @@
     Author     : phamdominhvuong
 --%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <h2 class="text-center m-2">Cập nhật <strong>QUẢN TRỊ VIÊN</strong></h2>
 
+<c:if test="${errorMessage != null}">
+    <div class="alert alert-danger" role="alert">${errorMessage}</div>
+</c:if>
+
 <c:url value="/admins/${id}" var="act"/>
 <form:form method="post" action="${act}" modelAttribute="admin" enctype="multipart/form-data" onsubmit="return validatePassword()">
     <form:hidden path="id"/>
+    <form:hidden path="createdDate"/>
     <form:hidden path="accountId.id"/>
     <form:hidden path="accountId.avatar"/>
+    <form:hidden path="accountId.createdDate"/>
     
     <c:if test="${!empty admin.accountId.avatar}">
     <div class="d-flex justify-content-center mb-3">

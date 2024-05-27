@@ -21,9 +21,12 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -51,15 +54,18 @@ public class SchoolYear implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "start_year")
-    @Temporal(TemporalType.DATE)
-    private Date startYear;
+    @Min(value = 1900, message = "Năm bắt đầu phải lớn hơn hoặc bằng 1900")
+    @Max(value = 2100, message = "Năm bắt đầu phải nhỏ hơn hoặc bằng 2100")
+    private Integer startYear;
     @Basic(optional = false)
     @NotNull
     @Column(name = "end_year")
-    @Temporal(TemporalType.DATE)
-    private Date endYear;
+    @Min(value = 1900, message = "Năm kết thúc phải lớn hơn hoặc bằng 1900")
+    @Max(value = 2100, message = "Năm kết thúc phải nhỏ hơn hoặc bằng 2100")
+    private Integer endYear;
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createdDate;
     @Column(name = "updated_date")
     @Temporal(TemporalType.TIMESTAMP)
@@ -78,7 +84,7 @@ public class SchoolYear implements Serializable {
         this.id = id;
     }
 
-    public SchoolYear(Integer id, Date startYear, Date endYear) {
+    public SchoolYear(Integer id, Integer startYear, Integer endYear) {
         this.id = id;
         this.startYear = startYear;
         this.endYear = endYear;
@@ -92,19 +98,19 @@ public class SchoolYear implements Serializable {
         this.id = id;
     }
 
-    public Date getStartYear() {
+    public Integer getStartYear() {
         return startYear;
     }
 
-    public void setStartYear(Date startYear) {
+    public void setStartYear(Integer startYear) {
         this.startYear = startYear;
     }
 
-    public Date getEndYear() {
+    public Integer getEndYear() {
         return endYear;
     }
 
-    public void setEndYear(Date endYear) {
+    public void setEndYear(Integer endYear) {
         this.endYear = endYear;
     }
 

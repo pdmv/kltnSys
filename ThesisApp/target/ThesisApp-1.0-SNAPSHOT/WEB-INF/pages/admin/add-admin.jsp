@@ -4,15 +4,20 @@
     Author     : phamdominhvuong
 --%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <h2 class="text-center m-2">Thêm <strong>QUẢN TRỊ VIÊN</strong></h2>
 
+<c:if test="${errorMessage != null}">
+    <div class="alert alert-danger" role="alert">${errorMessage}</div>
+</c:if>
+
 <c:url value="/admins/add" var="act"/>
 <form:form method="post" action="${act}" modelAttribute="admin" enctype="multipart/form-data" onsubmit="return validatePassword()">
     <form:hidden path="id"/>
+    <form:hidden path="createdDate"/>
     
     <div class="form-floating mb-3">
         <form:input path="lastName" type="text" class="form-control" id="lastName" placeholder="Họ" required="required"/>
@@ -79,6 +84,7 @@
     </div>
 
     <button type="submit" class="btn btn-primary">Thêm</button>
+    <a type="button" class="btn btn-secondary" href="<c:url value="/admins"/>">Quay lại</a>
 </form:form>
 
 <script type="text/javascript">
