@@ -8,7 +8,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<h2 class="text-center m-2">Danh sách <strong>NGÀNH</strong></h2>
+<h2 class="text-center m-2">Quản lý <strong>NGÀNH</strong></h2>
 
 <div class="container">
     <form action="${pageContext.request.contextPath}/admins/majors" method="get" class="row g-2 mb-3 justify-content-center">
@@ -36,9 +36,9 @@
             </div>
         </div>
         <div class="col-md-3 col-12 d-flex align-items-center">
-            <button type="submit" class="btn btn-primary" style="margin-left: 2px;">Tìm kiếm</button>
-            <a href="<c:url value='/admins/majors' />" class="btn btn-secondary" style="margin-left: 10px;">Hoàn tác</a>
-            <a href="<c:url value='/admins/majors/add' />" class="btn btn-success" style="margin-left: 10px;">Thêm</a>
+            <button type="submit" class="btn btn-dark" style="margin-left: 2px;">Tìm kiếm</button>
+            <a href="<c:url value='/admins/majors' />" class="btn btn-outline-dark" style="margin-left: 10px;">Tất cả</a>
+            <a href="<c:url value='/admins/majors/add' />" class="btn btn-outline-dark" style="margin-left: 10px;">Thêm</a>
         </div>
     </form>
 </div>
@@ -66,8 +66,8 @@
                     </c:choose>
                 </td>
                 <td>
-                    <a class="btn btn-primary" href="<c:url value="/admins/majors/${m.id}" />">Cập nhật</a>
-                    <button type="button" class="btn btn-danger">Xoá</button>
+                    <a class="btn btn-outline-dark" href="<c:url value="/admins/majors/${m.id}" />">Cập nhật</a>
+                    <button type="button" class="btn btn-outline-dark">Xoá</button>
                 </td>
             </tr>
         </c:forEach>

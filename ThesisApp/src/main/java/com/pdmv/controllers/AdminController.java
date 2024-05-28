@@ -9,10 +9,13 @@ import com.pdmv.pojo.Admin;
 import com.pdmv.pojo.Faculty;
 import com.pdmv.pojo.Major;
 import com.pdmv.pojo.SchoolYear;
+import com.pdmv.pojo.Class;
 import com.pdmv.services.AdminService;
+import com.pdmv.services.ClassService;
 import com.pdmv.services.FacultyService;
 import com.pdmv.services.MajorService;
 import com.pdmv.services.SchoolYearService;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -26,6 +29,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
@@ -42,6 +46,8 @@ public class AdminController {
     private FacultyService facultyService;
     @Autowired
     private MajorService majorService;
+    @Autowired
+    private ClassService classService;
     
     @GetMapping
     public String list(Model model, @RequestParam Map<String, String> params) {
@@ -220,7 +226,7 @@ public class AdminController {
     }
     
     @GetMapping("/majors")
-    public String getMojors(Model model, @RequestParam Map<String, String> params) {
+    public String getMajors(Model model, @RequestParam Map<String, String> params) {
         model.addAttribute("faculties", this.facultyService.getFaculties(""));
         model.addAttribute("majors", this.majorService.getMajors(params));
         
@@ -287,5 +293,85 @@ public class AdminController {
 
         return "redirect:/admins/majors";
     }
+    
+    @GetMapping("/major-by-facultyId")
+    public @ResponseBody List<Major> getMajorsByFaculty(@RequestParam Map<String, String> params) {
+        String type = params.get("type");
+        String kw = params.get("kw");
+        
+        System.out.println("type: " + type + ", kw: " + kw);  // Debugging
 
+
+        if ("faculty".equals(type) && kw != null && !kw.isEmpty()) {
+            return this.majorService.getMajors(params);
+        }
+
+        return this.majorService.getMajors(null);
+    }
+    
+    @GetMapping("/classes")
+    public String getClasses(Model model, @RequestParam Map<String, String> params) {
+        model.addAttribute("classes", this.classService.getClasses(params));
+        model.addAttribute("faculties", this.facultyService.getFaculties(""));
+        model.addAttribute("majors", this.majorService.getMajors(null));
+        return "classes";
+    }
+
+    @GetMapping("/classes/add")
+    public String addClassView(Model model) {
+        model.addAttribute("aClass", new Class());
+        model.addAttribute("faculties", this.facultyService.getFaculties(""));
+//        model.addAttribute("majors", this.majorService.getMajors(null));
+        return "add-class"; 
+    }
+
+    @PostMapping("/classes")
+    public String addClass(@ModelAttribute("aClass") @Valid Class aClass, 
+                              BindingResult result, 
+                              Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("faculties", this.facultyService.getFaculties(""));
+//            model.addAttribute("majors", this.majorService.getMajors(null));
+            
+            System.err.println(result.getAllErrors());
+            return "add-class"; 
+        }
+
+        try {
+            this.classService.addOrUpdate(aClass); 
+            return "redirect:/admins/classes"; 
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            model.addAttribute("errorMessage", "Có lỗi xảy ra khi thêm lớp.");
+            return "add-class"; 
+        }
+    }
+
+    @GetMapping("/classes/{id}")
+    public String updateClassView(Model model, @PathVariable(value = "id") int id) {
+        model.addAttribute("aClass", this.classService.getClassById(id));
+        model.addAttribute("faculties", this.facultyService.getFaculties(""));
+//        model.addAttribute("majors", this.majorService.getMajors(null));
+        return "update-class"; 
+    }
+
+    @PostMapping("/classes/{id}")
+    public String updateClass(@ModelAttribute("aClass") @Valid Class aClass,
+                              BindingResult result,
+                              Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("faculties", this.facultyService.getFaculties(""));
+//            model.addAttribute("majors", this.majorService.getMajors(null));
+            return "update-class"; 
+        }
+
+        try {
+            this.classService.addOrUpdate(aClass); 
+            return "redirect:/admins/classes"; 
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            model.addAttribute("errorMessage", "Có lỗi xảy ra khi cập nhật lớp.");
+            return "update-class"; 
+        }
+    }
 }

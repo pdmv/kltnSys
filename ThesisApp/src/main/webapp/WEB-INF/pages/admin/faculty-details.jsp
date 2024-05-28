@@ -35,7 +35,7 @@
     <c:choose>
         <c:when test="${faculty.id == null}">
             <input type="hidden" name="active" value="true">
-            <button type="submit" class="btn btn-primary mr-2" id="submitButton">Thêm</button>
+            <button type="submit" class="btn btn-dark mr-2" id="submitButton">Thêm</button>
         </c:when>
         <c:otherwise>
             <div class="form-floating mb-3">
@@ -46,10 +46,10 @@
                 <label for="active">Trạng thái</label>
                 <div id="activeError" class="text-danger"></div> 
             </div>
-            <button type="submit" class="btn btn-primary mr-2" id="submitButton">Cập nhật</button>
+            <button type="submit" class="btn btn-dark mr-2" id="submitButton">Cập nhật</button>
         </c:otherwise>
     </c:choose>
-    <a type="button" class="btn btn-secondary ml-auto" href="${act}" id="backButton">Quay lại</a>
+    <a type="button" class="btn btn-outline-dark ml-auto" href="${act}" id="backButton">Quay lại</a>
 </form>
 
 <script>

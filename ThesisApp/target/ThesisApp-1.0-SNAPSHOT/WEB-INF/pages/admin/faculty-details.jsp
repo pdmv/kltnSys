@@ -24,7 +24,6 @@
 <form id="facultyForm"> 
     <input type="hidden" name="id" value="${faculty.id}">
     <input type="hidden" name="createdDate" value="${faculty.createdDate}">
-    <input type="hidden" name="active" value="${faculty.active}">
 
     <div class="form-floating mb-3">
         <input name="name" type="text" class="form-control" id="name" placeholder="Tên khoa" required="required" value="${faculty.name}">
@@ -32,13 +31,25 @@
         <div id="nameError" class="text-danger"></div> 
     </div>
     
-    <button type="submit" class="btn btn-primary mr-2" id="submitButton">
-        <c:choose>
-            <c:when test="${faculty.id == null}">Thêm</c:when>
-            <c:otherwise>Cập nhật</c:otherwise>
-        </c:choose>
-    </button>
-    <a type="button" class="btn btn-secondary ml-auto" href="${act}" id="backButton">Quay lại</a>
+    
+    <c:choose>
+        <c:when test="${faculty.id == null}">
+            <input type="hidden" name="active" value="true">
+            <button type="submit" class="btn btn-dark mr-2" id="submitButton">Thêm</button>
+        </c:when>
+        <c:otherwise>
+            <div class="form-floating mb-3">
+                <select name="active" class="form-control" id="active" required="required">
+                    <option value="true" <c:if test="${faculty.active}">selected</c:if>>Hoạt động</option>
+                    <option value="false" <c:if test="${!faculty.active}">selected</c:if>>Đình chỉ</option>
+                </select>
+                <label for="active">Trạng thái</label>
+                <div id="activeError" class="text-danger"></div> 
+            </div>
+            <button type="submit" class="btn btn-dark mr-2" id="submitButton">Cập nhật</button>
+        </c:otherwise>
+    </c:choose>
+    <a type="button" class="btn btn-outline-dark ml-auto" href="${act}" id="backButton">Quay lại</a>
 </form>
 
 <script>
@@ -52,8 +63,10 @@
         event.preventDefault();
 
         const formData = new FormData(facultyForm);
-
-        fetch('${act}', {
+        
+        const url = '${act}<c:if test="${faculty.id != null}">/${faculty.id}</c:if>'
+        
+        fetch(url, {
             method: 'POST',
             body: formData
         })

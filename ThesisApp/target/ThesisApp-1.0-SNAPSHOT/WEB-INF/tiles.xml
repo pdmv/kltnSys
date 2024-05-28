@@ -13,6 +13,7 @@
         <put-attribute name="title" value="Trang chủ" />
         <put-attribute name="content" value="/WEB-INF/pages/index.jsp" />
     </definition>
+    
     <definition name="admins" extends="baseLayout">
         <put-attribute name="title" value="Quản trị viên" />
         <put-attribute name="content" value="/WEB-INF/pages/admin/admins.jsp" />
@@ -25,6 +26,7 @@
         <put-attribute name="title" value="Cập nhật Quản trị viên" />
         <put-attribute name="content" value="/WEB-INF/pages/admin/update-admin.jsp" />
     </definition>
+    
     <definition name="school-years" extends="baseLayout">
         <put-attribute name="title" value="Niên khoá" />
         <put-attribute name="content" value="/WEB-INF/pages/admin/school-years.jsp" />
@@ -37,6 +39,7 @@
         <put-attribute name="title" value="Cập nhật Niên khoá" />
         <put-attribute name="content" value="/WEB-INF/pages/admin/school-year-details.jsp" />
     </definition>
+    
     <definition name="faculties" extends="baseLayout">
         <put-attribute name="title" value="Khoa đào tạo" />
         <put-attribute name="content" value="/WEB-INF/pages/admin/faculties.jsp" />
@@ -48,5 +51,31 @@
     <definition name="update-faculty" extends="baseLayout">
         <put-attribute name="title" value="Cập nhật Khoa đào tạo" />
         <put-attribute name="content" value="/WEB-INF/pages/admin/faculty-details.jsp" />
+    </definition>
+    
+    <definition name="majors" extends="baseLayout">
+        <put-attribute name="title" value="Ngành đào tạo" />
+        <put-attribute name="content" value="/WEB-INF/pages/admin/majors.jsp" />
+    </definition>
+    <definition name="add-major" extends="baseLayout">
+        <put-attribute name="title" value="Thêm Ngành đào tạo" />
+        <put-attribute name="content" value="/WEB-INF/pages/admin/major-details.jsp" />
+    </definition>
+    <definition name="update-major" extends="baseLayout">
+        <put-attribute name="title" value="Cập nhật Ngành đào tạo" />
+        <put-attribute name="content" value="/WEB-INF/pages/admin/major-details.jsp" />
+    </definition>
+    
+    <definition name="classes" extends="baseLayout">
+        <put-attribute name="title" value="Lớp học" />
+        <put-attribute name="content" value="/WEB-INF/pages/admin/classes.jsp" />
+    </definition>
+    <definition name="add-class" extends="baseLayout">
+        <put-attribute name="title" value="Thêm Lớp học" />
+        <put-attribute name="content" value="/WEB-INF/pages/admin/class-details.jsp" />
+    </definition>
+    <definition name="update-class" extends="baseLayout">
+        <put-attribute name="title" value="Cập nhật Lớp học" />
+        <put-attribute name="content" value="/WEB-INF/pages/admin/class-details.jsp" />
     </definition>
 </tiles-definitions>

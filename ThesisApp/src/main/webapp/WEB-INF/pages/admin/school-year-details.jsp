@@ -43,7 +43,7 @@
     <c:choose>
         <c:when test="${schoolYear.id == null}">
             <form:hidden path="active"/>
-            <button type="submit" class="btn btn-primary mr-2">Thêm</button>
+            <button type="submit" class="btn btn-dark mr-2">Thêm</button>
         </c:when>
         <c:otherwise>
             <div class="form-floating mb-3">
@@ -54,10 +54,10 @@
                 <label for="active">Trạng thái</label>
                 <form:errors path="active" cssClass="text-danger"/>
             </div>
-            <button type="submit" class="btn btn-primary mr-2">Cập nhật</button>
+            <button type="submit" class="btn btn-dark mr-2">Cập nhật</button>
         </c:otherwise>
     </c:choose> 
-    <a type="button" class="btn btn-secondary ml-auto" href="<c:url value="/admins/school-years"/>">Quay lại</a>
+    <a type="button" class="btn btn-outline-dark ml-auto" href="<c:url value="/admins/school-years"/>">Quay lại</a>
 </form:form>
 
 <script>

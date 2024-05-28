@@ -7,6 +7,7 @@ package com.pdmv.services.impl;
 import com.pdmv.pojo.Major;
 import com.pdmv.repositories.MajorRepositoty;
 import com.pdmv.services.MajorService;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,9 @@ public class MajorServiceImpl implements MajorService {
 
     @Override
     public List<Major> getMajors(Map<String, String> params) {
+        if (params == null) {
+            params = new HashMap<>();
+        }
         return this.majorRepo.getMajors(params);
     }
     

@@ -83,8 +83,8 @@
         <form:errors path="accountId.file" cssClass="text-danger"/>
     </div>
 
-    <button type="submit" class="btn btn-primary">Thêm</button>
-    <a type="button" class="btn btn-secondary" href="<c:url value="/admins"/>">Quay lại</a>
+    <button type="submit" class="btn btn-dark">Thêm</button>
+    <a type="button" class="btn btn-outline-dark" href="<c:url value="/admins"/>">Quay lại</a>
 </form:form>
 
 <script type="text/javascript">
