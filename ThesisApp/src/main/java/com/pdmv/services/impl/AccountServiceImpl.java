@@ -91,17 +91,18 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Account account = this.getAccountByUsername(username);
-        
+
         if (account == null) {
             throw new UsernameNotFoundException("Not exists username");
         }
-        
+
         if (!account.getActive()) {
             throw new UsernameNotFoundException("Tài khoản bị đình chỉ.");
         }
-        
+
         Set<GrantedAuthority> authorities = new HashSet<>();
         authorities.add(new SimpleGrantedAuthority(account.getRole()));
+        
         return new org.springframework.security.core.userdetails.User(account.getUsername(), account.getPassword(), authorities);
     }
 

@@ -49,4 +49,16 @@
         <put-attribute name="title" value="Cập nhật Khoa đào tạo" />
         <put-attribute name="content" value="/WEB-INF/pages/admin/faculty-details.jsp" />
     </definition>
+    <definition name="majors" extends="baseLayout">
+        <put-attribute name="title" value="Ngành đào tạo" />
+        <put-attribute name="content" value="/WEB-INF/pages/admin/majors.jsp" />
+    </definition>
+    <definition name="add-major" extends="baseLayout">
+        <put-attribute name="title" value="Thêm Ngành đào tạo" />
+        <put-attribute name="content" value="/WEB-INF/pages/admin/major-details.jsp" />
+    </definition>
+    <definition name="update-major" extends="baseLayout">
+        <put-attribute name="title" value="Cập nhật Ngành đào tạo" />
+        <put-attribute name="content" value="/WEB-INF/pages/admin/major-details.jsp" />
+    </definition>
 </tiles-definitions>

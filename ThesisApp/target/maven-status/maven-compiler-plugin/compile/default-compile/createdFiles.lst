@@ -5,6 +5,7 @@ com/pdmv/pojo/Lecturer.class
 com/pdmv/configs/HibernateConfig.class
 com/pdmv/pojo/Major_.class
 com/pdmv/configs/DispatcherServletInit.class
+com/pdmv/services/MajorService.class
 com/pdmv/services/AccountService.class
 com/pdmv/configs/SpringSecurityConfig.class
 com/pdmv/configs/WebApplicationContextConfig.class
@@ -44,6 +45,7 @@ com/pdmv/pojo/ThesisLecturer.class
 com/pdmv/configs/TilesConfig.class
 com/pdmv/configs/SecurityWebAplicationInitializer.class
 com/pdmv/pojo/Score_.class
+com/pdmv/services/impl/MajorServiceImpl.class
 com/pdmv/filters/RestAuthenticationEntryPoint.class
 com/pdmv/repositories/FacultyRepository.class
 com/pdmv/pojo/Admin_.class
@@ -52,6 +54,7 @@ com/pdmv/pojo/Thesis_.class
 com/pdmv/pojo/Major.class
 com/pdmv/configs/JwtSecurityConfig.class
 com/pdmv/services/impl/SchoolYearServiceImpl.class
+com/pdmv/repositories/impl/MajorRepositoryImpl.class
 com/pdmv/pojo/Faculty_.class
 com/pdmv/pojo/Affair.class
 com/pdmv/pojo/Account.class
@@ -59,6 +62,8 @@ com/pdmv/pojo/Account_.class
 com/pdmv/services/FacultyService.class
 com/pdmv/services/AdminService.class
 com/pdmv/pojo/Student_.class
+com/pdmv/repositories/MajorRepositoty.class
+com/pdmv/components/StringToFacultyConverter.class
 com/pdmv/pojo/Class_.class
 com/pdmv/pojo/Affair_.class
 com/pdmv/pojo/CouncilCriterion.class

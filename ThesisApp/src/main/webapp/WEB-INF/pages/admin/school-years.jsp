@@ -19,6 +19,7 @@
         <tr>
             <th>ID</th>
             <th>Niên khoá</th>
+            <th>Trạng thái</th>
             <th></th>
         </tr>
     </thead>
@@ -27,6 +28,12 @@
             <tr>
                 <td>${s.id}</td>
                 <td>${s.startYear} - ${s.endYear}</td>
+                <td>
+                    <c:choose>
+                        <c:when test="${s.active==true}"><span class="badge bg-success">Đang hoạt động</span></c:when>
+                        <c:otherwise><span class="badge bg-danger">Đã đình chỉ</span></c:otherwise>
+                    </c:choose>
+                </td>
                 <td>
                     <a class="btn btn-primary" href="<c:url value="/admins/school-years/${s.id}" />">Cập nhật</a>
                     <button type="button" class="btn btn-danger">Xoá</button>

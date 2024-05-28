@@ -30,6 +30,7 @@
         </div>
         <div class="col-md-3 col-12 d-flex align-items-center">
             <button type="submit" class="btn btn-primary" style="margin-left: 2px;">Tìm kiếm</button>
+            <a href="<c:url value='/admins' />" class="btn btn-secondary" style="margin-left: 10px;">Hoàn tác</a>
             <a href="<c:url value='/admins/add' />" class="btn btn-success" style="margin-left: 10px;">Thêm</a>
         </div>
     </form>

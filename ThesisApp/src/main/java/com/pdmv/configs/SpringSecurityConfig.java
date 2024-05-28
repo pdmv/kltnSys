@@ -48,19 +48,26 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.formLogin().usernameParameter("username").passwordParameter("password");
+        http.formLogin()
+            .usernameParameter("username")
+            .passwordParameter("password")
+            .defaultSuccessUrl("/")
+            .failureUrl("/login?error")
+            .permitAll();
         
-        http.formLogin().defaultSuccessUrl("/").failureUrl("/login?error");
-        
-        http.logout().logoutSuccessUrl("/login");
+        http.logout()
+            .logoutSuccessUrl("/login")
+            .permitAll();
         
         http.exceptionHandling()
-                .accessDeniedPage("/login?accessDenied");
-//        http.authorizeRequests().antMatchers("/").permitAll()
-//                .antMatchers("/**/add")
-//                .access("hasRole('ROLE_ADMIN')");
-//        .antMatchers("/**/pay")
-//                .access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+            .accessDeniedPage("/login?accessDenied");
+        
+        http.authorizeRequests()
+            .antMatchers("/").permitAll()
+            .antMatchers("/**/admins").access("hasAuthority('ADMIN')") // Dung 'ADMIN' thay cho 'ROLE_ADMIN' -> khong dung hasRole(...)
+            .antMatchers("/**/admins/**").access("hasAuthority('ADMIN')")
+            .anyRequest().authenticated();
+        
         http.csrf().disable();
     }
     

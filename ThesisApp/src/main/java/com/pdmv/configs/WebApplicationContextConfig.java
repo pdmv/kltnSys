@@ -4,9 +4,11 @@
  */
 package com.pdmv.configs;
 
+import com.pdmv.components.StringToFacultyConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
@@ -38,6 +40,16 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
                 = new CommonsMultipartResolver();
         resolver.setDefaultEncoding("UTF-8");
         return resolver;
+    }
+    
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addConverter(stringToFacultyConverter()); 
+    }
+
+    @Bean
+    public StringToFacultyConverter stringToFacultyConverter() {
+        return new StringToFacultyConverter();
     }
     
 }

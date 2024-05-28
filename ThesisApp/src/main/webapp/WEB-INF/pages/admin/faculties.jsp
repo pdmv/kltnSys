@@ -19,6 +19,7 @@
         </div>
         <div class="col-md-3 col-12 d-flex align-items-center">
             <button type="submit" class="btn btn-primary" style="margin-left: 2px;">Tìm kiếm</button>
+            <a href="<c:url value='/admins/faculties' />" class="btn btn-secondary" style="margin-left: 10px;">Hoàn tác</a>
             <a href="<c:url value='/admins/faculties/add' />" class="btn btn-success" style="margin-left: 10px;">Thêm</a>
         </div>
     </form>
@@ -29,6 +30,7 @@
         <tr>
             <th>ID</th>
             <th>Tên khoa</th>
+            <th>Trạng thái</th>
             <th></th>
         </tr>
     </thead>
@@ -37,6 +39,12 @@
             <tr>
                 <td>${f.id}</td>
                 <td>${f.name}</td>
+                <td>
+                    <c:choose>
+                        <c:when test="${f.active==true}"><span class="badge bg-success">Đang hoạt động</span></c:when>
+                        <c:otherwise><span class="badge bg-danger">Đã đình chỉ</span></c:otherwise>
+                    </c:choose>
+                </td>
                 <td>
                     <a class="btn btn-primary" href="<c:url value="/admins/faculties/${f.id}" />">Cập nhật</a>
                     <button type="button" class="btn btn-danger">Xoá</button>

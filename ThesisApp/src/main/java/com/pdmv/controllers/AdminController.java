@@ -7,9 +7,11 @@ package com.pdmv.controllers;
 import com.pdmv.pojo.Account;
 import com.pdmv.pojo.Admin;
 import com.pdmv.pojo.Faculty;
+import com.pdmv.pojo.Major;
 import com.pdmv.pojo.SchoolYear;
 import com.pdmv.services.AdminService;
 import com.pdmv.services.FacultyService;
+import com.pdmv.services.MajorService;
 import com.pdmv.services.SchoolYearService;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -38,6 +40,8 @@ public class AdminController {
     private SchoolYearService schoolYearSrevice;
     @Autowired
     private FacultyService facultyService;
+    @Autowired
+    private MajorService majorService;
     
     @GetMapping
     public String list(Model model, @RequestParam Map<String, String> params) {
@@ -196,7 +200,7 @@ public class AdminController {
     }
     
     @PostMapping("/faculties/{id}")
-    public String updateFaculty(@ModelAttribute("schoolYear") @Valid Faculty faculty, 
+    public String updateFaculty(@ModelAttribute("faculty") @Valid Faculty faculty, 
                                    BindingResult result, 
                                    Model model) {
         if (result.hasErrors()) {
@@ -214,4 +218,74 @@ public class AdminController {
 
         return "redirect:/admins/faculties";
     }
+    
+    @GetMapping("/majors")
+    public String getMojors(Model model, @RequestParam Map<String, String> params) {
+        model.addAttribute("faculties", this.facultyService.getFaculties(""));
+        model.addAttribute("majors", this.majorService.getMajors(params));
+        
+        return "majors";
+    }
+    
+    @GetMapping("/majors/add")
+    public String createMajorView(Model model) {
+        Major major = new Major();
+        model.addAttribute("major", major);
+        model.addAttribute("faculties", this.facultyService.getFaculties(""));
+        return "add-major";
+    }
+
+    @PostMapping("/majors")
+    public String createMajor(@ModelAttribute("major") @Valid Major major, 
+                              BindingResult result, 
+                              Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("faculties", this.facultyService.getFaculties(""));
+            return "add-major";
+        }
+
+        try {
+            Integer facultyId = major.getFacultyId().getId(); // Lấy facultyId từ object major
+            Faculty faculty = this.facultyService.getFacultyById(facultyId); 
+            major.setFacultyId(faculty);
+            this.majorService.addOrUpdate(major); 
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            model.addAttribute("errorMessage", "Có lỗi xảy ra khi thêm ngành.");
+            return "add-major";
+        }
+
+        return "redirect:/admins/majors";
+    }
+    
+    @GetMapping("/majors/{id}")
+    public String updateMajorView(Model model, @PathVariable(value = "id") int id) {
+        model.addAttribute("major", this.majorService.getMajorById(id));
+        model.addAttribute("faculties", this.facultyService.getFaculties(""));
+        return "update-major";
+    }
+    
+    @PostMapping("/majors/{id}")
+    public String updateMajor(@ModelAttribute("major") @Valid Major major, 
+                              BindingResult result, 
+                              @RequestParam("facultyId") int facultyId,
+                              Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("faculties", this.facultyService.getFaculties(""));
+            return "update-major";
+        }
+
+        try {
+            Faculty faculty = this.facultyService.getFacultyById(facultyId);
+            major.setFacultyId(faculty);
+            this.majorService.addOrUpdate(major); 
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            model.addAttribute("errorMessage", "Có lỗi xảy ra khi cập nhật ngành.");
+            return "update-major";
+        }
+
+        return "redirect:/admins/majors";
+    }
+
 }

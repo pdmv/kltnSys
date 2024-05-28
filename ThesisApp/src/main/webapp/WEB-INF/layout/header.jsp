@@ -31,6 +31,9 @@
                         <li>
                             <a class="dropdown-item" href="<c:url value="/admins/faculties" />">Khoa đào tạo</a>
                         </li>
+                        <li>
+                            <a class="dropdown-item" href="<c:url value="/admins/majors" />">Ngành đào tạo</a>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -43,20 +46,18 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="/" />">Chào ${pageContext.request.userPrincipal.name}!</a>
-                </li>
                 </c:if>
-                <c:choose>
-                    <c:when test="${pageContext.request.userPrincipal.name == null}">
-                        <li class="nav-item">
-                            <a class="nav-link" href="<c:url value="/login" />">Đăng nhập</a>
-                        </li>
-                    </c:when>
-                    <c:when test="${pageContext.request.userPrincipal.name != null}">
-                    </c:when>
-                </c:choose>
             </ul>
+            <c:choose>
+                <c:when test="${pageContext.request.userPrincipal.name == null}">
+                    <span class="navbar-text"><a class="nav-link" href="<c:url value="/login" />">Đăng nhập</a>
+                </c:when>
+                <c:when test="${pageContext.request.userPrincipal.name != null}">
+                    <span class="navbar-text"><a class="nav-link" href="<c:url value="/" />">Chào ${pageContext.request.userPrincipal.name}!</a></span>
+
+                    <span class="navbar-text"><a class="nav-link" href="<c:url value="/logout" />">Đăng xuất</a></span>
+                </c:when>
+            </c:choose>
         </div>
     </div>
 </nav>
