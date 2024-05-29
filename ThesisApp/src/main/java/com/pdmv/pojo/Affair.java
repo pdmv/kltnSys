@@ -47,7 +47,6 @@ import org.springframework.format.annotation.DateTimeFormat;
     @NamedQuery(name = "Affair.findByGender", query = "SELECT a FROM Affair a WHERE a.gender = :gender"),
     @NamedQuery(name = "Affair.findByEmail", query = "SELECT a FROM Affair a WHERE a.email = :email"),
     @NamedQuery(name = "Affair.findByDob", query = "SELECT a FROM Affair a WHERE a.dob = :dob"),
-    @NamedQuery(name = "Affair.findByDegree", query = "SELECT a FROM Affair a WHERE a.degree = :degree"),
     @NamedQuery(name = "Affair.findByCreatedDate", query = "SELECT a FROM Affair a WHERE a.createdDate = :createdDate"),
     @NamedQuery(name = "Affair.findByUpdatedDate", query = "SELECT a FROM Affair a WHERE a.updatedDate = :updatedDate"),
     @NamedQuery(name = "Affair.findByActive", query = "SELECT a FROM Affair a WHERE a.active = :active")})
@@ -86,9 +85,6 @@ public class Affair implements Serializable {
     @Size(max = 65535)
     @Column(name = "address")
     private String address;
-    @Size(max = 255)
-    @Column(name = "degree")
-    private String degree;
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -177,14 +173,6 @@ public class Affair implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public String getDegree() {
-        return degree;
-    }
-
-    public void setDegree(String degree) {
-        this.degree = degree;
     }
 
     public Date getCreatedDate() {

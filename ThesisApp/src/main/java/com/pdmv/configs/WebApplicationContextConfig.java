@@ -4,6 +4,7 @@
  */
 package com.pdmv.configs;
 
+import com.pdmv.components.StringToClassConverter;
 import com.pdmv.components.StringToFacultyConverter;
 import com.pdmv.components.StringToMajorConverter;
 import org.springframework.context.annotation.Bean;
@@ -46,7 +47,8 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(stringToFacultyConverter());
-        registry.addConverter(stringToMajorConverter()); 
+        registry.addConverter(stringToMajorConverter());
+        registry.addConverter(stringToClassConverter()); 
     }
 
     @Bean
@@ -57,6 +59,11 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
     @Bean
     public StringToMajorConverter stringToMajorConverter() {
         return new StringToMajorConverter();
+    }
+    
+    @Bean
+    public StringToClassConverter stringToClassConverter() {
+        return new StringToClassConverter();
     }
     
 }

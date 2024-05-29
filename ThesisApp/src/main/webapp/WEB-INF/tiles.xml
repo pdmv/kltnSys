@@ -91,4 +91,30 @@
         <put-attribute name="title" value="Cập nhật Giáo vụ" />
         <put-attribute name="content" value="/WEB-INF/pages/affair/update-affair.jsp" />
     </definition>
+    
+    <definition name="lecturers" extends="baseLayout">
+        <put-attribute name="title" value="Giảng viên" />
+        <put-attribute name="content" value="/WEB-INF/pages/lecturer/lecturers.jsp" />
+    </definition>
+    <definition name="add-lecturer" extends="baseLayout">
+        <put-attribute name="title" value="Thêm Giảng viên" />
+        <put-attribute name="content" value="/WEB-INF/pages/lecturer/add-lecturer.jsp" />
+    </definition>
+    <definition name="update-lecturer" extends="baseLayout">
+        <put-attribute name="title" value="Cập nhật Giảng viên" />
+        <put-attribute name="content" value="/WEB-INF/pages/lecturer/update-lecturer.jsp" />
+    </definition>
+    
+    <definition name="students" extends="baseLayout">
+        <put-attribute name="title" value="Sinh viên" />
+        <put-attribute name="content" value="/WEB-INF/pages/student/students.jsp" />
+    </definition>
+    <definition name="add-student" extends="baseLayout">
+        <put-attribute name="title" value="Thêm Sinh viên" />
+        <put-attribute name="content" value="/WEB-INF/pages/student/add-student.jsp" />
+    </definition>
+    <definition name="update-student" extends="baseLayout">
+        <put-attribute name="title" value="Cập nhật Sinh viên" />
+        <put-attribute name="content" value="/WEB-INF/pages/student/update-student.jsp" />
+    </definition>
 </tiles-definitions>

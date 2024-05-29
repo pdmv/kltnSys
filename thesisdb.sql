@@ -114,7 +114,6 @@ CREATE TABLE affair (
     email VARCHAR(255) UNIQUE NOT NULL,
     dob DATE DEFAULT NULL,
     address TEXT DEFAULT NULL,
-    degree VARCHAR(255) DEFAULT NULL,
     account_id INT UNIQUE,
     faculty_id INT,
     created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

@@ -33,7 +33,7 @@ CREATE TABLE `account` (
   `active` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +42,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES (1,'admin','$2a$10$PUqsQjbYOaGS3t98.LmcDuWqblrdC58pZFQVkfayxoRe4QT.oXg/a','https://res.cloudinary.com/dyuafq1hx/image/upload/v1716802738/b920ceyu6uoiix7g0h3c.jpg','ADMIN','2024-05-27 18:00:13','2024-05-27 18:01:16',1),(2,'admin2','$2a$10$a7ml30HaBOFLg2M8k4osTOpxPikbW4Ase6dQZe1r.uMNmenw5aWZC','https://res.cloudinary.com/dyuafq1hx/image/upload/v1716958768/hjodjwtoszmutscywdbw.png','ADMIN','2024-05-29 04:59:29','2024-05-29 04:59:29',1),(3,'stephen','$2a$10$7WuTRnOfKFrlYqPa8W3Mpu60VDuyRGP5h4Z8NYVwPHDAPI2oMYli2','https://res.cloudinary.com/dyuafq1hx/image/upload/v1716960626/o3hpru2levojjmnn7yhq.jpg','ADMIN','2024-05-29 05:30:27','2024-05-29 05:30:27',1);
+INSERT INTO `account` VALUES (1,'admin','$2a$10$PUqsQjbYOaGS3t98.LmcDuWqblrdC58pZFQVkfayxoRe4QT.oXg/a','https://res.cloudinary.com/dyuafq1hx/image/upload/v1716802738/b920ceyu6uoiix7g0h3c.jpg','ADMIN','2024-05-27 18:00:13','2024-05-27 18:01:16',1),(2,'admin2','$2a$10$a7ml30HaBOFLg2M8k4osTOpxPikbW4Ase6dQZe1r.uMNmenw5aWZC','https://res.cloudinary.com/dyuafq1hx/image/upload/v1716958768/hjodjwtoszmutscywdbw.png','ADMIN','2024-05-29 04:59:29','2024-05-29 04:59:29',1),(3,'stephen','$2a$10$7WuTRnOfKFrlYqPa8W3Mpu60VDuyRGP5h4Z8NYVwPHDAPI2oMYli2','https://res.cloudinary.com/dyuafq1hx/image/upload/v1716960626/o3hpru2levojjmnn7yhq.jpg','ADMIN','2024-05-29 05:30:27','2024-05-29 05:30:27',1),(4,'affair','$2a$10$9tbvrP2lKN2fR3O5weq5H.2gGGfHNYhaJFgDTIRodxCeTlsHPp/OS','https://res.cloudinary.com/dyuafq1hx/image/upload/v1716970174/i9zv1bsr9ik8rdioazea.jpg','AFFAIR','2024-05-29 08:09:35','2024-05-29 08:11:37',1),(5,'affair2','$2a$10$4.OnsNsm7bw.S52PHV1rWO5pT4ri4UaNDVtZAm2HSuFmuGrwjXyD6','https://res.cloudinary.com/dyuafq1hx/image/upload/v1716971323/lml0fbgijbjo6upwhk0b.png','AFFAIR','2024-05-29 08:28:44','2024-05-29 08:28:44',1),(6,'lecturer','$2a$10$H88DkaoeBelU3D9c4qGrhu7Ns1B15kftGg2aVeYOLdkeTp8DgYHiK','https://res.cloudinary.com/dyuafq1hx/image/upload/v1716974901/xzrdugvmpwxivgf5ixmu.jpg','LECTURER','2024-05-29 09:28:22','2024-05-29 09:29:12',1),(7,'student','$2a$10$QEHdx5IaTibCpuyoK69lmeTYLNcw6N3cgfwucibRQqmVmxX8WImLC','https://res.cloudinary.com/dyuafq1hx/image/upload/v1716980117/wseszqeq45ljge5b0h3d.png','STUDENT','2024-05-29 10:55:18','2024-05-29 11:41:03',1);
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -97,7 +97,6 @@ CREATE TABLE `affair` (
   `email` varchar(255) COLLATE utf8mb4_vietnamese_ci NOT NULL,
   `dob` date DEFAULT NULL,
   `address` text COLLATE utf8mb4_vietnamese_ci,
-  `degree` varchar(255) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
   `account_id` int DEFAULT NULL,
   `faculty_id` int DEFAULT NULL,
   `created_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
@@ -109,7 +108,7 @@ CREATE TABLE `affair` (
   KEY `faculty_id` (`faculty_id`),
   CONSTRAINT `affair_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`),
   CONSTRAINT `affair_ibfk_2` FOREIGN KEY (`faculty_id`) REFERENCES `faculty` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -118,6 +117,7 @@ CREATE TABLE `affair` (
 
 LOCK TABLES `affair` WRITE;
 /*!40000 ALTER TABLE `affair` DISABLE KEYS */;
+INSERT INTO `affair` VALUES (1,'Phạm','Vương','male','phamdominhvuong07112003@gmail.com','2000-11-07','Thành phố Hồ Chí Minh',4,2,'2024-05-29 08:09:35','2024-05-29 08:11:37',1),(2,'Lê','Long','male','longaffair@gmail.com','1999-11-11','Bạc Liêu',5,8,'2024-05-29 08:28:44','2024-05-29 08:28:44',1);
 /*!40000 ALTER TABLE `affair` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -141,7 +141,7 @@ CREATE TABLE `class` (
   KEY `major_id` (`major_id`),
   CONSTRAINT `class_ibfk_1` FOREIGN KEY (`faculty_id`) REFERENCES `faculty` (`id`),
   CONSTRAINT `class_ibfk_2` FOREIGN KEY (`major_id`) REFERENCES `major` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -150,7 +150,7 @@ CREATE TABLE `class` (
 
 LOCK TABLES `class` WRITE;
 /*!40000 ALTER TABLE `class` DISABLE KEYS */;
-INSERT INTO `class` VALUES (1,'DH21CS02',2,1,'2024-05-28 14:58:30','2024-05-28 14:58:42',1),(2,'DH21CS01',2,1,'2024-05-28 17:20:37','2024-05-28 17:20:37',1),(3,'DH21IT01',2,2,'2024-05-29 04:49:05','2024-05-29 04:49:05',1),(4,'DH21IT02',2,2,'2024-05-29 04:49:36','2024-05-29 04:49:36',1),(5,'DH21IT03',2,2,'2024-05-29 04:50:03','2024-05-29 04:50:03',1);
+INSERT INTO `class` VALUES (1,'DH21CS02',2,1,'2024-05-28 14:58:30','2024-05-28 14:58:42',1),(2,'DH21CS01',2,1,'2024-05-28 17:20:37','2024-05-28 17:20:37',1),(3,'DH21IT01',2,2,'2024-05-29 04:49:05','2024-05-29 04:49:05',1),(4,'DH21IT02',2,2,'2024-05-29 04:49:36','2024-05-29 04:49:36',1),(5,'DH21IT03',2,2,'2024-05-29 04:50:03','2024-05-29 04:50:03',1),(6,'DH21BL01',11,35,'2024-05-29 11:35:57','2024-05-29 11:35:57',1);
 /*!40000 ALTER TABLE `class` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -326,7 +326,7 @@ CREATE TABLE `lecturer` (
   KEY `faculty_id` (`faculty_id`),
   CONSTRAINT `lecturer_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`),
   CONSTRAINT `lecturer_ibfk_2` FOREIGN KEY (`faculty_id`) REFERENCES `faculty` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -335,6 +335,7 @@ CREATE TABLE `lecturer` (
 
 LOCK TABLES `lecturer` WRITE;
 /*!40000 ALTER TABLE `lecturer` DISABLE KEYS */;
+INSERT INTO `lecturer` VALUES (1,'Đỗ','Vương','male','phamdominhvuong@icloud.com','1998-01-01','Long An','Thạc sỹ',6,2,'2024-05-29 09:28:22','2024-05-29 09:29:12',1);
 /*!40000 ALTER TABLE `lecturer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -463,7 +464,7 @@ CREATE TABLE `student` (
   CONSTRAINT `student_ibfk_2` FOREIGN KEY (`faculty_id`) REFERENCES `faculty` (`id`),
   CONSTRAINT `student_ibfk_3` FOREIGN KEY (`major_id`) REFERENCES `major` (`id`),
   CONSTRAINT `student_ibfk_4` FOREIGN KEY (`class_id`) REFERENCES `class` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -472,6 +473,7 @@ CREATE TABLE `student` (
 
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
+INSERT INTO `student` VALUES (1,'Đỗ Mạnh','Dũng','male','dung@gmail.com','2001-12-20','Đồng Nai',7,11,35,6,'2024-05-29 10:55:18','2024-05-29 11:41:03',1);
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -582,4 +584,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-29 13:40:11
+-- Dump completed on 2024-05-29 18:44:05

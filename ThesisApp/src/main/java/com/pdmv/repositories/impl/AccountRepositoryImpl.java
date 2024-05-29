@@ -40,7 +40,7 @@ public class AccountRepositoryImpl implements AccountRepository {
     public Account getAccountByUsername(String username) {
         Session s = this.factory.getObject().getCurrentSession();
         
-        Query q = s.createQuery("From Account Where username=:username");
+        Query q = s.createNamedQuery("Account.findByUsername");
         q.setParameter("username", username);
         
         return (Account) q.getSingleResult();

@@ -11,12 +11,16 @@ import com.pdmv.pojo.Faculty;
 import com.pdmv.pojo.Major;
 import com.pdmv.pojo.SchoolYear;
 import com.pdmv.pojo.Class;
+import com.pdmv.pojo.Lecturer;
+import com.pdmv.pojo.Student;
 import com.pdmv.services.AdminService;
 import com.pdmv.services.AffairService;
 import com.pdmv.services.ClassService;
 import com.pdmv.services.FacultyService;
+import com.pdmv.services.LecturerService;
 import com.pdmv.services.MajorService;
 import com.pdmv.services.SchoolYearService;
+import com.pdmv.services.StudentService;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -52,6 +56,10 @@ public class AdminController {
     private ClassService classService;
     @Autowired
     private AffairService affairSevice;
+    @Autowired
+    private LecturerService lecturerService;
+    @Autowired
+    private StudentService studentService;
     
     @GetMapping
     public String list(Model model, @RequestParam Map<String, String> params) {
@@ -298,21 +306,6 @@ public class AdminController {
         return "redirect:/admins/majors";
     }
     
-    @GetMapping("/major-by-facultyId")
-    public @ResponseBody List<Major> getMajorsByFaculty(@RequestParam Map<String, String> params) {
-        String type = params.get("type");
-        String kw = params.get("kw");
-        
-        System.out.println("type: " + type + ", kw: " + kw);  // Debugging
-
-
-        if ("faculty".equals(type) && kw != null && !kw.isEmpty()) {
-            return this.majorService.getMajors(params);
-        }
-
-        return this.majorService.getMajors(null);
-    }
-    
     @GetMapping("/classes")
     public String getClasses(Model model, @RequestParam Map<String, String> params) {
         model.addAttribute("classes", this.classService.getClasses(params));
@@ -448,5 +441,181 @@ public class AdminController {
         }
 
         return "redirect:/admins/affairs";
+    }
+    
+    @GetMapping("/lecturers")
+    public String listLecturer(Model model, @RequestParam Map<String, String> params) {
+        model.addAttribute("lecturers", this.lecturerService.getLecturers(params));
+        model.addAttribute("faculties", this.facultyService.getFaculties(""));
+        return "lecturers";
+    }
+    
+    @GetMapping("/lecturers/add")
+    public String createLecturerView(Model model) {
+        Lecturer a = new Lecturer();
+        a.setAccountId(new Account());
+        model.addAttribute("lecturer", a);
+        model.addAttribute("faculties", this.facultyService.getFaculties(""));
+        
+        return "add-lecturer";
+    }
+    
+    @PostMapping("/lecturers/add")
+    public String createLecturer(@ModelAttribute("lecturer") @Valid Lecturer lecturer, 
+                      BindingResult result,
+                      HttpServletRequest request,
+                      Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("faculties", this.facultyService.getFaculties(""));
+            
+            return "add-lecturer";
+        }
+
+        try {
+            this.lecturerService.addOrUpdate(lecturer);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            model.addAttribute("faculties", this.facultyService.getFaculties(""));
+            return "add-lecturer";
+        }
+        
+        return "redirect:/admins/lecturers";
+    }
+    
+    @GetMapping("/lecturers/{id}")
+    public String updateLecturerView(Model model, @PathVariable(value = "id") int id) {
+        Lecturer a = this.lecturerService.getLecturerById(id);
+        a.getAccountId().setPassword(null);
+        model.addAttribute("lecturer", a);
+        model.addAttribute("faculties", this.facultyService.getFaculties(""));
+        
+        return "update-lecturer";
+    }
+    
+    @PostMapping("/lecturers/{id}")
+    public String updateLecturer(@ModelAttribute("lecturer") @Valid Lecturer lecturer, 
+                          BindingResult result,
+                          HttpServletRequest request,
+                          Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("faculties", this.facultyService.getFaculties(""));
+            System.err.println(result.getAllErrors());
+            return "update-lecturer";
+        }
+
+        try {
+            this.lecturerService.addOrUpdate(lecturer);
+        } catch (Exception e) {
+            model.addAttribute("faculties", this.facultyService.getFaculties(""));
+            System.err.println(e.getMessage());
+            return "update-lecturer";
+        }
+
+        return "redirect:/admins/lecturers";
+    }
+    
+    @GetMapping("/students")
+    public String listStudents(Model model, @RequestParam Map<String, String> params) {
+        model.addAttribute("students", this.studentService.getStudents(params));
+        model.addAttribute("faculties", this.facultyService.getFaculties(""));
+        model.addAttribute("majors", this.majorService.getMajors(null));
+        return "students";
+    }
+    
+    @GetMapping("/students/add")
+    public String createStudentView(Model model) {
+        Student a = new Student();
+        a.setAccountId(new Account());
+        model.addAttribute("student", a);
+        model.addAttribute("faculties", this.facultyService.getFaculties(""));
+        
+        return "add-student";
+    }
+    
+    @PostMapping("/students/add")
+    public String createStudent(@ModelAttribute("student") @Valid Student student, 
+                      BindingResult result,
+                      HttpServletRequest request,
+                      Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("faculties", this.facultyService.getFaculties(""));
+            
+            return "add-student";
+        }
+
+        try {
+            this.studentService.addOrUpdate(student);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            model.addAttribute("faculties", this.facultyService.getFaculties(""));
+            return "add-student";
+        }
+        
+        return "redirect:/admins/students";
+    }
+    
+    @GetMapping("/students/{id}")
+    public String updateStudentView(Model model, @PathVariable(value = "id") int id) {
+        Student a = this.studentService.getStudentById(id);
+        a.getAccountId().setPassword(null);
+        model.addAttribute("student", a);
+        model.addAttribute("faculties", this.facultyService.getFaculties(""));
+        
+        return "update-student";
+    }
+    
+    @PostMapping("/students/{id}")
+    public String updateStudent(@ModelAttribute("student") @Valid Student student, 
+                          BindingResult result,
+                          HttpServletRequest request,
+                          Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("faculties", this.facultyService.getFaculties(""));
+            System.err.println(result.getAllErrors());
+            return "update-student";
+        }
+
+        try {
+            this.studentService.addOrUpdate(student);
+        } catch (Exception e) {
+            model.addAttribute("faculties", this.facultyService.getFaculties(""));
+            System.err.println(e.getMessage());
+            return "update-student";
+        }
+
+        return "redirect:/admins/students";
+    }
+    
+    // --------------
+    // return json
+    // --------------
+    @GetMapping("/major-by-facultyId")
+    public @ResponseBody List<Major> getMajorsByFaculty(@RequestParam Map<String, String> params) {
+        String type = params.get("type");
+        String kw = params.get("kw");
+        
+        System.out.println("type: " + type + ", kw: " + kw);  // Debugging
+
+
+        if ("faculty".equals(type) && kw != null && !kw.isEmpty()) {
+            return this.majorService.getMajors(params);
+        }
+
+        return this.majorService.getMajors(null);
+    }
+    
+    @GetMapping("/class-by-majorId")
+    public @ResponseBody List<Class> getClassByMajor(@RequestParam Map<String, String> params) {
+        String type = params.get("type");
+        String kw = params.get("kw");
+        
+        System.out.println("type: " + type + ", kw: " + kw);  // Debugging
+
+
+        if ("major".equals(type) && kw != null && !kw.isEmpty()) {
+            return this.classService.getClasses(params);
+        }
+
+        return this.classService.getClasses(params);
     }
 }

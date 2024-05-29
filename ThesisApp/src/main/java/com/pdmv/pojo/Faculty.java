@@ -4,6 +4,7 @@
  */
 package com.pdmv.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -64,6 +65,7 @@ public class Faculty implements Serializable {
     @Column(name = "active")
     private Boolean active;
     @OneToMany(mappedBy = "facultyId")
+    @JsonIgnore
     private Set<Student> studentSet;
     @OneToMany(mappedBy = "facultyId")
     private Set<Lecturer> lecturerSet;
