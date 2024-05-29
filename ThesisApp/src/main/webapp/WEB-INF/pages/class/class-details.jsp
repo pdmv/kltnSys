@@ -113,6 +113,7 @@
     function updateMajors() {
         const id = facultySelect.value;
         const url = '<c:url value="/admins/major-by-facultyId"/>?type=faculty&kw=' + id;
+        const majorId = '${aClass.majorId.id}';
         if (id) {
             fetch(url)
                 .then(response => response.json())
@@ -122,6 +123,9 @@
                         const option = document.createElement('option');
                         option.value = major.id;
                         option.textContent = major.name;
+                        if (majorId != "" && major.id == majorId) {
+                            option.selected = true;
+                        }
                         majorSelect.appendChild(option);
                     });
                 })
@@ -133,4 +137,11 @@
         }
     }
 </script>
+<c:if test="${aClass.facultyId != null}">
+    <script>
+        window.onload = function() {
+            updateMajors();
+        }
+    </script>
+</c:if>
 
