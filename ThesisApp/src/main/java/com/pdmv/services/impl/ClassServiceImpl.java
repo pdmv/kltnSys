@@ -7,6 +7,7 @@ package com.pdmv.services.impl;
 import com.pdmv.pojo.Class;
 import com.pdmv.repositories.ClassRepository;
 import com.pdmv.services.ClassService;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,9 @@ public class ClassServiceImpl implements ClassService {
 
     @Override
     public List<Class> getClasses(Map<String, String> params) {
+        if (params == null) {
+            params = new HashMap<>();
+        }
         return this.classRepo.getClasses(params);
     }
     

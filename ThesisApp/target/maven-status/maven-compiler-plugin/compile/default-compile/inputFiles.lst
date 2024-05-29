@@ -10,8 +10,10 @@
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/components/JwtService.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/pojo/Affair.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/services/ClassService.java
+/Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/services/AffairService.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/repositories/AdminRepository.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/repositories/impl/AccountRepositoryImpl.java
+/Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/repositories/AffairRepository.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/services/impl/ClassServiceImpl.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/filters/JwtAuthenticationTokenFilter.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/services/AccountService.java
@@ -30,6 +32,7 @@
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/pojo/CouncilLecturer.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/services/impl/AccountServiceImpl.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/repositories/AccountRepository.java
+/Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/repositories/impl/AffairRepositoryImpl.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/repositories/SchoolYearRepository.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/filters/CustomAccessDeniedHandler.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/repositories/impl/SchoolYearRepositoryImpl.java
@@ -55,3 +58,4 @@
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/pojo/Account.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/configs/SpringSecurityConfig.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/pojo/Student.java
+/Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/services/impl/AffairServiceImpl.java

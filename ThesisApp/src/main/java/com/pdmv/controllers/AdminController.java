@@ -6,11 +6,13 @@ package com.pdmv.controllers;
 
 import com.pdmv.pojo.Account;
 import com.pdmv.pojo.Admin;
+import com.pdmv.pojo.Affair;
 import com.pdmv.pojo.Faculty;
 import com.pdmv.pojo.Major;
 import com.pdmv.pojo.SchoolYear;
 import com.pdmv.pojo.Class;
 import com.pdmv.services.AdminService;
+import com.pdmv.services.AffairService;
 import com.pdmv.services.ClassService;
 import com.pdmv.services.FacultyService;
 import com.pdmv.services.MajorService;
@@ -48,6 +50,8 @@ public class AdminController {
     private MajorService majorService;
     @Autowired
     private ClassService classService;
+    @Autowired
+    private AffairService affairSevice;
     
     @GetMapping
     public String list(Model model, @RequestParam Map<String, String> params) {
@@ -373,5 +377,76 @@ public class AdminController {
             model.addAttribute("errorMessage", "Có lỗi xảy ra khi cập nhật lớp.");
             return "update-class"; 
         }
+    }
+    
+    @GetMapping("/affairs")
+    public String listAffair(Model model, @RequestParam Map<String, String> params) {
+        model.addAttribute("affairs", this.affairSevice.getAffairs(params));
+        model.addAttribute("faculties", this.facultyService.getFaculties(""));
+        return "affairs";
+    }
+    
+    @GetMapping("/affairs/add")
+    public String createAffairView(Model model) {
+        Affair a = new Affair();
+        a.setAccountId(new Account());
+        model.addAttribute("affair", a);
+        model.addAttribute("faculties", this.facultyService.getFaculties(""));
+        
+        return "add-affair";
+    }
+    
+    @PostMapping("/affairs/add")
+    public String createAffair(@ModelAttribute("affair") @Valid Affair affair, 
+                      BindingResult result,
+                      HttpServletRequest request,
+                      Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("faculties", this.facultyService.getFaculties(""));
+            
+            return "add-affair";
+        }
+
+        try {
+            this.affairSevice.addOrUpdate(affair);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            model.addAttribute("faculties", this.facultyService.getFaculties(""));
+            return "add-affair";
+        }
+        
+        return "redirect:/admins/affairs";
+    }
+    
+    @GetMapping("/affairs/{id}")
+    public String updateAffairView(Model model, @PathVariable(value = "id") int id) {
+        Affair a = this.affairSevice.getAffairById(id);
+        a.getAccountId().setPassword(null);
+        model.addAttribute("affair", a);
+        model.addAttribute("faculties", this.facultyService.getFaculties(""));
+        
+        return "update-affair";
+    }
+    
+    @PostMapping("/affairs/{id}")
+    public String updateAffair(@ModelAttribute("affair") @Valid Affair affair, 
+                          BindingResult result,
+                          HttpServletRequest request,
+                          Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("faculties", this.facultyService.getFaculties(""));
+            System.err.println(result.getAllErrors());
+            return "update-affair";
+        }
+
+        try {
+            this.affairSevice.addOrUpdate(affair);
+        } catch (Exception e) {
+            model.addAttribute("faculties", this.facultyService.getFaculties(""));
+            System.err.println(e.getMessage());
+            return "update-affair";
+        }
+
+        return "redirect:/admins/affairs";
     }
 }

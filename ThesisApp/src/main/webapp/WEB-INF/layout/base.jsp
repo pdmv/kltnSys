@@ -18,7 +18,7 @@
     </head>
     <body>
         <title:insertAttribute name="header"/>
-        <section class="container">
+        <section class="container-fluid" style="max-width: 80%">
             <title:insertAttribute name="content"/>
         </section>
         <title:insertAttribute name="footer"/>

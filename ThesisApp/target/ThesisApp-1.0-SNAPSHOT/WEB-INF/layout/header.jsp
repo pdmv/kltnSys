@@ -49,6 +49,9 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li>
+                                    <a class="dropdown-item" href="<c:url value="/admins/affairs" />">Giáo vụ</a>
+                                </li>
+                                <li>
                                     <a class="dropdown-item" href="<c:url value="/admins" />">Quản trị viên</a>
                                 </li>
                             </ul>

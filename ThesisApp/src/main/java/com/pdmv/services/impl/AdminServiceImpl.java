@@ -9,6 +9,7 @@ import com.pdmv.pojo.Admin;
 import com.pdmv.repositories.AdminRepository;
 import com.pdmv.services.AccountService;
 import com.pdmv.services.AdminService;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<Admin> getAdmins(Map<String, String> params) {
+        if (params == null) {
+            params = new HashMap<>();
+        }
         return this.adminRepo.getAdmins(params);
     }
 
