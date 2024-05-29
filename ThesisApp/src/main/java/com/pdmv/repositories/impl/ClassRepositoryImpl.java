@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.hibernate.Session;
@@ -55,6 +56,9 @@ public class ClassRepositoryImpl implements ClassRepository {
         CriteriaQuery<Class> criteriaQuery = criteriaBuilder.createQuery(Class.class);
         Root<Class> root = criteriaQuery.from(Class.class);
 
+        root.fetch("facultyId", JoinType.LEFT);
+        root.fetch("majorId", JoinType.LEFT);
+
         List<Predicate> predicates = new ArrayList<>();
 
         String type = params.getOrDefault("type", "");
@@ -65,23 +69,24 @@ public class ClassRepositoryImpl implements ClassRepository {
                 case "faculty":
                     try {
                         int facultyId = Integer.parseInt(kw);
-                        predicates.add(criteriaBuilder.equal(root.get("facultyId"), facultyId));
+                        predicates.add(criteriaBuilder.equal(root.get("facultyId").get("id"), facultyId));
                     } catch (NumberFormatException e) {
                         return new ArrayList<>();
-                    }   break;
+                    }
+                    break;
                 case "name":
                     if (!kw.isBlank()) {
-                        predicates.add(criteriaBuilder.or(
-                                criteriaBuilder.like(root.get("name"), "%" + kw + "%")
-                        ));
-                    }   break;
+                        predicates.add(criteriaBuilder.like(root.get("name"), "%" + kw + "%"));
+                    }
+                    break;
                 case "major":
                     try {
                         int majorId = Integer.parseInt(kw);
-                        predicates.add(criteriaBuilder.equal(root.get("majorId"), majorId));
+                        predicates.add(criteriaBuilder.equal(root.get("majorId").get("id"), majorId));
                     } catch (NumberFormatException e) {
                         return new ArrayList<>();
-                    }   break;
+                    }
+                    break;
                 default:
                     break;
             }

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.hibernate.Session;
@@ -54,25 +55,30 @@ public class MajorRepositoryImpl implements MajorRepositoty {
         CriteriaQuery<Major> criteriaQuery = criteriaBuilder.createQuery(Major.class);
         Root<Major> root = criteriaQuery.from(Major.class);
 
+        root.fetch("facultyId", JoinType.LEFT);
+
         List<Predicate> predicates = new ArrayList<>();
 
         String type = params.getOrDefault("type", "");
         String kw = params.getOrDefault("kw", "");
 
         if (!type.isBlank()) {
-            if (type.equals("faculty")) {
-                try {
-                    int facultyId = Integer.parseInt(kw);
-                    predicates.add(criteriaBuilder.equal(root.get("facultyId"), facultyId));
-                } catch (NumberFormatException e) {
-                    return new ArrayList<>();
-                }
-            } else if (type.equals("name")) {
-                if (!kw.isBlank()) {
-                    predicates.add(criteriaBuilder.or(
-                        criteriaBuilder.like(root.get("name"), "%" + kw + "%")
-                    ));
-                }
+            switch (type) {
+                case "faculty":
+                    try {
+                        int facultyId = Integer.parseInt(kw);
+                        predicates.add(criteriaBuilder.equal(root.get("facultyId").get("id"), facultyId));
+                    } catch (NumberFormatException e) {
+                        return new ArrayList<>();
+                    }
+                    break;
+                case "name":
+                    if (!kw.isBlank()) {
+                        predicates.add(criteriaBuilder.like(root.get("name"), "%" + kw + "%"));
+                    }
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -83,6 +89,5 @@ public class MajorRepositoryImpl implements MajorRepositoty {
         Query<Major> query = s.createQuery(criteriaQuery);
         return query.getResultList();
     }
-
-    
+ 
 }

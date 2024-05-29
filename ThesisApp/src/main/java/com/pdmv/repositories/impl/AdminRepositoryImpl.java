@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.hibernate.Session;
@@ -46,7 +47,7 @@ public class AdminRepositoryImpl implements AdminRepository {
         CriteriaBuilder b = s.getCriteriaBuilder();
         CriteriaQuery<Admin> q = b.createQuery(Admin.class);
         Root<Admin> r = q.from(Admin.class);
-
+        
         List<Predicate> predicates = new ArrayList<>();
 
         String type = params.getOrDefault("type", "");
