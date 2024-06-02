@@ -96,7 +96,7 @@
                 <div class="card-body text-center">
                     <i class="fas fa-user-shield fa-3x mb-3"></i>
                     <h5 class="card-title">Quản trị viên</h5>
-                    <p class="card-text">Quản lý các quản trị viên hệ thống.</p>
+                    <p class="card-text">Quản lý các quản trị viên.</p>
                     <a href="<c:url value='/admins' />" class="btn btn-outline-dark">Truy cập</a>
                 </div>
             </div>

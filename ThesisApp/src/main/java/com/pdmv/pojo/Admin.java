@@ -4,6 +4,9 @@
  */
 package com.pdmv.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.pdmv.dto.AccountDTO;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -92,6 +95,7 @@ public class Admin implements Serializable {
     private Boolean active;
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     @OneToOne
+    @JsonIgnore
     private Account accountId;
 
     public Admin() {
@@ -231,5 +235,20 @@ public class Admin implements Serializable {
     @PreUpdate
     public void preUpdate() {
         updatedDate = new Date();
+    }
+    
+    @JsonProperty("account") 
+    public AccountDTO getAccountInfo() {
+        if (accountId != null) {
+            AccountDTO accountDTO = new AccountDTO();
+            
+            accountDTO.setId(accountId.getId());
+            accountDTO.setUsername(accountId.getUsername());
+            accountDTO.setAvatar(accountId.getAvatar());
+            accountDTO.setRole(accountId.getRole());
+            
+            return accountDTO;
+        }
+        return null;
     }
 }

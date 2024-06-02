@@ -9,9 +9,9 @@ import com.pdmv.repositories.AdminRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.hibernate.Session;
@@ -80,5 +80,19 @@ public class AdminRepositoryImpl implements AdminRepository {
     public Admin getAdminById(int id) {
         Session s = this.factory.getObject().getCurrentSession();
         return (Admin) s.get(Admin.class, id);
+    }
+
+    @Override
+    public Admin getAdminByAccountId(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        
+        Query q = s.createQuery("FROM Admin WHERE accountId.id = :accountId");
+        q.setParameter("accountId", id);
+
+        try {
+            return (Admin) q.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 }

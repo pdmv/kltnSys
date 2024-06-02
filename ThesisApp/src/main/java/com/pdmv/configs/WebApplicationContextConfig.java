@@ -28,7 +28,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
     "com.pdmv.controllers",
     "com.pdmv.repositories",
     "com.pdmv.services",
-    "com.pdmv.components"
+    "com.pdmv.components",
 })
 public class WebApplicationContextConfig implements WebMvcConfigurer {
     @Override

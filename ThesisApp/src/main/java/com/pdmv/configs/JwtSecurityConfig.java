@@ -70,9 +70,9 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
 //        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/**/comments/").permitAll();
         http.antMatcher("/api/**").httpBasic().authenticationEntryPoint(restServicesEntryPoint()).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/api/**").access("hasRole('ADMIN') or hasRole('STUDENT') or hasRole('AFFAIR') or hasRole('LECTURER')")
-                .antMatchers(HttpMethod.POST, "/api/**").access("hasRole('ADMIN') or hasRole('STUDENT') or hasRole('AFFAIR') or hasRole('LECTURER')")
-                .antMatchers(HttpMethod.DELETE, "/api/**").access("hasRole('ADMIN') or hasRole('STUDENT') or hasRole('AFFAIR') or hasRole('LECTURER')").and()
+                .antMatchers(HttpMethod.GET, "/api/**").access("hasAuthority('ADMIN') or hasAuthority('STUDENT') or hasAuthority('AFFAIR') or hasAuthority('LECTURER')")
+                .antMatchers(HttpMethod.POST, "/api/**").access("hasAuthority('ADMIN') or hasAuthority('STUDENT') or hasAuthority('AFFAIR') or hasAuthority('LECTURER')")
+                .antMatchers(HttpMethod.DELETE, "/api/**").access("hasAuthority('ADMIN') or hasAuthority('STUDENT') or hasAuthority('AFFAIR') or hasAuthority('LECTURER')").and()
                 .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler());
     }

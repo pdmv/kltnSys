@@ -9,6 +9,7 @@ import com.pdmv.repositories.AffairRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
@@ -98,6 +99,19 @@ public class AffairRepositoryImpl implements AffairRepository {
     public Affair getAffairById(int id) {
         Session s = this.factory.getObject().getCurrentSession();
         return (Affair) s.get(Affair.class, id);
+    }
+
+    @Override
+    public Affair getAffairByAccountIf(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("From Affair WHERE accountId.id = :accountId");
+        q.setParameter("accountId", id);
+        
+        try {
+            return (Affair) q.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
     
 }

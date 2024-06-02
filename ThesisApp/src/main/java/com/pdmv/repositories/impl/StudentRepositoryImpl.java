@@ -9,6 +9,7 @@ import com.pdmv.repositories.StudentRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
@@ -106,6 +107,19 @@ public class StudentRepositoryImpl implements StudentRepository {
     public Student getStudentById(int id) {
         Session s = this.factory.getObject().getCurrentSession();
         return (Student) s.get(Student.class, id);
+    }
+
+    @Override
+    public Student getStudentByAccountId(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("FROM Student WHERE accountId.id = :accountId");
+        q.setParameter("accountId", id);
+
+        try {
+            return (Student) q.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
     
 }

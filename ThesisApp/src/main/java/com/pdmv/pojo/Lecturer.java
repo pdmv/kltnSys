@@ -4,6 +4,9 @@
  */
 package com.pdmv.pojo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.pdmv.dto.AccountDTO;
+import com.pdmv.dto.FacultyDTO;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -302,5 +305,33 @@ public class Lecturer implements Serializable {
     @PreUpdate
     public void preUpdate() {
         updatedDate = new Date();
+    }
+    
+    @JsonProperty("account") 
+    public AccountDTO getAccountInfo() {
+        if (accountId != null) {
+            AccountDTO accountDTO = new AccountDTO();
+            
+            accountDTO.setId(accountId.getId());
+            accountDTO.setUsername(accountId.getUsername());
+            accountDTO.setAvatar(accountId.getAvatar());
+            accountDTO.setRole(accountId.getRole());
+            
+            return accountDTO;
+        }
+        return null;
+    }
+    
+    @JsonProperty("faculty") 
+    public FacultyDTO getFacultyInfo() {
+        if (facultyId != null) {
+            FacultyDTO facultyDTO = new FacultyDTO();
+            
+            facultyDTO.setId(facultyId.getId());
+            facultyDTO.setName(facultyId.getName());
+            
+            return facultyDTO;
+        }
+        return null;
     }
 }

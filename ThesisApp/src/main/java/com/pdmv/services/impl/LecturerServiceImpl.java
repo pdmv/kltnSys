@@ -52,5 +52,10 @@ public class LecturerServiceImpl implements LecturerService {
     public Lecturer getLecturerById(int id) {
         return this.lecturerRepo.getLecturerById(id);
     }
+
+    @Override
+    public Lecturer getLecturerByAccountId(int id) {
+        return this.lecturerRepo.getLecturerByAccountId(id);
+    }
     
 }

@@ -9,6 +9,7 @@
         <put-attribute name="footer" value="/WEB-INF/layout/footer.jsp" />
         <put-attribute name="content" value="" />
     </definition>
+    
     <definition name="index" extends="baseLayout">
         <put-attribute name="title" value="Trang chủ" />
         <put-attribute name="content" value="/WEB-INF/pages/index.jsp" />

@@ -16,4 +16,5 @@ public interface LecturerService {
     void addOrUpdate(Lecturer lecturer);
     List<Lecturer> getLecturers(Map<String, String> params);
     Lecturer getLecturerById(int id);
+    Lecturer getLecturerByAccountId(int id);
 }

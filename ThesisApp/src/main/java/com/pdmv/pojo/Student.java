@@ -4,6 +4,12 @@
  */
 package com.pdmv.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.pdmv.dto.AccountDTO;
+import com.pdmv.dto.ClassDTO;
+import com.pdmv.dto.FacultyDTO;
+import com.pdmv.dto.MajorDTO;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -96,17 +102,22 @@ public class Student implements Serializable {
     private Boolean active;
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     @OneToOne
+    @JsonIgnore
     private Account accountId;
     @JoinColumn(name = "class_id", referencedColumnName = "id")
     @ManyToOne
+    @JsonIgnore
     private Class classId;
     @JoinColumn(name = "faculty_id", referencedColumnName = "id")
     @ManyToOne
+    @JsonIgnore
     private Faculty facultyId;
     @JoinColumn(name = "major_id", referencedColumnName = "id")
     @ManyToOne
+    @JsonIgnore
     private Major majorId;
     @OneToMany(mappedBy = "studentId")
+    @JsonIgnore
     private Set<ThesisStudent> thesisStudentSet;
 
     public Student() {
@@ -279,5 +290,59 @@ public class Student implements Serializable {
     @PreUpdate
     public void preUpdate() {
         updatedDate = new Date();
+    }
+    
+    @JsonProperty("account") 
+    public AccountDTO getAccountInfo() {
+        if (accountId != null) {
+            AccountDTO accountDTO = new AccountDTO();
+            
+            accountDTO.setId(accountId.getId());
+            accountDTO.setUsername(accountId.getUsername());
+            accountDTO.setAvatar(accountId.getAvatar());
+            accountDTO.setRole(accountId.getRole());
+            
+            return accountDTO;
+        }
+        return null;
+    }
+    
+    @JsonProperty("class") 
+    public ClassDTO getClassInfo() {
+        if (classId != null) {
+            ClassDTO classDTO = new ClassDTO();
+            
+            classDTO.setId(classId.getId());
+            classDTO.setName(classId.getName());
+            
+            return classDTO;
+        }
+        return null;
+    }
+    
+    @JsonProperty("faculty") 
+    public FacultyDTO getFacultyInfo() {
+        if (facultyId != null) {
+            FacultyDTO facultyDTO = new FacultyDTO();
+            
+            facultyDTO.setId(facultyId.getId());
+            facultyDTO.setName(facultyId.getName());
+            
+            return facultyDTO;
+        }
+        return null;
+    }
+    
+    @JsonProperty("major") 
+    public MajorDTO getMajorInfo() {
+        if (majorId != null) {
+            MajorDTO majorDTO = new MajorDTO();
+            
+            majorDTO.setId(majorId.getId());
+            majorDTO.setName(majorId.getName());
+                    
+            return majorDTO; 
+        }
+        return null;
     }
 }

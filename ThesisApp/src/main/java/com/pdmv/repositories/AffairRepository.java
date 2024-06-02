@@ -15,5 +15,6 @@ import java.util.Map;
 public interface AffairRepository {
     void addOrUpdate(Affair affair);
     List<Affair> getAffairs(Map<String, String> params);
-    Affair getAffairById(int id); 
+    Affair getAffairById(int id);
+    Affair getAffairByAccountIf(int id);
 }

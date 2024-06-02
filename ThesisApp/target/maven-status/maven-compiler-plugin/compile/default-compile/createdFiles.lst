@@ -1,5 +1,7 @@
+com/pdmv/dto/MajorDTO.class
 com/pdmv/pojo/Lecturer_.class
 com/pdmv/repositories/impl/StudentRepositoryImpl.class
+com/pdmv/dto/FacultyDTO.class
 com/pdmv/repositories/AccountRepository.class
 com/pdmv/services/impl/FacultyServiceImpl.class
 com/pdmv/pojo/Lecturer.class
@@ -20,6 +22,7 @@ com/pdmv/services/SchoolYearService.class
 com/pdmv/repositories/impl/AdminRepositoryImpl.class
 com/pdmv/pojo/Criterion_.class
 com/pdmv/pojo/SchoolYear_.class
+com/pdmv/dto/AccountDTO.class
 com/pdmv/controllers/AdminController.class
 com/pdmv/repositories/ClassRepository.class
 com/pdmv/pojo/CouncilLecturer.class
@@ -79,6 +82,7 @@ com/pdmv/services/FacultyService.class
 com/pdmv/services/AdminService.class
 com/pdmv/pojo/Student_.class
 com/pdmv/services/AffairService.class
+com/pdmv/dto/ClassDTO.class
 com/pdmv/repositories/MajorRepositoty.class
 com/pdmv/components/StringToFacultyConverter.class
 com/pdmv/pojo/Class_.class

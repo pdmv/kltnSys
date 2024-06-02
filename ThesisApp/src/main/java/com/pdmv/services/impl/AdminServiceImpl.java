@@ -52,5 +52,10 @@ public class AdminServiceImpl implements AdminService {
     public Admin getAdminById(int id) {
         return this.adminRepo.getAdminById(id);
     }
+
+    @Override
+    public Admin getAdminByAccountId(int id) {
+        return this.adminRepo.getAdminByAccountId(id);
+    }
     
 }

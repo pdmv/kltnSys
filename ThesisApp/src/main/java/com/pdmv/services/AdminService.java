@@ -16,4 +16,5 @@ public interface AdminService {
     void addOrUpdate(Admin admin);
     List<Admin> getAdmins(Map<String, String> params);
     Admin getAdminById(int id);
+    Admin getAdminByAccountId(int id);
 }

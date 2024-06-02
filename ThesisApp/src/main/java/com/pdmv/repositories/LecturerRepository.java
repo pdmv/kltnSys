@@ -15,5 +15,6 @@ import java.util.Map;
 public interface LecturerRepository {
     void addOrUpdate(Lecturer lecturer);
     List<Lecturer> getLecturers(Map<String, String> params);
-    Lecturer getLecturerById(int id); 
+    Lecturer getLecturerById(int id);
+    Lecturer getLecturerByAccountId(int id); 
 }

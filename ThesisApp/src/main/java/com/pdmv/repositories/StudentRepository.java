@@ -16,4 +16,5 @@ public interface StudentRepository {
     void addOrUpdate(Student student);
     List<Student> getStudents(Map<String, String> params);
     Student getStudentById(int id);
+    Student getStudentByAccountId(int id);
 }

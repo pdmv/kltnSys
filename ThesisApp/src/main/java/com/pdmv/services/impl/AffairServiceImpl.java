@@ -52,5 +52,10 @@ public class AffairServiceImpl implements AffairService {
     public Affair getAffairById(int id) {
         return this.affairRepo.getAffairById(id);
     }
+
+    @Override
+    public Affair getAffairByAccountId(int id) {
+        return this.affairRepo.getAffairByAccountIf(id);
+    }
     
 }

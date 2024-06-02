@@ -52,5 +52,10 @@ public class StudentServiceImpl implements StudentService {
     public Student getStudentById(int id) {
         return this.studentRepo.getStudentById(id);
     }
+
+    @Override
+    public Student getStudentByAccountId(int id) {
+        return this.studentRepo.getStudentByAccountId(id);
+    }
     
 }

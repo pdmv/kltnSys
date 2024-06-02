@@ -9,6 +9,7 @@ import com.pdmv.repositories.LecturerRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
@@ -98,6 +99,19 @@ public class LecturerRepositoryImpl implements LecturerRepository {
     public Lecturer getLecturerById(int id) {
         Session s = this.factory.getObject().getCurrentSession();
         return (Lecturer) s.get(Lecturer.class, id);
+    }
+
+    @Override
+    public Lecturer getLecturerByAccountId(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("FROM Lecturer WHERE accountId.id = :accountId");
+        q.setParameter("accountId", id);
+
+        try {
+            return (Lecturer) q.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
     
 }

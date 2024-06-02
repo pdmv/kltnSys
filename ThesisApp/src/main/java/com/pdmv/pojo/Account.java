@@ -22,6 +22,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -55,6 +56,7 @@ public class Account implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
+    @Pattern(regexp = "^[a-z]+$", message = "Tên đăng nhập chỉ được chứa các ký tự thường và không có khoảng trắng.")
     @Column(name = "username")
     private String username;
     @Basic(optional = false)

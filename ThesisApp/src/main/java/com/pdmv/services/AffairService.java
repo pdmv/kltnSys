@@ -16,4 +16,5 @@ public interface AffairService {
     void addOrUpdate(Affair affair);
     List<Affair> getAffairs(Map<String, String> params);
     Affair getAffairById(int id);
+    Affair getAffairByAccountId(int id);
 }

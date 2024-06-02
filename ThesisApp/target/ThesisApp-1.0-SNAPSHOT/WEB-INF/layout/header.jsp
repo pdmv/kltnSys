@@ -64,7 +64,7 @@
                         </li>
                         <li class="nav-item"><a class="nav-link" href="<c:url value="/logout" />">Đăng xuất</a></li>
                     </ul>
-                        <span class="navbar-text"><a class="nav-link" href="<c:url value="/" />">Chào <strong>${pageContext.request.userPrincipal.name}</strong>!</a></span>
+                    <span class="navbar-text"><a class="nav-link" href="<c:url value="/" />">Chào <strong>${pageContext.request.userPrincipal.name}</strong>!</a></span>
                     <a class="navbar-brand" href="#">
                         <img src="${userAvatar}" alt="user-avatar" style="width:40px;" class="rounded-pill"> 
                     </a>

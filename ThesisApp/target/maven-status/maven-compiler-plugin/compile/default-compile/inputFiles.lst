@@ -2,10 +2,12 @@
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/configs/JwtSecurityConfig.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/pojo/SchoolYear.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/pojo/Thesis.java
+/Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/dto/AccountDTO.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/pojo/Class.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/components/StringToMajorConverter.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/services/impl/StudentServiceImpl.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/repositories/FacultyRepository.java
+/Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/dto/MajorDTO.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/services/impl/AdminServiceImpl.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/repositories/StudentRepository.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/repositories/MajorRepositoty.java
@@ -32,6 +34,7 @@
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/filters/RestAuthenticationEntryPoint.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/pojo/CouncilCriterion.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/controllers/ApiAccountController.java
+/Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/dto/FacultyDTO.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/pojo/CouncilLecturer.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/services/impl/AccountServiceImpl.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/repositories/AccountRepository.java
@@ -39,6 +42,7 @@
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/repositories/SchoolYearRepository.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/filters/CustomAccessDeniedHandler.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/repositories/impl/SchoolYearRepositoryImpl.java
+/Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/dto/ClassDTO.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/components/StringToClassConverter.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/services/impl/FacultyServiceImpl.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/pojo/Major.java
