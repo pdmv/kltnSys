@@ -8,7 +8,7 @@ const getGreeting = () => {
   const currentHour = new Date().getHours();
   if (currentHour < 12) {
     return "Buổi sáng năng động!";
-  } else if(currentHour < 13) {
+  } else if (currentHour < 13) {
     return "Buổi trưa thư giản!";
   } else if (currentHour < 18) {
     return "Buổi chiều vui vẻ!";
@@ -27,7 +27,7 @@ const Header = () => {
   };
 
   return (
-    <Navbar expand="lg" className="bg-body-tertiary" style={{ padding: '8px 20px' }}>
+    <Navbar expand="lg" className="bg-body-tertiary" style={{ padding: '8px 20px', height: '77px' }}>
       <Navbar.Brand as={Link} to="/">
         Thesis Management System
       </Navbar.Brand>
@@ -58,7 +58,7 @@ const Header = () => {
               <small>{getGreeting()}</small>
               <strong>{user.lastName} {user.firstName}</strong>
             </div>
-            <Image src={user.account.avatar} alt="user-avatar" style={{ width: '50px' }} className="rounded-pill ms-2" />
+            <Image src={user.account.avatar} alt="user-avatar" style={{ width: '40px' }} className="rounded-pill ms-2" />
           </Navbar.Text>
         )}
       </Navbar.Collapse>
