@@ -51,13 +51,17 @@ public class ApiAccountController {
     
     @PostMapping("/login/")
     public ResponseEntity<String> login(@RequestBody Account account) {
+        if (account.getUsername() == null || account.getPassword() == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        
         if (this.accountService.authAccount(account.getUsername(), account.getPassword()) == true) {
             String token = this.jwtService.generateTokenLogin(account.getUsername());
             
             return new ResponseEntity<>(token, HttpStatus.OK);
         }
         
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
     
     @GetMapping(path = "/current-user/", produces = MediaType.APPLICATION_JSON_VALUE)

@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { UserContext } from "../../configs/UserContext";
-import { Form } from "react-bootstrap";
+import { Alert, Form } from "react-bootstrap";
 import { Button, Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import APIs, { authApi, endpoints } from "../../configs/APIs";
@@ -14,6 +14,7 @@ const Login = () => {
   });
   const { dispatch } = useContext(UserContext);
   const nav = useNavigate();
+  const [error, setError] = useState('');
 
   const change = (event, field) => {
     setUser(current => {
@@ -34,7 +35,11 @@ const Login = () => {
 
       nav('/');
     } catch (error) {
-      console.error(error);
+      if (error.response && error.response.status === 401) {
+        setError('Tên đăng nhập hoặc mật khẩu không đúng!');
+      } else {
+        setError('Đã xảy ra lỗi, vui lòng thử lại sau!');
+      }
     }
   };
 
@@ -46,16 +51,20 @@ const Login = () => {
       <Row className="justify-content-md-center">
         <Col md={4}>
           <h2 className="text-center mt-3 mb-4">Đăng nhập</h2>
+          {error &&
+            <Alert variant="danger">
+              {error}
+            </Alert>}
           <Form onSubmit={handleSubmit}>
             <Form.Group className="form-floating mb-3">
               <Form.Control
                 type="text"
-                placeholder="Nhập email"
+                placeholder="Tên đăng nhập"
                 value={user.username}
                 onChange={(e) => change(e, "username")}
                 id="floatingEmail"
               />
-              <Form.Label htmlFor="floatingEmail">Tên người dùng</Form.Label>
+              <Form.Label htmlFor="floatingEmail">Tên đăng nhập</Form.Label>
             </Form.Group>
 
             <Form.Group className="form-floating mb-3">
