@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author phamdominhvuong
  */
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api")
 @CrossOrigin
 public class ApiAccountController {
     @Autowired

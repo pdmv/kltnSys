@@ -16,5 +16,5 @@ public interface AffairRepository {
     void addOrUpdate(Affair affair);
     List<Affair> getAffairs(Map<String, String> params);
     Affair getAffairById(int id);
-    Affair getAffairByAccountIf(int id);
+    Affair getAffairByAccountId(int id);
 }

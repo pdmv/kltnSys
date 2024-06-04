@@ -7,8 +7,11 @@ package com.pdmv.repositories.impl;
 import com.pdmv.pojo.Lecturer;
 import com.pdmv.repositories.LecturerRepository;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -113,5 +116,5 @@ public class LecturerRepositoryImpl implements LecturerRepository {
             return null;
         }
     }
-    
+
 }

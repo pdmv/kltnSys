@@ -14,6 +14,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class FacultyDTO {
-    private int id;
+    private Integer id;
     private String name;
 }

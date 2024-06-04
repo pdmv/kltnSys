@@ -7,6 +7,7 @@ package com.pdmv.repositories;
 import com.pdmv.pojo.Lecturer;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -16,5 +17,5 @@ public interface LecturerRepository {
     void addOrUpdate(Lecturer lecturer);
     List<Lecturer> getLecturers(Map<String, String> params);
     Lecturer getLecturerById(int id);
-    Lecturer getLecturerByAccountId(int id); 
+    Lecturer getLecturerByAccountId(int id);
 }

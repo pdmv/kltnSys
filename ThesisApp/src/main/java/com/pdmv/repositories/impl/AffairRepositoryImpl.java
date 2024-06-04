@@ -102,7 +102,7 @@ public class AffairRepositoryImpl implements AffairRepository {
     }
 
     @Override
-    public Affair getAffairByAccountIf(int id) {
+    public Affair getAffairByAccountId(int id) {
         Session s = this.factory.getObject().getCurrentSession();
         Query q = s.createQuery("From Affair WHERE accountId.id = :accountId");
         q.setParameter("accountId", id);

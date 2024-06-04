@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -68,12 +69,15 @@ public class Thesis implements Serializable {
     private String reportFile;
     @Column(name = "start_date")
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date startDate;
     @Column(name = "end_date")
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date endDate;
     @Column(name = "exp_date")
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date expDate;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "avg_score")
@@ -91,12 +95,13 @@ public class Thesis implements Serializable {
     private Date createdDate;
     @Column(name = "updated_date")
     @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatedDate;
     @Column(name = "active")
     private Boolean active;
     @OneToMany(mappedBy = "thesisId")
     private Set<Score> scoreSet;
-    @OneToMany(mappedBy = "thesisId")
+    @OneToMany(mappedBy = "thesisId", cascade = CascadeType.ALL)
     private Set<ThesisLecturer> thesisLecturerSet;
     @JoinColumn(name = "affair_id", referencedColumnName = "id")
     @ManyToOne
@@ -107,7 +112,7 @@ public class Thesis implements Serializable {
     @JoinColumn(name = "school_year_id", referencedColumnName = "id")
     @ManyToOne
     private SchoolYear schoolYearId;
-    @OneToMany(mappedBy = "thesisId")
+    @OneToMany(mappedBy = "thesisId", cascade = CascadeType.ALL)
     private Set<ThesisStudent> thesisStudentSet;
 
     public Thesis() {
