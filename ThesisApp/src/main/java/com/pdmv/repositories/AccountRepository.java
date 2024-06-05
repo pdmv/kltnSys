@@ -15,4 +15,5 @@ public interface AccountRepository {
     Account getAccountByUsername(String username);
     Account getAccountById(int id);
     boolean authAccount(String username, String password);
+    boolean changePassword(String username, String oldPassword, String newPassword);
 }

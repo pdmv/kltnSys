@@ -138,7 +138,6 @@ CREATE TABLE criterion (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description TEXT DEFAULT NULL,
-    weight FLOAT DEFAULT NULL,
     affair_id INT,
     created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -213,6 +212,7 @@ CREATE TABLE council_criterion (
     id INT AUTO_INCREMENT PRIMARY KEY,
     council_id INT,
     criterion_id INT,
+	weight FLOAT DEFAULT NULL,
     FOREIGN KEY (council_id) REFERENCES council(id),
     FOREIGN KEY (criterion_id) REFERENCES criterion(id)
 );

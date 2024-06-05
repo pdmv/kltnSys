@@ -41,7 +41,6 @@ import org.springframework.format.annotation.DateTimeFormat;
     @NamedQuery(name = "Criterion.findAll", query = "SELECT c FROM Criterion c"),
     @NamedQuery(name = "Criterion.findById", query = "SELECT c FROM Criterion c WHERE c.id = :id"),
     @NamedQuery(name = "Criterion.findByName", query = "SELECT c FROM Criterion c WHERE c.name = :name"),
-    @NamedQuery(name = "Criterion.findByWeight", query = "SELECT c FROM Criterion c WHERE c.weight = :weight"),
     @NamedQuery(name = "Criterion.findByCreatedDate", query = "SELECT c FROM Criterion c WHERE c.createdDate = :createdDate"),
     @NamedQuery(name = "Criterion.findByUpdatedDate", query = "SELECT c FROM Criterion c WHERE c.updatedDate = :updatedDate"),
     @NamedQuery(name = "Criterion.findByActive", query = "SELECT c FROM Criterion c WHERE c.active = :active")})
@@ -62,9 +61,6 @@ public class Criterion implements Serializable {
     @Size(max = 65535)
     @Column(name = "description")
     private String description;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "weight")
-    private Float weight;
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -116,14 +112,6 @@ public class Criterion implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Float getWeight() {
-        return weight;
-    }
-
-    public void setWeight(Float weight) {
-        this.weight = weight;
     }
 
     public Date getCreatedDate() {

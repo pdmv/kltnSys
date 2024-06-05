@@ -27,7 +27,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "CouncilCriterion.findAll", query = "SELECT c FROM CouncilCriterion c"),
-    @NamedQuery(name = "CouncilCriterion.findById", query = "SELECT c FROM CouncilCriterion c WHERE c.id = :id")})
+    @NamedQuery(name = "CouncilCriterion.findById", query = "SELECT c FROM CouncilCriterion c WHERE c.id = :id"),
+    @NamedQuery(name = "CouncilCriterion.findByWeight", query = "SELECT c FROM CouncilCriterion c WHERE c.weight = :weight")})
 public class CouncilCriterion implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,6 +43,9 @@ public class CouncilCriterion implements Serializable {
     @JoinColumn(name = "criterion_id", referencedColumnName = "id")
     @ManyToOne
     private Criterion criterionId;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "weight")
+    private Float weight;
 
     public CouncilCriterion() {
     }
@@ -72,6 +76,14 @@ public class CouncilCriterion implements Serializable {
 
     public void setCriterionId(Criterion criterionId) {
         this.criterionId = criterionId;
+    }
+    
+    public Float getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Float weight) {
+        this.weight = weight;
     }
 
     @Override

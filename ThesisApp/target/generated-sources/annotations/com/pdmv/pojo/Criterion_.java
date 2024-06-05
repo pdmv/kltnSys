@@ -9,7 +9,7 @@ import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.12.v20230209-rNA", date="2024-06-05T10:14:50")
+@Generated(value="EclipseLink-2.7.12.v20230209-rNA", date="2024-06-05T15:30:12")
 @StaticMetamodel(Criterion.class)
 public class Criterion_ { 
 
@@ -17,7 +17,6 @@ public class Criterion_ {
     public static volatile SingularAttribute<Criterion, Date> createdDate;
     public static volatile SingularAttribute<Criterion, String> name;
     public static volatile SingularAttribute<Criterion, String> description;
-    public static volatile SingularAttribute<Criterion, Float> weight;
     public static volatile SingularAttribute<Criterion, Boolean> active;
     public static volatile SingularAttribute<Criterion, Integer> id;
     public static volatile SingularAttribute<Criterion, Date> updatedDate;

@@ -117,4 +117,9 @@ public class AccountServiceImpl implements AccountService {
         
         return url.substring(lastSlashIndex + 1, lastDotIndex);
     }
+
+    @Override
+    public boolean changePassword(String username, String oldPassword, String newPassword) {
+        return this.accountRepo.changePassword(username, oldPassword, newPassword);
+    }
 }

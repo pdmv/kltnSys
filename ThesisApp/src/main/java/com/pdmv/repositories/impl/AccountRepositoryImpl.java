@@ -58,5 +58,19 @@ public class AccountRepositoryImpl implements AccountRepository {
         Session s = this.factory.getObject().getCurrentSession();
         return (Account) s.get(Account.class, id);
     }
+
+    @Override
+    public boolean changePassword(String username, String oldPassword, String newPassword) {
+        Session s = this.factory.getObject().getCurrentSession();
+        
+        Account acc = this.getAccountByUsername(username);
+        if (acc != null && this.authAccount(username, oldPassword)) {
+            acc.setPassword(this.passwordEncoder.encode(newPassword));
+            s.update(acc);
+            return true;
+        }
+        
+        return false;
+    }
     
 }
