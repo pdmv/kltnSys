@@ -5,6 +5,7 @@
 package com.pdmv.services;
 
 import com.pdmv.dto.ThesisDTO;
+import com.pdmv.dto.ThesisDetailsDTO;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +14,7 @@ import java.util.Map;
  * @author phamdominhvuong
  */
 public interface ThesisService {
-    void addOrUpdate(ThesisDTO thesis);
-    ThesisDTO getThesisById(int id);
+    void addOrUpdate(ThesisDetailsDTO thesis);
+    ThesisDetailsDTO getThesisById(int id);
     List<ThesisDTO> getLists(Map<String, String> params);
 }

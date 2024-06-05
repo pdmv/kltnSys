@@ -8,7 +8,7 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.12.v20230209-rNA", date="2024-06-05T01:57:00")
+@Generated(value="EclipseLink-2.7.12.v20230209-rNA", date="2024-06-05T10:14:50")
 @StaticMetamodel(Score.class)
 public class Score_ { 
 

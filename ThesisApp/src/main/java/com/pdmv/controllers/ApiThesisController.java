@@ -5,9 +5,12 @@
 package com.pdmv.controllers;
 
 import com.pdmv.dto.ThesisDTO;
+import com.pdmv.dto.ThesisDetailsDTO;
 import com.pdmv.dto.ThesisLecturerDTO;
 import com.pdmv.dto.ThesisStudentDTO;
 import com.pdmv.services.ThesisService;
+import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -34,7 +38,7 @@ public class ApiThesisController {
     @PostMapping(path = "/thesis/", produces = {
         MediaType.APPLICATION_JSON_VALUE
     })
-    public ResponseEntity<ThesisDTO> create(@RequestBody ThesisDTO thesisDTO) {
+    public ResponseEntity<ThesisDetailsDTO> create(@RequestBody ThesisDetailsDTO thesisDTO) {
         
         try {
             for (ThesisLecturerDTO lecturer : thesisDTO.getThesisLecturerSet()) {
@@ -59,13 +63,26 @@ public class ApiThesisController {
     @GetMapping(path = "/thesis/{id}/", produces = {
         MediaType.APPLICATION_JSON_VALUE
     })
-    public ResponseEntity<ThesisDTO> get(@PathVariable(value = "id") Integer id) {
-        ThesisDTO thesisDTO = this.thesisService.getThesisById(id);
+    public ResponseEntity<ThesisDetailsDTO> retrieve(@PathVariable(value = "id") Integer id) {
+        ThesisDetailsDTO thesisDTO = this.thesisService.getThesisById(id);
 
         if (thesisDTO == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         return new ResponseEntity<>(thesisDTO, HttpStatus.OK);
+    }
+    
+    @GetMapping(path = "/thesis/", produces = {
+        MediaType.APPLICATION_JSON_VALUE
+    })
+    public ResponseEntity<List<ThesisDTO>> list(@RequestParam Map<String, String> params) {
+        List<ThesisDTO> list = this.thesisService.getLists(params);
+
+        if (list == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 }

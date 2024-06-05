@@ -84,6 +84,7 @@ com/pdmv/pojo/Score_.class
 com/pdmv/pojo/Admin_.class
 com/pdmv/repositories/impl/FacultyRepositoryImpl.class
 com/pdmv/pojo/Thesis_.class
+com/pdmv/dto/ThesisDetailsDTO.class
 com/pdmv/repositories/impl/ThesisRepositoryImpl.class
 com/pdmv/configs/JwtSecurityConfig.class
 com/pdmv/repositories/impl/MajorRepositoryImpl.class

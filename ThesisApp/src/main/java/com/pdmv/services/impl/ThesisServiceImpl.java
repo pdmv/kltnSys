@@ -6,6 +6,7 @@ package com.pdmv.services.impl;
 
 import com.cloudinary.Cloudinary;
 import com.pdmv.dto.ThesisDTO;
+import com.pdmv.dto.ThesisDetailsDTO;
 import com.pdmv.pojo.Account;
 import com.pdmv.pojo.Affair;
 import com.pdmv.repositories.AccountRepository;
@@ -14,6 +15,7 @@ import com.pdmv.repositories.ThesisRepository;
 import com.pdmv.services.ThesisService;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -81,7 +83,7 @@ public class ThesisServiceImpl implements ThesisService {
     
 
     @Override
-    public void addOrUpdate(ThesisDTO thesis) {
+    public void addOrUpdate(ThesisDetailsDTO thesis) {
         if (thesis.getAffairId() == null) {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             Account a = this.accountRepo.getAccountByUsername(authentication.getName());
@@ -94,7 +96,7 @@ public class ThesisServiceImpl implements ThesisService {
     }
 
     @Override
-    public ThesisDTO getThesisById(int id) {
+    public ThesisDetailsDTO getThesisById(int id) {
         return this.thesisRepo.getThesisById(id);
     }
 
