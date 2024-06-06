@@ -155,7 +155,7 @@ CREATE TABLE thesis (
     exp_date DATE DEFAULT NULL,
     avg_score FLOAT DEFAULT NULL,
     comment TEXT DEFAULT NULL,
-    status ENUM('in_progress', 'completed', 'canceled') DEFAULT 'in_progress',
+    status ENUM('in_progress', 'submitted', 'under_review', 'defended', 'canceled') DEFAULT 'in_progress',
     affair_id INT,
     critical_lecturer_id INT,
     school_year_id INT,

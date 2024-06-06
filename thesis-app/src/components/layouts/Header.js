@@ -6,15 +6,19 @@ import cookie from 'react-cookies'
 
 const getGreeting = () => {
   const currentHour = new Date().getHours();
-  if (currentHour < 12) {
+  if (currentHour <= 10) {
     return "Buổi sáng năng động!";
-  } else if (currentHour < 13) {
-    return "Buổi trưa thư giản!";
-  } else if (currentHour < 18) {
-    return "Buổi chiều vui vẻ!";
-  } else {
-    return "Buổi tối an lành!";
   }
+  if (currentHour <= 12) {
+    return "Buổi trưa thư giản!";
+  }
+  if (currentHour <= 18) {
+    return "Buổi chiều vui vẻ!";
+  }
+  if (currentHour <= 21) {
+    return "Buổi tối hạnh phúc!";
+  }
+  return "Đêm đã khuya rồi!";
 };
 
 const Header = () => {
@@ -36,6 +40,9 @@ const Header = () => {
         <Nav className="me-auto">
           <Link to="/" className="nav-link">Trang chủ</Link>
           {user ? <>
+            {user.account.role === 'AFFAIR' && (
+              <Link to="/thesis" className="nav-link">Khoá luận</Link>
+            )}
             <Link onClick={handleLogout} className="nav-link">Đăng xuất</Link>
           </> : <>
             <Link to="/login" className="nav-link">Đăng nhập</Link>

@@ -6,6 +6,8 @@ const BASE_URL = 'http://localhost:8080/ThesisApp/';
 export const endpoints = {
   'login': '/api/login/',
   'current-user': '/api/current-user/',
+  'thesis': '/api/thesis/',
+  'thesis-details': (id) =>  `/api/thesis/${id}/`,
 }
 
 export const authApi = () => {

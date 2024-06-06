@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import APIs, { authApi, endpoints } from "../../configs/APIs";
 import cookie from 'react-cookies';
 import { Helmet } from "react-helmet";
+import Title from "../common/Title";
 
 const Login = () => {
   const [user, setUser] = useState({
@@ -32,7 +33,7 @@ const Login = () => {
 
       let u = await authApi().get(endpoints["current-user"]);
       dispatch({ type: 'login', payload: u.data });
-
+      console.log(u.data);
       nav('/');
     } catch (error) {
       if (error.response && error.response.status === 401) {
@@ -50,7 +51,7 @@ const Login = () => {
       </Helmet>
       <Row className="justify-content-md-center">
         <Col md={4}>
-          <h2 className="text-center mt-3 mb-4">Đăng nhập</h2>
+          <Title title="Đăng nhập" />
           {error &&
             <Alert variant="danger">
               {error}

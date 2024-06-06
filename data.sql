@@ -24,10 +24,10 @@ DROP TABLE IF EXISTS `account`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `account` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `username` varchar(255) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `avatar` varchar(255) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
-  `role` enum('ADMIN','LECTURER','STUDENT','AFFAIR') COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
+  `role` enum('ADMIN','LECTURER','STUDENT','AFFAIR') CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
   `created_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `active` tinyint(1) DEFAULT '1',
@@ -42,7 +42,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES (1,'admin','$2a$10$PUqsQjbYOaGS3t98.LmcDuWqblrdC58pZFQVkfayxoRe4QT.oXg/a','https://res.cloudinary.com/dyuafq1hx/image/upload/v1716802738/b920ceyu6uoiix7g0h3c.jpg','ADMIN','2024-05-27 18:00:13','2024-05-27 18:01:16',1),(2,'admin2','$2a$10$a7ml30HaBOFLg2M8k4osTOpxPikbW4Ase6dQZe1r.uMNmenw5aWZC','https://res.cloudinary.com/dyuafq1hx/image/upload/v1716958768/hjodjwtoszmutscywdbw.png','ADMIN','2024-05-29 04:59:29','2024-05-29 04:59:29',1),(3,'stephen','$2a$10$7WuTRnOfKFrlYqPa8W3Mpu60VDuyRGP5h4Z8NYVwPHDAPI2oMYli2','https://res.cloudinary.com/dyuafq1hx/image/upload/v1716960626/o3hpru2levojjmnn7yhq.jpg','ADMIN','2024-05-29 05:30:27','2024-05-29 05:30:27',1),(4,'affair','$2a$10$9tbvrP2lKN2fR3O5weq5H.2gGGfHNYhaJFgDTIRodxCeTlsHPp/OS','https://res.cloudinary.com/dyuafq1hx/image/upload/v1716970174/i9zv1bsr9ik8rdioazea.jpg','AFFAIR','2024-05-29 08:09:35','2024-05-29 08:11:37',1),(5,'affair2','$2a$10$4.OnsNsm7bw.S52PHV1rWO5pT4ri4UaNDVtZAm2HSuFmuGrwjXyD6','https://res.cloudinary.com/dyuafq1hx/image/upload/v1716971323/lml0fbgijbjo6upwhk0b.png','AFFAIR','2024-05-29 08:28:44','2024-05-29 08:28:44',1),(6,'lecturer','$2a$10$H88DkaoeBelU3D9c4qGrhu7Ns1B15kftGg2aVeYOLdkeTp8DgYHiK','https://res.cloudinary.com/dyuafq1hx/image/upload/v1716974901/xzrdugvmpwxivgf5ixmu.jpg','LECTURER','2024-05-29 09:28:22','2024-05-29 09:29:12',1),(7,'student','$2a$10$QEHdx5IaTibCpuyoK69lmeTYLNcw6N3cgfwucibRQqmVmxX8WImLC','https://res.cloudinary.com/dyuafq1hx/image/upload/v1716980117/wseszqeq45ljge5b0h3d.png','STUDENT','2024-05-29 10:55:18','2024-05-29 11:41:03',1);
+INSERT INTO `account` VALUES (1,'admin','$2a$10$PUqsQjbYOaGS3t98.LmcDuWqblrdC58pZFQVkfayxoRe4QT.oXg/a','https://res.cloudinary.com/dyuafq1hx/image/upload/v1716802738/b920ceyu6uoiix7g0h3c.jpg','ADMIN','2024-05-27 18:00:13','2024-05-27 18:01:16',1),(2,'admin2','$2a$10$a7ml30HaBOFLg2M8k4osTOpxPikbW4Ase6dQZe1r.uMNmenw5aWZC','https://res.cloudinary.com/dyuafq1hx/image/upload/v1716958768/hjodjwtoszmutscywdbw.png','ADMIN','2024-05-29 04:59:29','2024-05-29 04:59:29',1),(3,'stephen','$2a$10$7WuTRnOfKFrlYqPa8W3Mpu60VDuyRGP5h4Z8NYVwPHDAPI2oMYli2','https://res.cloudinary.com/dyuafq1hx/image/upload/v1716960626/o3hpru2levojjmnn7yhq.jpg','ADMIN','2024-05-29 05:30:27','2024-05-29 05:30:27',1),(4,'affair','$2a$10$9tbvrP2lKN2fR3O5weq5H.2gGGfHNYhaJFgDTIRodxCeTlsHPp/OS','https://res.cloudinary.com/dyuafq1hx/image/upload/v1716970174/i9zv1bsr9ik8rdioazea.jpg','AFFAIR','2024-05-29 08:09:35','2024-05-29 08:11:37',1),(5,'affair2','$2a$10$4.OnsNsm7bw.S52PHV1rWO5pT4ri4UaNDVtZAm2HSuFmuGrwjXyD6','https://res.cloudinary.com/dyuafq1hx/image/upload/v1716971323/lml0fbgijbjo6upwhk0b.png','AFFAIR','2024-05-29 08:28:44','2024-05-29 08:28:44',1),(6,'lecturer','$2a$10$H88DkaoeBelU3D9c4qGrhu7Ns1B15kftGg2aVeYOLdkeTp8DgYHiK','https://res.cloudinary.com/dyuafq1hx/image/upload/v1716974901/xzrdugvmpwxivgf5ixmu.jpg','LECTURER','2024-05-29 09:28:22','2024-05-29 09:29:12',1),(7,'student','$2a$10$QEHdx5IaTibCpuyoK69lmeTYLNcw6N3cgfwucibRQqmVmxX8WImLC','https://res.cloudinary.com/dyuafq1hx/image/upload/v1716980117/wseszqeq45ljge5b0h3d.png','STUDENT','2024-05-29 10:55:18','2024-06-06 03:30:17',1);
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -55,12 +55,12 @@ DROP TABLE IF EXISTS `admin`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `admin` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `last_name` varchar(255) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `first_name` varchar(255) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `gender` enum('male','female','other') COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `last_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `first_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `gender` enum('male','female','other') CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
   `dob` date DEFAULT NULL,
-  `address` text COLLATE utf8mb4_vietnamese_ci,
+  `address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci,
   `account_id` int DEFAULT NULL,
   `created_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -91,12 +91,12 @@ DROP TABLE IF EXISTS `affair`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `affair` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `last_name` varchar(255) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `first_name` varchar(255) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `gender` enum('male','female','other') COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `last_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `first_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `gender` enum('male','female','other') CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
   `dob` date DEFAULT NULL,
-  `address` text COLLATE utf8mb4_vietnamese_ci,
+  `address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci,
   `account_id` int DEFAULT NULL,
   `faculty_id` int DEFAULT NULL,
   `created_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
@@ -130,7 +130,7 @@ DROP TABLE IF EXISTS `class`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `class` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
   `faculty_id` int DEFAULT NULL,
   `major_id` int DEFAULT NULL,
   `created_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
@@ -163,8 +163,8 @@ DROP TABLE IF EXISTS `council`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `council` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `status` enum('pending','blocked') COLLATE utf8mb4_vietnamese_ci DEFAULT 'pending',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `status` enum('pending','blocked') CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT 'pending',
   `school_year_id` int DEFAULT NULL,
   `created_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -224,7 +224,7 @@ CREATE TABLE `council_lecturer` (
   `id` int NOT NULL AUTO_INCREMENT,
   `council_id` int DEFAULT NULL,
   `lecturer_id` int DEFAULT NULL,
-  `position` enum('president','secretary','critical') COLLATE utf8mb4_vietnamese_ci DEFAULT 'critical',
+  `position` enum('president','secretary','critical') CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT 'critical',
   PRIMARY KEY (`id`),
   KEY `council_id` (`council_id`),
   KEY `lecturer_id` (`lecturer_id`),
@@ -251,8 +251,8 @@ DROP TABLE IF EXISTS `criterion`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `criterion` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `description` text COLLATE utf8mb4_vietnamese_ci,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci,
   `affair_id` int DEFAULT NULL,
   `created_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -281,7 +281,7 @@ DROP TABLE IF EXISTS `faculty`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `faculty` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
   `created_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `active` tinyint(1) DEFAULT '1',
@@ -308,13 +308,13 @@ DROP TABLE IF EXISTS `lecturer`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `lecturer` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `last_name` varchar(255) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `first_name` varchar(255) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `gender` enum('male','female','other') COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `last_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `first_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `gender` enum('male','female','other') CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
   `dob` date DEFAULT NULL,
-  `address` text COLLATE utf8mb4_vietnamese_ci,
-  `degree` varchar(255) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
+  `address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci,
+  `degree` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
   `account_id` int DEFAULT NULL,
   `faculty_id` int DEFAULT NULL,
   `created_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
@@ -348,7 +348,7 @@ DROP TABLE IF EXISTS `major`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `major` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
   `faculty_id` int DEFAULT NULL,
   `created_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -441,12 +441,12 @@ DROP TABLE IF EXISTS `student`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `student` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `last_name` varchar(255) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `first_name` varchar(255) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `gender` enum('male','female','other') COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `last_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `first_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `gender` enum('male','female','other') CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
   `dob` date DEFAULT NULL,
-  `address` text COLLATE utf8mb4_vietnamese_ci,
+  `address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci,
   `account_id` int DEFAULT NULL,
   `faculty_id` int DEFAULT NULL,
   `major_id` int DEFAULT NULL,
@@ -473,7 +473,7 @@ CREATE TABLE `student` (
 
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` VALUES (1,'Đỗ Mạnh','Dũng','male','dung@gmail.com','2001-12-20','Đồng Nai',7,11,35,6,'2024-05-29 10:55:18','2024-05-29 11:41:03',1);
+INSERT INTO `student` VALUES (1,'Đỗ Mạnh','Dũng','male','dung@gmail.com','2001-12-20','Đồng Nai',7,2,1,1,'2024-05-29 10:55:18','2024-06-06 03:30:17',1);
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -486,14 +486,14 @@ DROP TABLE IF EXISTS `thesis`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `thesis` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `report_file` varchar(255) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `report_file` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
   `start_date` date DEFAULT NULL,
   `end_date` date DEFAULT NULL,
   `exp_date` date DEFAULT NULL,
   `avg_score` float DEFAULT NULL,
-  `comment` text COLLATE utf8mb4_vietnamese_ci,
-  `status` enum('in_progress','completed','canceled') COLLATE utf8mb4_vietnamese_ci DEFAULT 'in_progress',
+  `comment` text CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci,
+  `status` enum('in_progress', 'submitted', 'under_review', 'defended', 'canceled') CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT 'in_progress',
   `affair_id` int DEFAULT NULL,
   `critical_lecturer_id` int DEFAULT NULL,
   `school_year_id` int DEFAULT NULL,
@@ -507,7 +507,7 @@ CREATE TABLE `thesis` (
   CONSTRAINT `thesis_ibfk_1` FOREIGN KEY (`affair_id`) REFERENCES `affair` (`id`),
   CONSTRAINT `thesis_ibfk_2` FOREIGN KEY (`critical_lecturer_id`) REFERENCES `lecturer` (`id`),
   CONSTRAINT `thesis_ibfk_3` FOREIGN KEY (`school_year_id`) REFERENCES `school_year` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -516,6 +516,7 @@ CREATE TABLE `thesis` (
 
 LOCK TABLES `thesis` WRITE;
 /*!40000 ALTER TABLE `thesis` DISABLE KEYS */;
+INSERT INTO `thesis` VALUES (1,'Tên luận văn 2',NULL,'2024-06-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','in_progress',1,1,3,'2024-06-06 03:30:32','2024-06-06 03:30:32',1),(2,'Tên luận văn 3',NULL,'2024-06-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','in_progress',1,1,3,'2024-06-06 06:19:30','2024-06-06 06:19:30',1),(3,'Tên luận văn 4',NULL,'2024-06-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','in_progress',1,1,3,'2024-06-06 06:28:00','2024-06-06 06:28:00',1);
 /*!40000 ALTER TABLE `thesis` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -535,7 +536,7 @@ CREATE TABLE `thesis_lecturer` (
   KEY `lecturer_id` (`lecturer_id`),
   CONSTRAINT `thesis_lecturer_ibfk_1` FOREIGN KEY (`thesis_id`) REFERENCES `thesis` (`id`),
   CONSTRAINT `thesis_lecturer_ibfk_2` FOREIGN KEY (`lecturer_id`) REFERENCES `lecturer` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -544,6 +545,7 @@ CREATE TABLE `thesis_lecturer` (
 
 LOCK TABLES `thesis_lecturer` WRITE;
 /*!40000 ALTER TABLE `thesis_lecturer` DISABLE KEYS */;
+INSERT INTO `thesis_lecturer` VALUES (1,1,1),(2,2,1),(3,3,1);
 /*!40000 ALTER TABLE `thesis_lecturer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -563,7 +565,7 @@ CREATE TABLE `thesis_student` (
   KEY `student_id` (`student_id`),
   CONSTRAINT `thesis_student_ibfk_1` FOREIGN KEY (`thesis_id`) REFERENCES `thesis` (`id`),
   CONSTRAINT `thesis_student_ibfk_2` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -572,6 +574,7 @@ CREATE TABLE `thesis_student` (
 
 LOCK TABLES `thesis_student` WRITE;
 /*!40000 ALTER TABLE `thesis_student` DISABLE KEYS */;
+INSERT INTO `thesis_student` VALUES (1,1,1),(2,2,1),(3,3,1);
 /*!40000 ALTER TABLE `thesis_student` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -584,4 +587,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-29 18:44:05
+-- Dump completed on 2024-06-07  2:07:49
