@@ -5,6 +5,7 @@
 package com.pdmv.controllers;
 
 import com.pdmv.dto.ThesisDTO;
+import com.pdmv.dto.CreateThesisDTO;
 import com.pdmv.dto.ThesisDetailsDTO;
 import com.pdmv.dto.ThesisLecturerDTO;
 import com.pdmv.dto.ThesisStudentDTO;
@@ -38,7 +39,7 @@ public class ApiThesisController {
     @PostMapping(path = "/thesis/", produces = {
         MediaType.APPLICATION_JSON_VALUE
     })
-    public ResponseEntity<ThesisDetailsDTO> create(@RequestBody ThesisDetailsDTO thesisDTO) {
+    public ResponseEntity<CreateThesisDTO> create(@RequestBody CreateThesisDTO thesisDTO) {
         
         try {
             for (ThesisLecturerDTO lecturer : thesisDTO.getThesisLecturerSet()) {

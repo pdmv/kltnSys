@@ -5,12 +5,14 @@
 package com.pdmv.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pdmv.pojo.Thesis;
 import java.util.Date;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -18,7 +20,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class ThesisDetailsDTO {
+public class CreateThesisDTO {
     private Integer id;
     private String name;
     private String reportFile;
@@ -36,50 +38,53 @@ public class ThesisDetailsDTO {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatedDate;
     private Boolean active;
-    private SchoolYearDTO schoolYearId;
+    private Integer schoolYearId;
     private Set<ThesisLecturerDTO> thesisLecturerSet;
     private Set<ThesisStudentDTO> thesisStudentSet;
-    private CriticalLecturerDTO criticalLecturerId;
-    private ThesisAffairDTO affairId;
+    private Integer criticalLecturerId;
+    private Integer affairId;
     
-    public static ThesisDetailsDTO toThesisDetailsDTO(Thesis thesis) {
-        ThesisDetailsDTO dto = new ThesisDetailsDTO();
+    @JsonIgnore
+    private MultipartFile file;
+    
+    public static CreateThesisDTO toCreateThesisDTO(Thesis thesis) {
+        CreateThesisDTO thesisDTO = new CreateThesisDTO();
 
-        dto.setId(thesis.getId());
-        dto.setName(thesis.getName());
-        dto.setReportFile(thesis.getReportFile());
-        dto.setStartDate(thesis.getStartDate());
-        dto.setEndDate(thesis.getEndDate());
-        dto.setExpDate(thesis.getExpDate());
-        dto.setAvgScore(thesis.getAvgScore());
-        dto.setComment(thesis.getComment());
-        dto.setStatus(thesis.getStatus());
-        dto.setCreatedDate(thesis.getCreatedDate());
-        dto.setUpdatedDate(thesis.getUpdatedDate());
-        dto.setActive(thesis.getActive());
+        thesisDTO.setId(thesis.getId());
+        thesisDTO.setName(thesis.getName());
+        thesisDTO.setReportFile(thesis.getReportFile());
+        thesisDTO.setStartDate(thesis.getStartDate());
+        thesisDTO.setEndDate(thesis.getEndDate());
+        thesisDTO.setExpDate(thesis.getExpDate());
+        thesisDTO.setAvgScore(thesis.getAvgScore());
+        thesisDTO.setComment(thesis.getComment());
+        thesisDTO.setStatus(thesis.getStatus());
+        thesisDTO.setCreatedDate(thesis.getCreatedDate());
+        thesisDTO.setUpdatedDate(thesis.getUpdatedDate());
+        thesisDTO.setActive(thesis.getActive());
 
         if (thesis.getSchoolYearId() != null) {
-            dto.setSchoolYearId(SchoolYearDTO.toSchoolYearDTO(thesis.getSchoolYearId()));
+            thesisDTO.setSchoolYearId(thesis.getSchoolYearId().getId());
         }
         
         Set<ThesisLecturerDTO> lecturerDTOs = thesis.getThesisLecturerSet().stream()
                                                     .map(ThesisLecturerDTO::toThesisLecturerDTO)
                                                     .collect(Collectors.toSet());
-        dto.setThesisLecturerSet(lecturerDTOs);
+        thesisDTO.setThesisLecturerSet(lecturerDTOs);
 
         Set<ThesisStudentDTO> studentDTOs = thesis.getThesisStudentSet().stream()
                                                   .map(ThesisStudentDTO::toThesisStudentDTO) 
                                                   .collect(Collectors.toSet());
-        dto.setThesisStudentSet(studentDTOs);
+        thesisDTO.setThesisStudentSet(studentDTOs);
 
         if (thesis.getCriticalLecturerId() != null) {
-            dto.setCriticalLecturerId(CriticalLecturerDTO.toCriticalLecturerDTO(thesis.getCriticalLecturerId()));
+            thesisDTO.setCriticalLecturerId(thesis.getCriticalLecturerId().getId());
         }
 
         if (thesis.getAffairId() != null) {
-            dto.setAffairId(ThesisAffairDTO.toThesisAffairDTO(thesis.getAffairId()));
+            thesisDTO.setAffairId(thesis.getAffairId().getId());
         }
 
-        return dto;
+        return thesisDTO;
     }
 }

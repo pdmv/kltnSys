@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+    <definition name="baseLayout" template="/WEB-INF/layout/base.jsp">
+        <put-attribute name="title" value="" />
+        <put-attribute name="header" value="/WEB-INF/layout/header.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/layout/footer.jsp" />
+        <put-attribute name="content" value="" />
+    </definition>
+    
+    <definition name="index" extends="baseLayout">
+        <put-attribute name="title" value="Trang chủ" />
+        <put-attribute name="content" value="/WEB-INF/pages/index.jsp" />
+    </definition>
+    
+    <definition name="admins" extends="baseLayout">
+        <put-attribute name="title" value="Quản trị viên" />
+        <put-attribute name="content" value="/WEB-INF/pages/admin/admins.jsp" />
+    </definition>
+    <definition name="add-admin" extends="baseLayout">
+        <put-attribute name="title" value="Thêm Quản trị viên" />
+        <put-attribute name="content" value="/WEB-INF/pages/admin/add-admin.jsp" />
+    </definition>
+    <definition name="update-admin" extends="baseLayout">
+        <put-attribute name="title" value="Cập nhật Quản trị viên" />
+        <put-attribute name="content" value="/WEB-INF/pages/admin/update-admin.jsp" />
+    </definition>
+    
+    <definition name="school-years" extends="baseLayout">
+        <put-attribute name="title" value="Niên khoá" />
+        <put-attribute name="content" value="/WEB-INF/pages/school_year/school-years.jsp" />
+    </definition>
+    <definition name="add-school-year" extends="baseLayout">
+        <put-attribute name="title" value="Thêm Niên khoá" />
+        <put-attribute name="content" value="/WEB-INF/pages/school_year/school-year-details.jsp" />
+    </definition>
+    <definition name="update-school-year" extends="baseLayout">
+        <put-attribute name="title" value="Cập nhật Niên khoá" />
+        <put-attribute name="content" value="/WEB-INF/pages/school_year/school-year-details.jsp" />
+    </definition>
+    
+    <definition name="faculties" extends="baseLayout">
+        <put-attribute name="title" value="Khoa đào tạo" />
+        <put-attribute name="content" value="/WEB-INF/pages/faculty/faculties.jsp" />
+    </definition>
+    <definition name="add-faculty" extends="baseLayout">
+        <put-attribute name="title" value="Thêm Khoa đào tạo" />
+        <put-attribute name="content" value="/WEB-INF/pages/faculty/faculty-details.jsp" />
+    </definition>
+    <definition name="update-faculty" extends="baseLayout">
+        <put-attribute name="title" value="Cập nhật Khoa đào tạo" />
+        <put-attribute name="content" value="/WEB-INF/pages/faculty/faculty-details.jsp" />
+    </definition>
+    
+    <definition name="majors" extends="baseLayout">
+        <put-attribute name="title" value="Ngành đào tạo" />
+        <put-attribute name="content" value="/WEB-INF/pages/major/majors.jsp" />
+    </definition>
+    <definition name="add-major" extends="baseLayout">
+        <put-attribute name="title" value="Thêm Ngành đào tạo" />
+        <put-attribute name="content" value="/WEB-INF/pages/major/major-details.jsp" />
+    </definition>
+    <definition name="update-major" extends="baseLayout">
+        <put-attribute name="title" value="Cập nhật Ngành đào tạo" />
+        <put-attribute name="content" value="/WEB-INF/pages/major/major-details.jsp" />
+    </definition>
+    
+    <definition name="classes" extends="baseLayout">
+        <put-attribute name="title" value="Lớp học" />
+        <put-attribute name="content" value="/WEB-INF/pages/class/classes.jsp" />
+    </definition>
+    <definition name="add-class" extends="baseLayout">
+        <put-attribute name="title" value="Thêm Lớp học" />
+        <put-attribute name="content" value="/WEB-INF/pages/class/class-details.jsp" />
+    </definition>
+    <definition name="update-class" extends="baseLayout">
+        <put-attribute name="title" value="Cập nhật Lớp học" />
+        <put-attribute name="content" value="/WEB-INF/pages/class/class-details.jsp" />
+    </definition>
+    
+    <definition name="affairs" extends="baseLayout">
+        <put-attribute name="title" value="Giáo vụ" />
+        <put-attribute name="content" value="/WEB-INF/pages/affair/affairs.jsp" />
+    </definition>
+    <definition name="add-affair" extends="baseLayout">
+        <put-attribute name="title" value="Thêm Giáo vụ" />
+        <put-attribute name="content" value="/WEB-INF/pages/affair/add-affair.jsp" />
+    </definition>
+    <definition name="update-affair" extends="baseLayout">
+        <put-attribute name="title" value="Cập nhật Giáo vụ" />
+        <put-attribute name="content" value="/WEB-INF/pages/affair/update-affair.jsp" />
+    </definition>
+    
+    <definition name="lecturers" extends="baseLayout">
+        <put-attribute name="title" value="Giảng viên" />
+        <put-attribute name="content" value="/WEB-INF/pages/lecturer/lecturers.jsp" />
+    </definition>
+    <definition name="add-lecturer" extends="baseLayout">
+        <put-attribute name="title" value="Thêm Giảng viên" />
+        <put-attribute name="content" value="/WEB-INF/pages/lecturer/add-lecturer.jsp" />
+    </definition>
+    <definition name="update-lecturer" extends="baseLayout">
+        <put-attribute name="title" value="Cập nhật Giảng viên" />
+        <put-attribute name="content" value="/WEB-INF/pages/lecturer/update-lecturer.jsp" />
+    </definition>
+    
+    <definition name="students" extends="baseLayout">
+        <put-attribute name="title" value="Sinh viên" />
+        <put-attribute name="content" value="/WEB-INF/pages/student/students.jsp" />
+    </definition>
+    <definition name="add-student" extends="baseLayout">
+        <put-attribute name="title" value="Thêm Sinh viên" />
+        <put-attribute name="content" value="/WEB-INF/pages/student/add-student.jsp" />
+    </definition>
+    <definition name="update-student" extends="baseLayout">
+        <put-attribute name="title" value="Cập nhật Sinh viên" />
+        <put-attribute name="content" value="/WEB-INF/pages/student/update-student.jsp" />
+    </definition>
+</tiles-definitions>

@@ -6,6 +6,7 @@ package com.pdmv.services.impl;
 
 import com.cloudinary.Cloudinary;
 import com.pdmv.dto.ThesisDTO;
+import com.pdmv.dto.CreateThesisDTO;
 import com.pdmv.dto.ThesisDetailsDTO;
 import com.pdmv.pojo.Account;
 import com.pdmv.pojo.Affair;
@@ -83,7 +84,7 @@ public class ThesisServiceImpl implements ThesisService {
     
 
     @Override
-    public void addOrUpdate(ThesisDetailsDTO thesis) {
+    public void addOrUpdate(CreateThesisDTO thesis) {
         if (thesis.getAffairId() == null) {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             Account a = this.accountRepo.getAccountByUsername(authentication.getName());

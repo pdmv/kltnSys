@@ -16,10 +16,16 @@ import lombok.Setter;
 @Setter
 public class ThesisLecturerDTO {
     private Integer lecturerId;
+    private String firstName;
+    private String lastName;
+    private String email;
     
     public static ThesisLecturerDTO toThesisLecturerDTO(ThesisLecturer thesisLecturer) {
         ThesisLecturerDTO dto = new ThesisLecturerDTO();
         dto.setLecturerId(thesisLecturer.getLecturerId().getId());
+        dto.setFirstName(thesisLecturer.getLecturerId().getFirstName());
+        dto.setLastName(thesisLecturer.getLecturerId().getLastName());
+        dto.setEmail(thesisLecturer.getLecturerId().getEmail());
         return dto;
     }
 }

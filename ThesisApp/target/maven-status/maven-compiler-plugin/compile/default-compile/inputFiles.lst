@@ -22,6 +22,7 @@
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/services/impl/ClassServiceImpl.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/services/ThesisService.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/filters/JwtAuthenticationTokenFilter.java
+/Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/dto/ThesisDetailsDTO.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/services/AccountService.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/pojo/Criterion.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/services/AdminService.java

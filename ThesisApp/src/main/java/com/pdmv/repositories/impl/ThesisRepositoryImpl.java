@@ -5,6 +5,7 @@
 package com.pdmv.repositories.impl;
 
 import com.pdmv.dto.ThesisDTO;
+import com.pdmv.dto.CreateThesisDTO;
 import com.pdmv.dto.ThesisDetailsDTO;
 import com.pdmv.dto.ThesisLecturerDTO;
 import com.pdmv.dto.ThesisStudentDTO;
@@ -59,7 +60,7 @@ public class ThesisRepositoryImpl implements ThesisRepository {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public void addOrUpdate(ThesisDetailsDTO thesisDTO) {
+    public void addOrUpdate(CreateThesisDTO thesisDTO) {
         Session s = this.factory.getObject().getCurrentSession();
         Thesis thesis = new Thesis();
 
@@ -76,7 +77,7 @@ public class ThesisRepositoryImpl implements ThesisRepository {
         }
     }
 
-    private void populateThesis(ThesisDetailsDTO thesisDTO, Thesis thesis) {
+    private void populateThesis(CreateThesisDTO thesisDTO, Thesis thesis) {
         thesis.setId(thesisDTO.getId());
         thesis.setName(thesisDTO.getName());
         thesis.setReportFile(thesisDTO.getReportFile());
@@ -104,7 +105,7 @@ public class ThesisRepositoryImpl implements ThesisRepository {
         thesis.setAffairId(affair);
     }
 
-    private void saveThesisLecturers(ThesisDetailsDTO thesisDTO, Thesis thesis, Session s) {
+    private void saveThesisLecturers(CreateThesisDTO thesisDTO, Thesis thesis, Session s) {
         for (ThesisLecturerDTO lecturerDTO : thesisDTO.getThesisLecturerSet()) {
             Lecturer l = lecturerRepo.getLecturerById(lecturerDTO.getLecturerId());
             validateFaculty(l, thesis.getAffairId());
@@ -115,7 +116,7 @@ public class ThesisRepositoryImpl implements ThesisRepository {
         }
     }
 
-    private void saveThesisStudents(ThesisDetailsDTO thesisDTO, Thesis thesis, Session s) {
+    private void saveThesisStudents(CreateThesisDTO thesisDTO, Thesis thesis, Session s) {
         for (ThesisStudentDTO studentDTO : thesisDTO.getThesisStudentSet()) {
             Student stu = studentRepo.getStudentById(studentDTO.getStudentId());
             validateFaculty(stu, thesis.getAffairId());
@@ -126,14 +127,14 @@ public class ThesisRepositoryImpl implements ThesisRepository {
         }
     }
 
-    private void updateThesisLecturers(ThesisDetailsDTO thesisDTO, Thesis thesis, Session s) {
+    private void updateThesisLecturers(CreateThesisDTO thesisDTO, Thesis thesis, Session s) {
         List<ThesisLecturer> existingLecturers = s.createQuery("FROM ThesisLecturer WHERE thesisId.id = :thesisId", ThesisLecturer.class)
                 .setParameter("thesisId", thesis.getId())
                 .getResultList();
         updateThesisAssociations(existingLecturers, thesisDTO.getThesisLecturerSet(), thesis, s, ThesisLecturer.class);
     }
 
-    private void updateThesisStudents(ThesisDetailsDTO thesisDTO, Thesis thesis, Session s) {
+    private void updateThesisStudents(CreateThesisDTO thesisDTO, Thesis thesis, Session s) {
         List<ThesisStudent> existingStudents = s.createQuery("FROM ThesisStudent WHERE thesisId.id = :thesisId", ThesisStudent.class)
                 .setParameter("thesisId", thesis.getId())
                 .getResultList();

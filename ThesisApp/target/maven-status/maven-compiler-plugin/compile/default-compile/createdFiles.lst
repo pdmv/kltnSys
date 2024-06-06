@@ -13,6 +13,7 @@ com/pdmv/services/impl/ThesisServiceImpl.class
 com/pdmv/repositories/impl/AdminRepositoryImpl.class
 com/pdmv/pojo/SchoolYear_.class
 com/pdmv/repositories/ClassRepository.class
+com/pdmv/dto/CreateThesisDTO.class
 com/pdmv/repositories/AffairRepository.class
 com/pdmv/components/JwtService.class
 com/pdmv/pojo/ThesisStudent.class
@@ -20,6 +21,7 @@ com/pdmv/repositories/AdminRepository.class
 com/pdmv/pojo/Faculty.class
 com/pdmv/pojo/Council.class
 com/pdmv/pojo/Student.class
+com/pdmv/dto/SchoolYearDTO.class
 com/pdmv/services/StudentService.class
 com/pdmv/services/impl/AccountServiceImpl.class
 com/pdmv/repositories/impl/ClassRepositoryImpl.class
@@ -46,6 +48,7 @@ com/pdmv/repositories/StudentRepository.class
 com/pdmv/repositories/impl/LecturerRepositoryImpl.class
 com/pdmv/services/FacultyService.class
 com/pdmv/pojo/CouncilCriterion.class
+com/pdmv/dto/ThesisAffairDTO.class
 com/pdmv/dto/MajorDTO.class
 com/pdmv/pojo/Lecturer_.class
 com/pdmv/repositories/impl/StudentRepositoryImpl.class
@@ -77,6 +80,7 @@ com/pdmv/pojo/Score.class
 com/pdmv/services/impl/AffairServiceImpl.class
 com/pdmv/repositories/impl/SchoolYearRepositoryImpl.class
 com/pdmv/repositories/ThesisRepository.class
+com/pdmv/dto/CriticalLecturerDTO.class
 com/pdmv/repositories/impl/AccountRepositoryImpl.class
 com/pdmv/configs/SecurityWebAplicationInitializer.class
 com/pdmv/services/ThesisService.class
