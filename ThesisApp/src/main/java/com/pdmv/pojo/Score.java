@@ -4,7 +4,9 @@
  */
 package com.pdmv.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,8 +17,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -28,7 +35,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Score.findAll", query = "SELECT s FROM Score s"),
     @NamedQuery(name = "Score.findById", query = "SELECT s FROM Score s WHERE s.id = :id"),
-    @NamedQuery(name = "Score.findByScore", query = "SELECT s FROM Score s WHERE s.score = :score")})
+    @NamedQuery(name = "Score.findByScore", query = "SELECT s FROM Score s WHERE s.score = :score"),
+    @NamedQuery(name = "Score.findByCreatedDate", query = "SELECT s FROM Score s WHERE s.createdDate = :createdDate"),
+    @NamedQuery(name = "Score.findByUpdatedDate", query = "SELECT s FROM Score s WHERE s.updatedDate = :updatedDate"),
+    @NamedQuery(name = "Score.findByActive", query = "SELECT s FROM Score s WHERE s.active = :active")})
 public class Score implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,6 +50,17 @@ public class Score implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "score")
     private Float score;
+    @Column(name = "created_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createdDate;
+    @Column(name = "updated_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date updatedDate;
+    @Column(name = "active")
+    private Boolean active;
     @JoinColumn(name = "council_id", referencedColumnName = "id")
     @ManyToOne
     private Council councilId;
@@ -132,5 +153,58 @@ public class Score implements Serializable {
     public String toString() {
         return "com.pdmv.pojo.Score[ id=" + id + " ]";
     }
+
+    /**
+     * @return the createdDate
+     */
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    /**
+     * @param createdDate the createdDate to set
+     */
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    /**
+     * @return the updatedDate
+     */
+    public Date getUpdatedDate() {
+        return updatedDate;
+    }
+
+    /**
+     * @param updatedDate the updatedDate to set
+     */
+    public void setUpdatedDate(Date updatedDate) {
+        this.updatedDate = updatedDate;
+    }
+
+    /**
+     * @return the active
+     */
+    public Boolean getActive() {
+        return active;
+    }
+
+    /**
+     * @param active the active to set
+     */
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
     
+    @PrePersist
+    public void prePersist() {
+        createdDate = new Date();
+        updatedDate = createdDate;
+        active = true;
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        updatedDate = new Date();
+    }
 }

@@ -4,6 +4,7 @@
  */
 package com.pdmv.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
@@ -58,9 +59,11 @@ public class Faculty implements Serializable {
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createdDate;
     @Column(name = "updated_date")
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatedDate;
     @Column(name = "active")
     private Boolean active;
@@ -68,12 +71,16 @@ public class Faculty implements Serializable {
     @JsonIgnore
     private Set<Student> studentSet;
     @OneToMany(mappedBy = "facultyId")
+    @JsonIgnore
     private Set<Lecturer> lecturerSet;
     @OneToMany(mappedBy = "facultyId")
+    @JsonIgnore
     private Set<Major> majorSet;
     @OneToMany(mappedBy = "facultyId")
+    @JsonIgnore
     private Set<Affair> affairSet;
     @OneToMany(mappedBy = "facultyId")
+    @JsonIgnore
     private Set<Class> classSet;
 
     public Faculty() {

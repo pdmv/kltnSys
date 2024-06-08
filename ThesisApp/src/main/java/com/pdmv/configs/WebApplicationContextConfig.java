@@ -7,6 +7,9 @@ package com.pdmv.configs;
 import com.pdmv.components.StringToClassConverter;
 import com.pdmv.components.StringToFacultyConverter;
 import com.pdmv.components.StringToMajorConverter;
+import javax.servlet.http.HttpServletRequest;
+import org.apache.commons.fileupload.FileUploadBase;
+import org.apache.commons.fileupload.servlet.ServletRequestContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -39,8 +42,12 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
     
     @Bean
     public CommonsMultipartResolver multipartResolver() {
-        CommonsMultipartResolver resolver
-                = new CommonsMultipartResolver();
+        CommonsMultipartResolver resolver = new CommonsMultipartResolver() {
+            @Override
+            public boolean isMultipart(HttpServletRequest request) {
+                return FileUploadBase.isMultipartContent(new ServletRequestContext(request));
+            }
+        };
         resolver.setDefaultEncoding("UTF-8");
         return resolver;
     }

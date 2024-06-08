@@ -39,7 +39,7 @@ public class ApiThesisController {
     @PostMapping(path = "/thesis/", produces = {
         MediaType.APPLICATION_JSON_VALUE
     })
-    public ResponseEntity<CreateThesisDTO> create(@RequestBody CreateThesisDTO thesisDTO) {
+    public ResponseEntity<?> create(@RequestBody CreateThesisDTO thesisDTO) {
         
         try {
             for (ThesisLecturerDTO lecturer : thesisDTO.getThesisLecturerSet()) {
@@ -54,11 +54,10 @@ public class ApiThesisController {
             
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
+            return new ResponseEntity<>(Map.of("error", e.getMessage()), HttpStatus.BAD_REQUEST); 
         }
         
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-
     }
     
     @GetMapping(path = "/thesis/{id}/", produces = {
