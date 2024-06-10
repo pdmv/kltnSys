@@ -2,8 +2,9 @@ import { useLocation } from "react-router-dom";
 import Title from "../common/Title";
 import { useEffect, useState } from "react";
 import { authApi, endpoints } from "../../configs/APIs";
-import { Spinner, Alert } from "react-bootstrap";
+import { Spinner, Alert, Container, Row, Col, Card, ListGroup } from "react-bootstrap";
 import FormatDate from "../common/FormatDate";
+
 const ThesisDetails = () => {
   const location = useLocation();
   const id = location.state.selected;
@@ -26,47 +27,66 @@ const ThesisDetails = () => {
 
   useEffect(() => {
     fetchThesis();
-    console.log(thesis);
   }, []);
 
   return (
-    <>
+    <Container>
       {loading && (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
           <Spinner animation="border" variant="primary" />
         </div>
       )}
       {error && <Alert variant="danger">{error}</Alert>}
-      {thesis && <>
-        <Title title="Chi tiết khoá luận" strong={thesis.name} />
-        <p>ID: {thesis.id}</p>
-        <p>Tên luận văn: {thesis.name}</p>
-        <p>Ngày bắt đầu thực hiện: <FormatDate date={thesis.startDate}/></p>
-        <p>Ngày kết thúc thực hiện: <FormatDate date={thesis.endDate} /></p>
-        <p>Ngày hết hạn nộp: <FormatDate date={thesis.expDate} /></p>
-        <p>Trạng thái: {thesis.status}</p>
-        <p>Ghi chú: {thesis.comment}</p>
-        {/* <p>Ngày tạo: {thesis.createdDate}</p>
-        <p>Ngày cập nhật: {thesis.updatedDate}</p>
-        <p>Active: {thesis.active.toString()}</p> */}
-        <p>Năm học: {thesis.schoolYearId.startYear} - {thesis.schoolYearId.endYear}</p>
-        <p>Giảng viên hướng dẫn:</p>
-        <ul>
-          {thesis.thesisLecturerSet.map((lecturer) => (
-            <li key={lecturer.id}>{lecturer.lastName} {lecturer.firstName} - Liên hệ: {lecturer.email}</li>
-          ))}
-        </ul>
-        <p>Sinh viên thực hiện:</p>
-        <ul>
-          {thesis.thesisStudentSet.map((student, index) => (
-            <li key={index}>{student.lastName} {student.firstName} - Liên hệ: {student.email}</li>
-          ))}
-        </ul>
-        <p>Giảng viên phản biện: {thesis.criticalLecturerId.lastName} {thesis.criticalLecturerId.firstName} - Liên hệ: {thesis.criticalLecturerId.email}</p>
-        <p>Người tạo: {thesis.affairId.lastName} {thesis.affairId.firstName} - Liên hệ: {thesis.affairId.email}</p>
-      </>
-      }
-    </>
+      {thesis && (
+        <>
+          <Title title="Chi tiết khoá luận" strong={thesis.name} />
+          <Card className="mt-3">
+            <Card.Body>
+              <Row>
+                <Col md={6}>
+                  <ListGroup variant="flush">
+                    <ListGroup.Item><strong>ID:</strong> {thesis.id}</ListGroup.Item>
+                    <ListGroup.Item><strong>Tên luận văn:</strong> {thesis.name}</ListGroup.Item>
+                    <ListGroup.Item><strong>Ngày bắt đầu thực hiện:</strong> <FormatDate date={thesis.startDate} /></ListGroup.Item>
+                    <ListGroup.Item><strong>Ngày kết thúc thực hiện:</strong> <FormatDate date={thesis.endDate} /></ListGroup.Item>
+                    <ListGroup.Item><strong>Ngày hết hạn nộp:</strong> <FormatDate date={thesis.expDate} /></ListGroup.Item>
+                    <ListGroup.Item><strong>Trạng thái:</strong> {thesis.status}</ListGroup.Item>
+                    <ListGroup.Item><strong>Ghi chú:</strong> {thesis.comment}</ListGroup.Item>
+                    <ListGroup.Item><strong>Năm học:</strong> {thesis.schoolYearId.startYear} - {thesis.schoolYearId.endYear}</ListGroup.Item>
+                  </ListGroup>
+                </Col>
+                <Col md={6}>
+                  <ListGroup variant="flush">
+                    <ListGroup.Item>
+                      <strong>Giảng viên hướng dẫn:</strong>
+                      <ul>
+                        {thesis.thesisLecturerSet.map((lecturer) => (
+                          <li key={lecturer.id}>{lecturer.lastName} {lecturer.firstName} - Liên hệ: {lecturer.email}</li>
+                        ))}
+                      </ul>
+                    </ListGroup.Item>
+                    <ListGroup.Item>
+                      <strong>Sinh viên thực hiện:</strong>
+                      <ul>
+                        {thesis.thesisStudentSet.map((student, index) => (
+                          <li key={index}>{student.lastName} {student.firstName} - Liên hệ: {student.email}</li>
+                        ))}
+                      </ul>
+                    </ListGroup.Item>
+                    <ListGroup.Item>
+                      <strong>Giảng viên phản biện:</strong> {thesis.criticalLecturerId.lastName} {thesis.criticalLecturerId.firstName} - Liên hệ: {thesis.criticalLecturerId.email}
+                    </ListGroup.Item>
+                    <ListGroup.Item>
+                      <strong>Người tạo:</strong> {thesis.affairId.lastName} {thesis.affairId.firstName} - Liên hệ: {thesis.affairId.email}
+                    </ListGroup.Item>
+                  </ListGroup>
+                </Col>
+              </Row>
+            </Card.Body>
+          </Card>
+        </>
+      )}
+    </Container>
   );
 };
 
