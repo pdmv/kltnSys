@@ -70,10 +70,12 @@ com/pdmv/dto/StudentDTO.class
 com/pdmv/pojo/CouncilLecturer.class
 com/pdmv/pojo/Class.class
 com/pdmv/dto/ThesisLecturerDTO.class
+com/pdmv/configs/SecurityWebApplicationInitializer.class
 com/pdmv/repositories/SchoolYearRepository.class
 com/pdmv/pojo/CouncilLecturer_.class
 com/pdmv/controllers/IndexController.class
 com/pdmv/controllers/ApiAccountController.class
+com/pdmv/dto/response/MessageResponse.class
 com/pdmv/filters/JwtAuthenticationTokenFilter.class
 com/pdmv/pojo/Admin.class
 com/pdmv/pojo/SchoolYear.class
@@ -86,7 +88,6 @@ com/pdmv/repositories/impl/SchoolYearRepositoryImpl.class
 com/pdmv/repositories/ThesisRepository.class
 com/pdmv/dto/CriticalLecturerDTO.class
 com/pdmv/repositories/impl/AccountRepositoryImpl.class
-com/pdmv/configs/SecurityWebAplicationInitializer.class
 com/pdmv/controllers/ApiStudentController.class
 com/pdmv/services/ThesisService.class
 com/pdmv/pojo/Score_.class
@@ -105,6 +106,7 @@ com/pdmv/services/AdminService.class
 com/pdmv/pojo/Student_.class
 com/pdmv/services/AffairService.class
 com/pdmv/dto/ClassDTO.class
+com/pdmv/dto/request/ChangePasswordRequest.class
 com/pdmv/repositories/MajorRepositoty.class
 com/pdmv/components/StringToFacultyConverter.class
 com/pdmv/pojo/Class_.class

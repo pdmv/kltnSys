@@ -18,4 +18,5 @@ public interface ThesisRepository {
     void addOrUpdate(CreateThesisDTO thesis);
     ThesisDetailsDTO getThesisById(int id);
     List<ThesisDTO> getLists(Map<String, String> params);
+    void submitReportFile(Integer id, String url);
 }

@@ -5,6 +5,8 @@
 package com.pdmv.controllers;
 
 import com.pdmv.components.JwtService;
+import com.pdmv.dto.request.ChangePasswordRequest;
+import com.pdmv.dto.response.MessageResponse;
 import com.pdmv.pojo.Account;
 import com.pdmv.pojo.Admin;
 import com.pdmv.pojo.Affair;
@@ -50,18 +52,22 @@ public class ApiAccountController {
     
     
     @PostMapping("/login/")
-    public ResponseEntity<String> login(@RequestBody Account account) {
+    public ResponseEntity<?> login(@RequestBody Account account) {
         if (account.getUsername() == null || account.getPassword() == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         
-        if (this.accountService.authAccount(account.getUsername(), account.getPassword()) == true) {
-            String token = this.jwtService.generateTokenLogin(account.getUsername());
-            
-            return new ResponseEntity<>(token, HttpStatus.OK);
+        try {
+            if (this.accountService.authAccount(account.getUsername(), account.getPassword()) == true) {
+                String token = this.jwtService.generateTokenLogin(account.getUsername());
+
+                return new ResponseEntity<>(token, HttpStatus.OK);
+            }
+
+            return new ResponseEntity<>(new MessageResponse("Tên đăng nhập hoặc mật khẩu sai!"), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        
-        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
     
     @GetMapping(path = "/current-user/", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -87,6 +93,32 @@ public class ApiAccountController {
                 return new ResponseEntity<>(admin, HttpStatus.OK); 
             default:
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); 
+        }
+    }
+    
+    @PostMapping(path = "/change-password/", produces = {
+            MediaType.APPLICATION_JSON_VALUE
+    })
+    public ResponseEntity<?> changePassword(Principal principal, @RequestBody ChangePasswordRequest request) {
+        try {
+            if (!this.accountService.authAccount(principal.getName(), request.getOldPassword())) {
+                return new ResponseEntity<>(new MessageResponse("Mật khẩu cũ sai!"), HttpStatus.BAD_REQUEST);
+            }
+
+            if (request.getNewPassword().isEmpty()) {
+                return new ResponseEntity<>(new MessageResponse("Mật khẩu mới không được để trống!"), HttpStatus.BAD_REQUEST);
+            }
+
+            if (request.getNewPassword().equals(request.getOldPassword())) {
+                return new ResponseEntity<>(new MessageResponse("Mật khẩu mới phải khác mật khẩu cũ!"), HttpStatus.BAD_REQUEST); 
+            }
+
+            this.accountService.changePassword(principal.getName(), request.getOldPassword(), request.getNewPassword()); 
+
+            return new ResponseEntity<>(new MessageResponse("Đổi mật khẩu thành công!"), HttpStatus.OK);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return new ResponseEntity<>(new MessageResponse("Có lỗi xảy ra khi đổi mật khẩu."), HttpStatus.INTERNAL_SERVER_ERROR); 
         }
     }
 }

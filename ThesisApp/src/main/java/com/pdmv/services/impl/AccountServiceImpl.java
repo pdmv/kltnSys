@@ -48,8 +48,6 @@ public class AccountServiceImpl implements AccountService {
        
         if (account.getFile() != null && !account.getFile().isEmpty()) {
             try {
-                Map res = this.cloudinary.uploader().upload(account.getFile().getBytes(), ObjectUtils.asMap("resource_type", "auto"));
-                
                 if (account.getId() != null) {
                     Account exist = this.accountRepo.getAccountById(account.getId());
                     
@@ -67,6 +65,7 @@ public class AccountServiceImpl implements AccountService {
                     }
                 }
                 
+                Map res = this.cloudinary.uploader().upload(account.getFile().getBytes(), ObjectUtils.asMap("resource_type", "auto"));
                 account.setAvatar(res.get("secure_url").toString());
             } catch (IOException ex) {
                 Logger.getLogger(AccountServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
