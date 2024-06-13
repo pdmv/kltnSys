@@ -65,7 +65,7 @@ public class ThesisRepositoryImpl implements ThesisRepository {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public void addOrUpdate(CreateThesisDTO thesisDTO) {
+    public int addOrUpdate(CreateThesisDTO thesisDTO) {
         Session s = this.factory.getObject().getCurrentSession();
         Thesis thesis = new Thesis();
 
@@ -80,6 +80,8 @@ public class ThesisRepositoryImpl implements ThesisRepository {
             updateThesisLecturers(thesisDTO, thesis, s);
             updateThesisStudents(thesisDTO, thesis, s);
         }
+        
+        return thesis.getId();
     }
 
     private void populateThesis(CreateThesisDTO thesisDTO, Thesis thesis) {

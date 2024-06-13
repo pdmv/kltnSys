@@ -7,6 +7,7 @@ package com.pdmv.configs;
 import com.pdmv.components.StringToClassConverter;
 import com.pdmv.components.StringToFacultyConverter;
 import com.pdmv.components.StringToMajorConverter;
+import java.util.concurrent.Executor;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.fileupload.FileUploadBase;
 import org.apache.commons.fileupload.servlet.ServletRequestContext;
@@ -14,6 +15,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
@@ -34,6 +37,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
     "com.pdmv.components",
     "com.pdmv.dto"
 })
+@EnableAsync
 public class WebApplicationContextConfig implements WebMvcConfigurer {
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
@@ -50,6 +54,17 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         };
         resolver.setDefaultEncoding("UTF-8");
         return resolver;
+    }
+    
+    @Bean
+    public Executor taskExecutor() { 
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(5);
+        executor.setMaxPoolSize(10);
+        executor.setQueueCapacity(25);
+        executor.setThreadNamePrefix("EmailThread-");
+        executor.initialize();
+        return executor;
     }
     
     @Override

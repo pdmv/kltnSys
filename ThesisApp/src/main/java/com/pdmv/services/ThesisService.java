@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author phamdominhvuong
  */
 public interface ThesisService {
-    void addOrUpdate(CreateThesisDTO thesis);
+    ThesisDetailsDTO addOrUpdate(CreateThesisDTO thesis);
     ThesisDetailsDTO getThesisById(int id);
     List<ThesisDTO> getLists(Map<String, String> params);
     void submitReportFile(int id, MultipartFile file);

@@ -53,9 +53,8 @@ public class ApiThesisController {
     public ResponseEntity<?> create(@RequestBody CreateThesisDTO thesisDTO) {
         
         try {
-            this.thesisService.addOrUpdate(thesisDTO);
-            
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            ThesisDetailsDTO thesis = this.thesisService.addOrUpdate(thesisDTO);
+            return new ResponseEntity<>(thesis, HttpStatus.CREATED);
         } catch (IllegalArgumentException ex) {
             return new ResponseEntity<>(new MessageResponse(ex.getMessage()), HttpStatus.BAD_REQUEST); 
         } catch (Exception e) {

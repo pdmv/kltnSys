@@ -10,6 +10,8 @@ import com.cloudinary.utils.ObjectUtils;
 import com.pdmv.dto.ThesisDTO;
 import com.pdmv.dto.CreateThesisDTO;
 import com.pdmv.dto.ThesisDetailsDTO;
+import com.pdmv.dto.ThesisLecturerDTO;
+import com.pdmv.dto.ThesisStudentDTO;
 import com.pdmv.pojo.Account;
 import com.pdmv.pojo.Affair;
 import com.pdmv.repositories.AccountRepository;
@@ -47,55 +49,11 @@ public class ThesisServiceImpl implements ThesisService {
     private Cloudinary cloudinary;
     @Autowired
     private Environment env;
+    @Autowired
+    private EmailService emailService;
     
-//    @Override
-//    public void addOrUpdate(Thesis thesis) {
-//        if (thesis.getFile() != null && !thesis.getFile().isEmpty()) {
-//            try {
-//                Map res = this.cloudinary.uploader().upload(thesis.getFile().getBytes(), ObjectUtils.asMap("resource_type", "auto"));
-//                
-//                if (thesis.getId() != null) {
-//                    Thesis exist = this.thesisRepo.getThesisById(thesis.getId());
-//                    
-//                    if (exist.getReportFile()!= null && !exist.getReportFile().isEmpty()) {
-//                        String publicId = extractPublicId(thesis.getReportFile());
-//                        try {
-//                            ApiResponse apiResponse = this.cloudinary.api().deleteResources(Arrays.asList(publicId),
-//                                ObjectUtils.asMap("type", "upload", "resource_type", "raw"));
-//                            System.out.println(apiResponse);
-//                        } catch (IOException exception) {
-//                            System.out.println(exception.getMessage());
-//                        } catch (Exception ex) {
-//                            Logger.getLogger(ThesisServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-//                        }
-//                    }
-//                }
-//                
-//                thesis.setReportFile(res.get("secure_url").toString());
-//            } catch (IOException ex) {
-//                Logger.getLogger(AccountServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        } else if (thesis.getId() != null) {
-//            thesis.setReportFile(this.thesisRepo.getThesisById(thesis.getId()).getReportFile());
-//        }
-//        
-//        this.thesisRepo.addOrUpdate(thesis);
-//    }
-//
-//    @Override
-//    public Thesis getThesisById(int id) {
-//        return this.thesisRepo.getThesisById(id);
-//    }
-//
-//    @Override
-//    public List<Thesis> getThesises(Map<String, String> params) {
-//        return this.thesisRepo.getThesises(params);
-//    }
-    
-    
-
     @Override
-    public void addOrUpdate(CreateThesisDTO thesis) {
+    public ThesisDetailsDTO addOrUpdate(CreateThesisDTO thesis) {
         if (thesis.getThesisStudentSet().size() > Integer.parseInt(env.getProperty("thesis.maxStudents"))) {
             throw new IllegalArgumentException("Số lượng sinh viên vượt quá giới hạn cho phép.");
         }
@@ -112,7 +70,14 @@ public class ThesisServiceImpl implements ThesisService {
             thesis.setAffairId(affair.getId());
         }
         
-        this.thesisRepo.addOrUpdate(thesis);
+        int id = this.thesisRepo.addOrUpdate(thesis);
+        ThesisDetailsDTO newThesis = this.thesisRepo.getThesisById(id);
+        
+        if (thesis.getId() == null) {
+            this.sendNotificationMail(newThesis);
+        }
+        
+        return newThesis;
     }
 
     @Override
@@ -175,5 +140,17 @@ public class ThesisServiceImpl implements ThesisService {
         int lastSlashIndex = url.lastIndexOf('/');
         
         return url.substring(lastSlashIndex + 1);
+    }
+    
+    private void sendNotificationMail(ThesisDetailsDTO thesis) {
+        this.emailService.sendThesisNotificationEmail(thesis, thesis.getCriticalLecturerId().getEmail(), thesis.getCriticalLecturerId().getFullname(), "Giảng viên phản biện");
+        
+        for (ThesisLecturerDTO l : thesis.getThesisLecturerSet()) {
+            this.emailService.sendThesisNotificationEmail(thesis, l.getEmail(), l.getFullname(), "Giảng viên hướng dẫn");
+        }
+        
+        for (ThesisStudentDTO stu : thesis.getThesisStudentSet()) {
+            this.emailService.sendThesisNotificationEmail(thesis, stu.getEmail(), stu.getFullname(), "Sinh viên tham gia");
+        }
     }
 }

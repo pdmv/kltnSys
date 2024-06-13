@@ -15,7 +15,7 @@ import java.util.Map;
  * @author phamdominhvuong
  */
 public interface ThesisRepository {
-    void addOrUpdate(CreateThesisDTO thesis);
+    int addOrUpdate(CreateThesisDTO thesis);
     ThesisDetailsDTO getThesisById(int id);
     List<ThesisDTO> getLists(Map<String, String> params);
     void submitReportFile(Integer id, String url);

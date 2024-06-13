@@ -9,6 +9,7 @@ com/pdmv/configs/WebApplicationContextConfig.class
 com/pdmv/pojo/ThesisLecturer_.class
 com/pdmv/repositories/impl/AffairRepositoryImpl.class
 com/pdmv/dto/ThesisDTO.class
+com/pdmv/configs/MailConfig.class
 com/pdmv/services/impl/ThesisServiceImpl.class
 com/pdmv/repositories/impl/AdminRepositoryImpl.class
 com/pdmv/pojo/SchoolYear_.class
@@ -47,6 +48,7 @@ com/pdmv/pojo/Affair.class
 com/pdmv/pojo/Account_.class
 com/pdmv/configs/WebApplicationContextConfig$1.class
 com/pdmv/repositories/StudentRepository.class
+com/pdmv/services/impl/EmailService.class
 com/pdmv/repositories/impl/LecturerRepositoryImpl.class
 com/pdmv/services/FacultyService.class
 com/pdmv/pojo/CouncilCriterion.class
@@ -69,6 +71,7 @@ com/pdmv/controllers/AdminController.class
 com/pdmv/dto/StudentDTO.class
 com/pdmv/pojo/CouncilLecturer.class
 com/pdmv/pojo/Class.class
+com/pdmv/configs/ThymeleafConfig.class
 com/pdmv/dto/ThesisLecturerDTO.class
 com/pdmv/configs/SecurityWebApplicationInitializer.class
 com/pdmv/repositories/SchoolYearRepository.class
@@ -83,6 +86,7 @@ com/pdmv/controllers/ApiThesisController.class
 com/pdmv/services/impl/AdminServiceImpl.class
 com/pdmv/pojo/Score.class
 com/pdmv/controllers/ApiLecturerController.class
+com/pdmv/dto/request/SubmitThesisRequest.class
 com/pdmv/services/impl/AffairServiceImpl.class
 com/pdmv/repositories/impl/SchoolYearRepositoryImpl.class
 com/pdmv/repositories/ThesisRepository.class
