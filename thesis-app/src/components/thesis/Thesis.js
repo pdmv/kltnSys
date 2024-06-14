@@ -1,11 +1,13 @@
-import { useContext, useEffect, useState } from "react";
-import { Button, Col, Container, Row, Table, Alert, Spinner } from "react-bootstrap";
+import { useCallback, useContext, useEffect, useState } from "react";
+import { Col, Container, Row, Table, Alert, Spinner, Button } from "react-bootstrap";
 import { UserContext } from "../../configs/UserContext";
 import Title from "../common/Title";
 import { authApi, endpoints } from "../../configs/APIs";
 import FormatDate from "../common/FormatDate";
-import StatusBadge from "../common/StatusBadge";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
+import ThesisStatusBadge from "../common/ThesisStatusBadge";
+import withAuth from "../hoc/withAuth";
 
 const Thesis = () => {
   const { user } = useContext(UserContext);
@@ -14,7 +16,7 @@ const Thesis = () => {
   const [error, setError] = useState(null);
   const nav = useNavigate();
 
-  const fetchTheses = async () => {
+  const fetchTheses = useCallback(async () => {
     if (user) {
       setLoading(true);
       try {
@@ -27,41 +29,34 @@ const Thesis = () => {
         setLoading(false);
       }
     }
-  }
-
-  const getStatus = (status) => {
-    switch (status) {
-      case 'in_progress':
-        return <StatusBadge status="Đang thực hiện" bg="success" />;
-      case 'submitted':
-        return <StatusBadge status="Đã nộp" bg="info" />;
-      case 'under_review':
-        return <StatusBadge status="Đang bảo vệ" bg="warning" />;
-      case 'defended':
-        return <StatusBadge status="Đã bảo vệ" bg="secondary" />;
-      case 'canceled':
-        return <StatusBadge status="Đã huỷ" bg="dark" />;
-      default:
-        return '';
-    }
-  };
-
-  const handleDetail = (id) => {
-    nav("/thesis-details", { state: { selected: id } });
-  };
+  }, [user]);
 
   useEffect(() => {
     fetchTheses();
-  }, [user]);
+  }, [fetchTheses]);
 
   return (
     <Container>
+      <Helmet>
+        <title>Danh sách Khoá luận</title>
+      </Helmet>
       <Row>
         <Col>
           <Title title="Danh sách" strong="Khoá luận" />
+          <div className="d-flex justify-content-center align-items-center mb-4">
+            <Link className="btn btn-dark" to="/thesis/create">
+              Thêm Khoá luận
+            </Link>
+          </div>
           {loading && (
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
-              <Spinner animation="border" variant="primary" />
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
             </div>
           )}
           {error && <Alert variant="danger">{error}</Alert>}
@@ -87,9 +82,9 @@ const Thesis = () => {
                     <td><FormatDate date={item.startDate} /></td>
                     <td><FormatDate date={item.endDate} /></td>
                     <td><FormatDate date={item.expDate} /></td>
-                    <td>{getStatus(item.status)}</td>
+                    <td><ThesisStatusBadge status={item.status} /></td>
                     <td>
-                      <Button variant="outline-dark" onClick={() => handleDetail(item.id)}>Chi tiết</Button>
+                      <Link to={`/thesis/${item.id}`} className="btn btn-outline-dark">Chi tiết</Link>
                     </td>
                   </tr>
                 ))}
@@ -102,4 +97,4 @@ const Thesis = () => {
   );
 }
 
-export default Thesis;
+export default withAuth(Thesis);

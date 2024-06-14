@@ -1,17 +1,20 @@
-import { useLocation } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Title from "../common/Title";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { authApi, endpoints } from "../../configs/APIs";
-import { Spinner, Alert } from "react-bootstrap";
+import { Spinner, Alert, Card, ListGroup, Button } from "react-bootstrap";
 import FormatDate from "../common/FormatDate";
+import { Helmet } from "react-helmet";
+import ThesisStatusBadge from "../common/ThesisStatusBadge";
+
 const ThesisDetails = () => {
-  const location = useLocation();
-  const id = location.state.selected;
+  const { id } = useParams();
   const [thesis, setThesis] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const nav = useNavigate();
 
-  const fetchThesis = async () => {
+  const fetchThesis = useCallback(async () => {
     setLoading(true);
     try {
       let res = await authApi().get(endpoints["thesis-details"](id));
@@ -22,50 +25,76 @@ const ThesisDetails = () => {
     } finally {
       setLoading(false);
     }
-  }
+  }, [id]);
 
   useEffect(() => {
     fetchThesis();
-    console.log(thesis);
-  }, []);
+  }, [fetchThesis]);
+
+  const handleBack = () => {
+    nav(-1);
+  }
 
   return (
     <>
-      {loading && (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
-          <Spinner animation="border" variant="primary" />
-        </div>
-      )}
-      {error && <Alert variant="danger">{error}</Alert>}
-      {thesis && <>
-        <Title title="Chi tiết khoá luận" strong={thesis.name} />
-        <p>ID: {thesis.id}</p>
-        <p>Tên luận văn: {thesis.name}</p>
-        <p>Ngày bắt đầu thực hiện: <FormatDate date={thesis.startDate}/></p>
-        <p>Ngày kết thúc thực hiện: <FormatDate date={thesis.endDate} /></p>
-        <p>Ngày hết hạn nộp: <FormatDate date={thesis.expDate} /></p>
-        <p>Trạng thái: {thesis.status}</p>
-        <p>Ghi chú: {thesis.comment}</p>
-        {/* <p>Ngày tạo: {thesis.createdDate}</p>
-        <p>Ngày cập nhật: {thesis.updatedDate}</p>
-        <p>Active: {thesis.active.toString()}</p> */}
-        <p>Năm học: {thesis.schoolYearId.startYear} - {thesis.schoolYearId.endYear}</p>
-        <p>Giảng viên hướng dẫn:</p>
-        <ul>
-          {thesis.thesisLecturerSet.map((lecturer) => (
-            <li key={lecturer.id}>{lecturer.lastName} {lecturer.firstName} - Liên hệ: {lecturer.email}</li>
-          ))}
-        </ul>
-        <p>Sinh viên thực hiện:</p>
-        <ul>
-          {thesis.thesisStudentSet.map((student, index) => (
-            <li key={index}>{student.lastName} {student.firstName} - Liên hệ: {student.email}</li>
-          ))}
-        </ul>
-        <p>Giảng viên phản biện: {thesis.criticalLecturerId.lastName} {thesis.criticalLecturerId.firstName} - Liên hệ: {thesis.criticalLecturerId.email}</p>
-        <p>Người tạo: {thesis.affairId.lastName} {thesis.affairId.firstName} - Liên hệ: {thesis.affairId.email}</p>
-      </>
-      }
+      <Helmet>
+        <title>Chi tiết Khoá luận</title>
+      </Helmet>
+      <div className="thesis-details-container">
+        {loading && (
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
+            <Spinner
+              as="span"
+              animation="border"
+              size="sm"
+              role="status"
+              aria-hidden="true"
+            />
+          </div>
+        )}
+        {error && <Alert variant="danger">{error}</Alert>}
+        {thesis && (
+          <Card className="thesis-card mt-4 mb-4">
+            <Card.Body>
+              <Card.Title className="mb-4"><Title title="Chi tiết khoá luận" strong={thesis.name} /></Card.Title>
+              <ListGroup variant="flush">
+                <ListGroup.Item><strong>ID:</strong> {thesis.id}</ListGroup.Item>
+                <ListGroup.Item><strong>Ngày bắt đầu thực hiện:</strong> <FormatDate date={thesis.startDate} /></ListGroup.Item>
+                <ListGroup.Item><strong>Ngày kết thúc thực hiện:</strong> <FormatDate date={thesis.endDate} /></ListGroup.Item>
+                <ListGroup.Item><strong>Ngày hết hạn nộp:</strong> <FormatDate date={thesis.expDate} /></ListGroup.Item>
+                <ListGroup.Item><strong>Trạng thái:</strong> <ThesisStatusBadge status={thesis.status} /></ListGroup.Item>
+                <ListGroup.Item><strong>Ghi chú:</strong> {thesis.comment}</ListGroup.Item>
+                <ListGroup.Item><strong>Năm học:</strong> {thesis.schoolYearId.startYear} - {thesis.schoolYearId.endYear}</ListGroup.Item>
+                <ListGroup.Item>
+                  <strong>Giảng viên hướng dẫn:</strong>
+                  <ul className="lecturer-list">
+                    {thesis.thesisLecturerSet.map((lecturer) => (
+                      <li key={lecturer.id}>{lecturer.lastName} {lecturer.firstName} - Liên hệ: {lecturer.email}</li>
+                    ))}
+                  </ul>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <strong>Sinh viên thực hiện:</strong>
+                  <ul className="student-list">
+                    {thesis.thesisStudentSet.map((student, index) => (
+                      <li key={index}>{student.lastName} {student.firstName} - Liên hệ: {student.email}</li>
+                    ))}
+                  </ul>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <strong>Giảng viên phản biện:</strong> {thesis.criticalLecturerId.lastName} {thesis.criticalLecturerId.firstName} - Liên hệ: {thesis.criticalLecturerId.email}
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <strong>Người tạo:</strong> {thesis.affairId.lastName} {thesis.affairId.firstName} - Liên hệ: {thesis.affairId.email}
+                </ListGroup.Item>
+              </ListGroup>
+              <div className="button-group mt-3">
+                <Button as={Link} onClick={handleBack} variant="outline-dark">Quay lại</Button>
+              </div>
+            </Card.Body>
+          </Card>
+        )}
+      </div>
     </>
   );
 };

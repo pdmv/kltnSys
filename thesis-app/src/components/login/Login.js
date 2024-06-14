@@ -1,21 +1,31 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../configs/UserContext";
-import { Alert, Form } from "react-bootstrap";
+import { Alert, Form, Spinner } from "react-bootstrap";
 import { Button, Col, Row } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import APIs, { authApi, endpoints } from "../../configs/APIs";
 import cookie from 'react-cookies';
 import { Helmet } from "react-helmet";
 import Title from "../common/Title";
+import './Login.css';
 
 const Login = () => {
   const [user, setUser] = useState({
     username: '',
     password: ''
   });
-  const { dispatch } = useContext(UserContext);
+  const { user: currentUser, dispatch } = useContext(UserContext);
+  const location = useLocation();
   const nav = useNavigate();
+  const from = location.state?.from?.pathname || "/";
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (currentUser) {
+      nav(from, { replace: true });
+    }
+  }, [currentUser, from, nav]);
 
   const change = (event, field) => {
     setUser(current => {
@@ -25,22 +35,27 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError('');
 
     try {
       let res = await APIs.post(endpoints["login"], { ...user });
 
+      cookie.remove('token');
       cookie.save('token', res.data);
 
       let u = await authApi().get(endpoints["current-user"]);
       dispatch({ type: 'login', payload: u.data });
-      console.log(u.data);
-      nav('/');
+
+      nav(from, { replace: true });
     } catch (error) {
       if (error.response && error.response.status === 401) {
         setError('Tên đăng nhập hoặc mật khẩu không đúng!');
       } else {
         setError('Đã xảy ra lỗi, vui lòng thử lại sau!');
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -79,10 +94,19 @@ const Login = () => {
               <Form.Label htmlFor="floatingPassword">Mật khẩu</Form.Label>
             </Form.Group>
 
-            <Button variant="dark" type="submit" className="mt-3 w-100" size="lg">
-              Đăng nhập
+            <Button variant="dark" type="submit" className="mt-3 w-100" size="lg" disabled={loading}>
+              {loading ? <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              /> : 'Đăng nhập'}
             </Button>
           </Form>
+          <div className="mt-4 text-center">
+            <h6 className="muted-text">Nếu bạn quên mật khẩu, hãy liên hệ Quản trị viên.</h6>
+          </div>
         </Col>
       </Row>
     </>

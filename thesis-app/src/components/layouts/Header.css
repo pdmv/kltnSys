@@ -1,0 +1,28 @@
+.no-caret-dropdown .dropdown-toggle::after {
+  display: none !important;
+}
+
+.no-caret-dropdown .dropdown-toggle {
+  padding-right: 0 !important;
+}
+
+.dropdown-item-hover:hover {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+.active-link {
+  font-weight: 500 !important;
+  color: #000000 !important;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: 550; 
+  color: #333;
+  text-decoration: none;
+}
+
+.navbar-brand:hover {
+  color: #555;
+}
