@@ -125,4 +125,64 @@ public class StudentRepositoryImpl implements StudentRepository {
         }
     }
 
+    @Override
+    public List<Student> list(Map<String, String> params) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder criteriaBuilder = s.getCriteriaBuilder();
+        CriteriaQuery<Student> criteriaQuery = criteriaBuilder.createQuery(Student.class);
+        Root<Student> root = criteriaQuery.from(Student.class);
+
+        root.fetch("facultyId", JoinType.LEFT); 
+        root.fetch("majorId", JoinType.LEFT); 
+
+        List<Predicate> predicates = new ArrayList<>();
+
+        if (params != null) {
+            try {
+                String facultyId = params.get("facultyId");
+                if (facultyId != null && !facultyId.isEmpty()) {
+                    int id = Integer.parseInt(facultyId);
+                    predicates.add(criteriaBuilder.equal(root.get("facultyId").get("id"), id));
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("Invalid facultyId: " + e.getMessage()); 
+            }
+
+            String name = params.get("name");
+            if (name != null && !name.isEmpty()) {
+                predicates.add(criteriaBuilder.or(
+                    criteriaBuilder.like(root.get("firstName"), "%" + name + "%"),
+                    criteriaBuilder.like(root.get("lastName"), "%" + name + "%")
+                ));
+            }
+
+            try {
+                String id = params.get("id");
+                if (id != null && !id.isEmpty()) {
+                    int studentId = Integer.parseInt(id); 
+                    predicates.add(criteriaBuilder.equal(root.get("id"), studentId)); 
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("Invalid student ID: " + e.getMessage());
+            }
+
+            try {
+                String majorId = params.get("majorId"); 
+                if (majorId != null && !majorId.isEmpty()) {
+                    int id = Integer.parseInt(majorId);
+                    predicates.add(criteriaBuilder.equal(root.get("majorId").get("id"), id)); 
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("Invalid majorId: " + e.getMessage());
+            }
+        }
+
+        if (!predicates.isEmpty()) {
+            criteriaQuery.where(criteriaBuilder.and(predicates.toArray(new Predicate[0]))); 
+        }
+
+        Query<Student> query = s.createQuery(criteriaQuery);
+        return query.getResultList();
+    }
+
 }

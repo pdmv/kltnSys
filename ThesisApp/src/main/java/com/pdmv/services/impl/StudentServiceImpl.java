@@ -57,5 +57,13 @@ public class StudentServiceImpl implements StudentService {
     public Student getStudentByAccountId(int id) {
         return this.studentRepo.getStudentByAccountId(id);
     }
+
+    @Override
+    public List<Student> list(Map<String, String> params) {
+        if (params == null) {
+            params = new HashMap<>();
+        }
+        return this.studentRepo.list(params);
+    }
     
 }

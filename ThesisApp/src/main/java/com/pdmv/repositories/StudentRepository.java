@@ -18,4 +18,5 @@ public interface StudentRepository {
     List<Student> getStudents(Map<String, String> params);
     Student getStudentById(int id);
     Student getStudentByAccountId(int id);
+    List<Student> list(Map<String, String> params);
 }

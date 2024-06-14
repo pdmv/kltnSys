@@ -86,7 +86,6 @@ com/pdmv/controllers/ApiThesisController.class
 com/pdmv/services/impl/AdminServiceImpl.class
 com/pdmv/pojo/Score.class
 com/pdmv/controllers/ApiLecturerController.class
-com/pdmv/dto/request/SubmitThesisRequest.class
 com/pdmv/services/impl/AffairServiceImpl.class
 com/pdmv/repositories/impl/SchoolYearRepositoryImpl.class
 com/pdmv/repositories/ThesisRepository.class

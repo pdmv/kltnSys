@@ -35,7 +35,8 @@ public class ApiStudentController {
     @GetMapping("/student/")
     public ResponseEntity<List<StudentDTO>> list(@RequestParam(required = false) Map<String, String> params) {
         try {
-            return new ResponseEntity<>(this.studentService.getStudents(params).stream().map(StudentDTO::toStudentDTO).collect(Collectors.toList()), HttpStatus.OK);
+//            return new ResponseEntity<>(this.studentService.getStudents(params).stream().map(StudentDTO::toStudentDTO).collect(Collectors.toList()), HttpStatus.OK);
+            return new ResponseEntity<>(this.studentService.list(params).stream().map(StudentDTO::toStudentDTO).collect(Collectors.toList()), HttpStatus.OK);
         } catch (Exception e) {
             System.err.println(e.getMessage()); 
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); 

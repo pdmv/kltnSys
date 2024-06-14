@@ -92,7 +92,7 @@ public class ApiAccountController {
                 Admin admin = this.adminService.getAdminByAccountId(account.getId());
                 return new ResponseEntity<>(admin, HttpStatus.OK); 
             default:
-                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); 
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     
