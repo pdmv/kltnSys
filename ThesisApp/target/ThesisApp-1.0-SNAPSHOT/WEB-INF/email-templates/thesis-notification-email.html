@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thông báo về khóa luận</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333333;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #dddddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f5f5f5;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff; 
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 th:text="${'Thông báo về khóa luận: ' + thesis.name}"></h1>
+
+        <p th:utext="${'Xin chào <strong>' + recipientName + '</strong>,'}"></p>
+
+        <p th:utext="${'Bạn đã được thêm vào khóa luận với vai trò <strong>' + role + '</strong>.'}"></p>
+
+        <h2>Thông tin chi tiết:</h2>
+        <table>
+            <tr>
+                <th>Tên luận văn</th>
+                <td th:text="${thesis.name}"></td>
+            </tr>
+            <tr>
+                <th>Niên khóa</th>
+                <td th:text="${thesis.schoolYearId.startYear + '-' + thesis.schoolYearId.endYear}"></td>
+            </tr>
+            <tr>
+                <th>Giảng viên phản biện</th>
+                <td th:text="${thesis.criticalLecturerId.lastName + ' ' + thesis.criticalLecturerId.firstName}"></td>
+            </tr>
+            <tr>
+                <th>Giảng viên hướng dẫn</th>
+                <td>
+                    <ul>
+                        <li th:each="lecturer : ${thesis.thesisLecturerSet}" th:text="${lecturer.lastName + ' ' + lecturer.firstName}"></li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th>Sinh viên thực hiện</th>
+                <td>
+                    <ul>
+                        <li th:each="student : ${thesis.thesisStudentSet}" th:text="${student.lastName + ' ' + student.firstName}"></li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th>Ngày bắt đầu</th>
+                <td th:text="${#dates.format(thesis.startDate, 'dd-MM-yyyy')}"></td>
+            </tr>
+            <tr>
+                <th>Ngày kết thúc</th>
+                <td th:text="${#dates.format(thesis.endDate, 'dd-MM-yyyy')}"></td>
+            </tr>
+            <tr>
+                <th>Hạn nộp</th>
+                <td th:text="${#dates.format(thesis.expDate, 'dd-MM-yyyy')}"></td>
+            </tr>
+            <tr>
+                <th>Giáo vụ phụ trách</th>
+                <td th:text="${thesis.affairId.lastName + ' ' + thesis.affairId.firstName}"></td>
+            </tr>
+        </table>
+        <p>Vui lòng truy cập hệ thống để xem chi tiết.</p>
+    </div>
+</body>
+</html>

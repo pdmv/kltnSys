@@ -2,14 +2,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.pdmv.configs;
+package com.pdmv.dto.request;
 
-import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
  * @author phamdominhvuong
  */
-public class SecurityWebAplicationInitializer extends AbstractSecurityWebApplicationInitializer {
-    
+@Getter
+@Setter
+public class SubmitThesisRequest {
+    private Integer id;
+    private MultipartFile file;
 }

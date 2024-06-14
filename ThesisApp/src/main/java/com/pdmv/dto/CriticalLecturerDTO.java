@@ -4,6 +4,7 @@
  */
 package com.pdmv.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pdmv.pojo.Lecturer;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,5 +28,10 @@ public class CriticalLecturerDTO {
         dto.setLastName(criticalLecturer.getLastName());
         dto.setEmail(criticalLecturer.getEmail());
         return dto;
+    }
+    
+    @JsonIgnore
+    public String getFullname() {
+        return this.lastName + ' ' + this.firstName;
     }
 }

@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class IndexController {
     @Autowired
     private AccountService accountService;
+//    @Autowired
+//    private EmailService emailService;
     
     public String getCurrentUserAvatar(AccountService accountService) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -46,6 +48,12 @@ public class IndexController {
     
     @RequestMapping("/")
     public String index() {
+//        Map<String, Object> variables = new HashMap<>();
+//        variables.put("name", "Test emial");
+//        variables.put("message", "Chào mừng bạn đến với hệ thống quản lý luận văn!");
+//
+//        emailService.sendEmail("phamdominhvuong07112003@gmail.com", "Email chào mừng", "test", variables);
+        
         return "index";
     }
     

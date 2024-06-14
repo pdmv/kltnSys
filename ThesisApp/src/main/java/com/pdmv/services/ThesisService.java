@@ -9,13 +9,15 @@ import com.pdmv.dto.CreateThesisDTO;
 import com.pdmv.dto.ThesisDetailsDTO;
 import java.util.List;
 import java.util.Map;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
  * @author phamdominhvuong
  */
 public interface ThesisService {
-    void addOrUpdate(CreateThesisDTO thesis);
+    ThesisDetailsDTO addOrUpdate(CreateThesisDTO thesis);
     ThesisDetailsDTO getThesisById(int id);
     List<ThesisDTO> getLists(Map<String, String> params);
+    void submitReportFile(int id, MultipartFile file);
 }

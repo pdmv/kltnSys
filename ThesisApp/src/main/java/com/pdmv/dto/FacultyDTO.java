@@ -4,6 +4,7 @@
  */
 package com.pdmv.dto;
 
+import com.pdmv.pojo.Faculty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,4 +17,13 @@ import lombok.Setter;
 public class FacultyDTO {
     private Integer id;
     private String name;
+    
+    public static FacultyDTO toFacultyDTO(Faculty faculty) {
+        FacultyDTO f = new FacultyDTO();
+        
+        f.setId(faculty.getId());
+        f.setName(faculty.getName());
+        
+        return f;
+    }
 }

@@ -35,6 +35,8 @@ import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -46,6 +48,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
+@PropertySource("classpath:theses.properties")
 public class ThesisRepositoryImpl implements ThesisRepository {
     @Autowired
     private LocalSessionFactoryBean factory;
@@ -57,10 +60,12 @@ public class ThesisRepositoryImpl implements ThesisRepository {
     private StudentRepository studentRepo;
     @Autowired
     private AffairRepository affairRepo;
+    @Autowired
+    private Environment env;
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public void addOrUpdate(CreateThesisDTO thesisDTO) {
+    public int addOrUpdate(CreateThesisDTO thesisDTO) {
         Session s = this.factory.getObject().getCurrentSession();
         Thesis thesis = new Thesis();
 
@@ -75,6 +80,8 @@ public class ThesisRepositoryImpl implements ThesisRepository {
             updateThesisLecturers(thesisDTO, thesis, s);
             updateThesisStudents(thesisDTO, thesis, s);
         }
+        
+        return thesis.getId();
     }
 
     private void populateThesis(CreateThesisDTO thesisDTO, Thesis thesis) {
@@ -88,7 +95,7 @@ public class ThesisRepositoryImpl implements ThesisRepository {
         thesis.setComment(thesisDTO.getComment());
         
         if (thesis.getId() == null && thesisDTO.getStatus() == null) {
-            thesis.setStatus("in_progress");
+            thesis.setStatus(this.env.getProperty("thesis.status.in_progress"));
         } else {
             thesis.setStatus(thesisDTO.getStatus());
         }
@@ -108,6 +115,9 @@ public class ThesisRepositoryImpl implements ThesisRepository {
     private void saveThesisLecturers(CreateThesisDTO thesisDTO, Thesis thesis, Session s) {
         for (ThesisLecturerDTO lecturerDTO : thesisDTO.getThesisLecturerSet()) {
             Lecturer l = lecturerRepo.getLecturerById(lecturerDTO.getLecturerId());
+            if (l == null) {
+                throw new IllegalArgumentException("Giảng viên không tồn tại!");
+            }
             validateFaculty(l, thesis.getAffairId());
             ThesisLecturer lecturer = new ThesisLecturer();
             lecturer.setThesisId(thesis);
@@ -119,6 +129,9 @@ public class ThesisRepositoryImpl implements ThesisRepository {
     private void saveThesisStudents(CreateThesisDTO thesisDTO, Thesis thesis, Session s) {
         for (ThesisStudentDTO studentDTO : thesisDTO.getThesisStudentSet()) {
             Student stu = studentRepo.getStudentById(studentDTO.getStudentId());
+            if (stu == null) {
+                throw new IllegalArgumentException("Sinh viên không tồn tại!");
+            }
             validateFaculty(stu, thesis.getAffairId());
             ThesisStudent student = new ThesisStudent();
             student.setThesisId(thesis);
@@ -278,5 +291,19 @@ public class ThesisRepositoryImpl implements ThesisRepository {
                 throw new IllegalArgumentException("Sinh viên không thuộc chung khoa với giáo vụ.");
             }
         }
+    }
+
+    @Override
+    public void submitReportFile(Integer id, String url) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Thesis thesis = s.get(Thesis.class, id);
+
+        if (thesis == null) {
+            throw new IllegalArgumentException("Không tìm thấy khoá luân!"); 
+        }
+        
+        thesis.setReportFile(url);
+        thesis.setStatus(this.env.getProperty("thesis.status.submitted"));
+        s.merge(thesis);
     }
 }
