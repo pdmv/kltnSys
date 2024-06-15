@@ -9,7 +9,7 @@ export const endpoints = {
   'thesis': '/api/thesis/',
   'thesis-details': (id) =>  `/api/thesis/${id}/`,
   'criteria': '/api/criteria',
-  'criterionDetails': (id) => `/api/criteria/${id}`,
+  'criterion-details': (id) => `/api/criteria/${id}`,
 }
 
 export const authApi = () => {
