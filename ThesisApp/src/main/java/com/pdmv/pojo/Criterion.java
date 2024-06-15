@@ -203,4 +203,8 @@ public class Criterion implements Serializable {
     public void preUpdate() {
         updatedDate = new Date();
     }
+
+    public void setAffairId(Integer affairId) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

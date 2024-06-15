@@ -58,6 +58,7 @@ const Header = () => {
                 </>
               )}
               <Link to="/thesis" className="nav-link">Khoá luận</Link>
+              <Link to="/criterion" className="nav-link">Tiêu chí</Link> {/* Link to Criterion */}
               <Link onClick={handleLogout} className="nav-link">Đăng xuất</Link>
             </>
           ) : (
