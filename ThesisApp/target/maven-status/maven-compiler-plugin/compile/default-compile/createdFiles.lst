@@ -15,6 +15,7 @@ com\pdmv\services\impl\ClassServiceImpl.class
 com\pdmv\pojo\Class.class
 com\pdmv\pojo\CouncilCriterion_.class
 com\pdmv\pojo\Account_.class
+com\pdmv\services\impl\StatsServiceImpl.class
 com\pdmv\controllers\ApiSchoolYearController.class
 com\pdmv\dto\CriticalLecturerDTO.class
 com\pdmv\pojo\Affair_.class
@@ -27,6 +28,7 @@ com\pdmv\controllers\ApiAccountController.class
 com\pdmv\dto\LecturerDTO.class
 com\pdmv\pojo\Major_.class
 com\pdmv\services\CriterionService.class
+com\pdmv\controllers\StatsController.class
 com\pdmv\pojo\Criterion_.class
 com\pdmv\repositories\StudentRepository.class
 com\pdmv\pojo\Account.class
@@ -49,6 +51,7 @@ com\pdmv\services\AdminService.class
 com\pdmv\configs\DispatcherServletInit.class
 com\pdmv\dto\AccountDTO.class
 com\pdmv\pojo\Affair.class
+com\pdmv\repositories\StatsRepository.class
 com\pdmv\repositories\impl\CriterionRepositoryImpl.class
 com\pdmv\dto\response\MessageResponse.class
 com\pdmv\services\impl\AccountServiceImpl.class
@@ -62,6 +65,7 @@ com\pdmv\services\impl\FacultyServiceImpl.class
 com\pdmv\configs\TilesConfig.class
 com\pdmv\pojo\Score.class
 com\pdmv\services\impl\StudentServiceImpl.class
+com\pdmv\services\StatsService.class
 com\pdmv\repositories\LecturerRepository.class
 com\pdmv\pojo\ThesisStudent.class
 com\pdmv\pojo\Thesis.class
@@ -100,6 +104,7 @@ com\pdmv\repositories\SchoolYearRepository.class
 com\pdmv\pojo\ThesisLecturer.class
 com\pdmv\repositories\AccountRepository.class
 com\pdmv\services\AffairService.class
+com\pdmv\repositories\impl\StatsRepositoryImpl.class
 com\pdmv\configs\WebApplicationContextConfig$1.class
 com\pdmv\controllers\ApiStudentController.class
 com\pdmv\repositories\AffairRepository.class

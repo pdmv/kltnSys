@@ -1,4 +1,5 @@
 D:\kltnSys\ThesisApp\src\main\java\com\pdmv\dto\CriticalLecturerDTO.java
+D:\kltnSys\ThesisApp\src\main\java\com\pdmv\repositories\impl\StatsRepositoryImpl.java
 D:\kltnSys\ThesisApp\src\main\java\com\pdmv\repositories\SchoolYearRepository.java
 D:\kltnSys\ThesisApp\src\main\java\com\pdmv\controllers\ApiFacultyController.java
 D:\kltnSys\ThesisApp\src\main\java\com\pdmv\repositories\AccountRepository.java
@@ -8,6 +9,7 @@ D:\kltnSys\ThesisApp\src\main\java\com\pdmv\components\StringToClassConverter.ja
 D:\kltnSys\ThesisApp\src\main\java\com\pdmv\services\CriterionService.java
 D:\kltnSys\ThesisApp\src\main\java\com\pdmv\services\impl\CriterionServiceImpl.java
 D:\kltnSys\ThesisApp\src\main\java\com\pdmv\services\StudentService.java
+D:\kltnSys\ThesisApp\src\main\java\com\pdmv\controllers\StatsController.java
 D:\kltnSys\ThesisApp\src\main\java\com\pdmv\dto\StudentDTO.java
 D:\kltnSys\ThesisApp\src\main\java\com\pdmv\pojo\Lecturer.java
 D:\kltnSys\ThesisApp\src\main\java\com\pdmv\repositories\impl\StudentRepositoryImpl.java
@@ -23,6 +25,7 @@ D:\kltnSys\ThesisApp\src\main\java\com\pdmv\services\AdminService.java
 D:\kltnSys\ThesisApp\src\main\java\com\pdmv\repositories\impl\AccountRepositoryImpl.java
 D:\kltnSys\ThesisApp\src\main\java\com\pdmv\configs\SecurityWebApplicationInitializer.java
 D:\kltnSys\ThesisApp\src\main\java\com\pdmv\pojo\Score.java
+D:\kltnSys\ThesisApp\src\main\java\com\pdmv\services\StatsService.java
 D:\kltnSys\ThesisApp\src\main\java\com\pdmv\dto\CreateThesisDTO.java
 D:\kltnSys\ThesisApp\src\main\java\com\pdmv\services\impl\EmailService.java
 D:\kltnSys\ThesisApp\src\main\java\com\pdmv\pojo\Affair.java
@@ -44,6 +47,7 @@ D:\kltnSys\ThesisApp\src\main\java\com\pdmv\controllers\ApiStudentController.jav
 D:\kltnSys\ThesisApp\src\main\java\com\pdmv\dto\MajorDTO.java
 D:\kltnSys\ThesisApp\src\main\java\com\pdmv\pojo\Student.java
 D:\kltnSys\ThesisApp\src\main\java\com\pdmv\services\impl\MajorServiceImpl.java
+D:\kltnSys\ThesisApp\src\main\java\com\pdmv\services\impl\StatsServiceImpl.java
 D:\kltnSys\ThesisApp\src\main\java\com\pdmv\pojo\Faculty.java
 D:\kltnSys\ThesisApp\src\main\java\com\pdmv\pojo\ThesisStudent.java
 D:\kltnSys\ThesisApp\src\main\java\com\pdmv\dto\ThesisLecturerDTO.java
@@ -99,6 +103,7 @@ D:\kltnSys\ThesisApp\src\main\java\com\pdmv\repositories\LecturerRepository.java
 D:\kltnSys\ThesisApp\src\main\java\com\pdmv\services\LecturerService.java
 D:\kltnSys\ThesisApp\src\main\java\com\pdmv\configs\JwtSecurityConfig.java
 D:\kltnSys\ThesisApp\src\main\java\com\pdmv\filters\CustomAccessDeniedHandler.java
+D:\kltnSys\ThesisApp\src\main\java\com\pdmv\repositories\StatsRepository.java
 D:\kltnSys\ThesisApp\src\main\java\com\pdmv\repositories\ClassRepository.java
 D:\kltnSys\ThesisApp\src\main\java\com\pdmv\pojo\Account.java
 D:\kltnSys\ThesisApp\src\main\java\com\pdmv\repositories\AdminRepository.java
