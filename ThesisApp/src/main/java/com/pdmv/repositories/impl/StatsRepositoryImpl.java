@@ -4,44 +4,55 @@
  */
 package com.pdmv.repositories.impl;
 
+import com.pdmv.pojo.Thesis;
 import com.pdmv.repositories.StatsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
+import javax.persistence.Query;
+
 /**
  *
  * @author tid83
  */
 @Repository
+@Transactional
 public class StatsRepositoryImpl implements StatsRepository {
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
-    public List<Object[]> findAvgScoresBySchoolYearAndFaculty() {
-        String query = "SELECT school_year_id, faculty_id, AVG(avg_score) " +
-                       "FROM thesis " +
-                       "GROUP BY school_year_id, faculty_id";
-        return jdbcTemplate.query(query, (rs, rowNum) -> new Object[]{
-                rs.getInt("school_year_id"),
-                rs.getInt("faculty_id"),
-                rs.getDouble("AVG(avg_score)")
-        });
+    public List<Object[]> statsAvgScoresByYear(String facultyId) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Object[]> query = builder.createQuery(Object[].class);
+
+        Root<Thesis> root = query.from(Thesis.class);
+        query.multiselect(root.get("schoolYearId"), builder.avg(root.get("avgScore")));
+        query.groupBy(root.get("schoolYearId"));
+
+        TypedQuery<Object[]> typedQuery = entityManager.createQuery(query);
+        return typedQuery.getResultList();
     }
 
     @Override
-    public List<Object[]> findParticipationFrequencyByMajorFacultyAndSchoolYear() {
-        String query = "SELECT major_id, faculty_id, school_year_id, COUNT(student_id) " +
-                       "FROM thesis " +
-                       "GROUP BY major_id, faculty_id, school_year_id";
-        return jdbcTemplate.query(query, (rs, rowNum) -> new Object[]{
-                rs.getInt("major_id"),
-                rs.getInt("faculty_id"),
-                rs.getInt("school_year_id"),
-                rs.getInt("COUNT(student_id)")
-        });
+    public List<Object[]> statsThesisParticipationByMajor(String facultyId) {
+        String hql = "SELECT thesis.major, COUNT(thesis) "
+                + "FROM Thesis thesis "
+                + "WHERE thesis.facultyId = :facultyId "
+                + "GROUP BY thesis.major";
+
+        TypedQuery<Object[]> query = entityManager.createQuery(hql, Object[].class);
+        query.setParameter("facultyId", facultyId);
+
+        return query.getResultList();
     }
 }

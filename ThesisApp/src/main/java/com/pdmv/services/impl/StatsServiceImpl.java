@@ -18,17 +18,16 @@ import java.util.List;
  */
 @Service
 public class StatsServiceImpl implements StatsService {
-
     @Autowired
-    private StatsRepository statsRepository;
+    private StatsRepository statsRepo;
 
     @Override
-    public List<Object[]> getAvgScoresBySchoolYearAndFaculty() {
-        return statsRepository.findAvgScoresBySchoolYearAndFaculty();
+    public List<Object[]> statsAvgScoresByYear(String facultyId) {
+        return statsRepo.statsAvgScoresByYear(facultyId);
     }
 
     @Override
-    public List<Object[]> getParticipationFrequencyByMajorFacultyAndSchoolYear() {
-        return statsRepository.findParticipationFrequencyByMajorFacultyAndSchoolYear();
+    public List<Object[]> statsThesisParticipationByMajor(String facultyId) {
+        return statsRepo.statsThesisParticipationByMajor(facultyId);
     }
 }

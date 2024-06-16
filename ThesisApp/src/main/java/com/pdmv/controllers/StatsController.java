@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Map;
 
 /**
  *
@@ -16,14 +19,19 @@ import org.springframework.web.bind.annotation.GetMapping;
  */
 @Controller
 public class StatsController {
-
     @Autowired
     private StatsService statsService;
 
     @GetMapping("/stats")
-    public String showStats(Model model) {
-        model.addAttribute("avgScoresBySchoolYearAndFaculty", statsService.getAvgScoresBySchoolYearAndFaculty());
-        model.addAttribute("participationFrequencyByMajorFacultyAndSchoolYear", statsService.getParticipationFrequencyByMajorFacultyAndSchoolYear());
+    public String statsView(Model model, @RequestParam Map<String, String> params) {
+        String facultyId = params.get("facultyId"); // Chỉnh sửa để lấy facultyId từ params
+
+        // Thống kê điểm trung bình khoá luận theo từng niên khoá của một khoa
+        model.addAttribute("avgScoresByYear", statsService.statsAvgScoresByYear(facultyId));
+
+        // Thống kê tần suất tham gia làm khoá luận theo từng ngành của từng niên khoá của một khoa
+        model.addAttribute("thesisParticipation", statsService.statsThesisParticipationByMajor(facultyId));
+
         return "stats";
     }
 }

@@ -51,7 +51,9 @@ import org.springframework.format.annotation.DateTimeFormat;
     @NamedQuery(name = "Thesis.findByStatus", query = "SELECT t FROM Thesis t WHERE t.status = :status"),
     @NamedQuery(name = "Thesis.findByCreatedDate", query = "SELECT t FROM Thesis t WHERE t.createdDate = :createdDate"),
     @NamedQuery(name = "Thesis.findByUpdatedDate", query = "SELECT t FROM Thesis t WHERE t.updatedDate = :updatedDate"),
-    @NamedQuery(name = "Thesis.findByActive", query = "SELECT t FROM Thesis t WHERE t.active = :active")})
+    @NamedQuery(name = "Thesis.findByActive", query = "SELECT t FROM Thesis t WHERE t.active = :active"),
+    @NamedQuery(name = "Thesis.findByFacultyId", query = "SELECT thesis.major, COUNT(thesis) FROM Thesis thesis WHERE thesis.facultyId.id = :facultyId GROUP BY thesis.major")
+})
 public class Thesis implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -117,6 +119,14 @@ public class Thesis implements Serializable {
     private SchoolYear schoolYearId;
     @OneToMany(mappedBy = "thesisId", cascade = CascadeType.ALL)
     private Set<ThesisStudent> thesisStudentSet;
+
+    @Size(max = 255)
+    @Column(name = "major")
+    private String major; // Thêm thuộc tính này
+
+    @JoinColumn(name = "faculty_id", referencedColumnName = "id")
+    @ManyToOne
+    private Faculty facultyId;
 
     public Thesis() {
     }
@@ -277,6 +287,22 @@ public class Thesis implements Serializable {
         this.thesisStudentSet = thesisStudentSet;
     }
 
+    public String getMajor() {
+        return major;
+    }
+
+    public void setMajor(String major) {
+        this.major = major;
+    }
+
+    public Faculty getFacultyId() {
+        return facultyId;
+    }
+
+    public void setFacultyId(Faculty facultyId) {
+        this.facultyId = facultyId;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -301,7 +327,7 @@ public class Thesis implements Serializable {
     public String toString() {
         return "com.pdmv.pojo.Thesis[ id=" + id + " ]";
     }
-    
+
     @PrePersist
     public void prePersist() {
         createdDate = new Date();

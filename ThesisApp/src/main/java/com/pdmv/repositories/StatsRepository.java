@@ -11,6 +11,7 @@ import java.util.List;
  * @author tid83
  */
 public interface StatsRepository {
-    List<Object[]> findAvgScoresBySchoolYearAndFaculty();
-    List<Object[]> findParticipationFrequencyByMajorFacultyAndSchoolYear();
+    List<Object[]> statsAvgScoresByYear(String facultyId);
+
+    List<Object[]> statsThesisParticipationByMajor(String facultyId);
 }

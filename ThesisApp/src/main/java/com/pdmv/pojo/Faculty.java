@@ -82,6 +82,8 @@ public class Faculty implements Serializable {
     @OneToMany(mappedBy = "facultyId")
     @JsonIgnore
     private Set<Class> classSet;
+    @OneToMany(mappedBy = "facultyId")
+    private Set<Thesis> thesisSet;
 
     public Faculty() {
     }
@@ -180,6 +182,15 @@ public class Faculty implements Serializable {
         this.classSet = classSet;
     }
 
+    @XmlTransient
+    public Set<Thesis> getThesisSet() {
+        return thesisSet;
+    }
+
+    public void setThesisSet(Set<Thesis> thesisSet) {
+        this.thesisSet = thesisSet;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -204,7 +215,7 @@ public class Faculty implements Serializable {
     public String toString() {
         return "com.pdmv.pojo.Faculty[ id=" + id + " ]";
     }
-    
+
     @PrePersist
     public void prePersist() {
         createdDate = new Date();
