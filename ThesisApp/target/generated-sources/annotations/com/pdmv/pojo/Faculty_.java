@@ -5,13 +5,14 @@ import com.pdmv.pojo.Class;
 import com.pdmv.pojo.Lecturer;
 import com.pdmv.pojo.Major;
 import com.pdmv.pojo.Student;
+import com.pdmv.pojo.Thesis;
 import java.util.Date;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.12.v20230209-rNA", date="2024-06-16T23:58:35")
+@Generated(value="EclipseLink-2.7.12.v20230209-rNA", date="2024-06-18T21:54:38")
 @StaticMetamodel(Faculty.class)
 public class Faculty_ { 
 
@@ -21,6 +22,7 @@ public class Faculty_ {
     public static volatile SetAttribute<Faculty, Major> majorSet;
     public static volatile SingularAttribute<Faculty, String> name;
     public static volatile SingularAttribute<Faculty, Boolean> active;
+    public static volatile SetAttribute<Faculty, Thesis> thesisSet;
     public static volatile SingularAttribute<Faculty, Integer> id;
     public static volatile SingularAttribute<Faculty, Date> updatedDate;
     public static volatile SetAttribute<Faculty, Affair> affairSet;

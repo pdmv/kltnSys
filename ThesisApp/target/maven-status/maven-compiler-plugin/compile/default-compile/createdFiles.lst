@@ -104,6 +104,7 @@ com\pdmv\repositories\SchoolYearRepository.class
 com\pdmv\pojo\ThesisLecturer.class
 com\pdmv\repositories\AccountRepository.class
 com\pdmv\services\AffairService.class
+com\pdmv\repositories\impl\StatsRepositoryImpl.class
 com\pdmv\configs\WebApplicationContextConfig$1.class
 com\pdmv\controllers\ApiStudentController.class
 com\pdmv\repositories\AffairRepository.class

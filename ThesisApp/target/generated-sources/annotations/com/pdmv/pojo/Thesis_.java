@@ -1,6 +1,7 @@
 package com.pdmv.pojo;
 
 import com.pdmv.pojo.Affair;
+import com.pdmv.pojo.Faculty;
 import com.pdmv.pojo.Lecturer;
 import com.pdmv.pojo.SchoolYear;
 import com.pdmv.pojo.Score;
@@ -12,7 +13,7 @@ import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.12.v20230209-rNA", date="2024-06-16T23:58:35")
+@Generated(value="EclipseLink-2.7.12.v20230209-rNA", date="2024-06-18T21:54:38")
 @StaticMetamodel(Thesis.class)
 public class Thesis_ { 
 
@@ -25,6 +26,7 @@ public class Thesis_ {
     public static volatile SingularAttribute<Thesis, Date> updatedDate;
     public static volatile SingularAttribute<Thesis, SchoolYear> schoolYearId;
     public static volatile SingularAttribute<Thesis, Date> expDate;
+    public static volatile SingularAttribute<Thesis, Faculty> facultyId;
     public static volatile SingularAttribute<Thesis, Date> createdDate;
     public static volatile SingularAttribute<Thesis, Float> avgScore;
     public static volatile SingularAttribute<Thesis, String> major;

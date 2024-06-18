@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 8.0.36, for macos14 (arm64)
+-- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
 -- Host: localhost    Database: thesisdb
 -- ------------------------------------------------------
@@ -260,7 +260,7 @@ CREATE TABLE `criterion` (
   PRIMARY KEY (`id`),
   KEY `affair_id` (`affair_id`),
   CONSTRAINT `criterion_ibfk_1` FOREIGN KEY (`affair_id`) REFERENCES `affair` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -269,6 +269,7 @@ CREATE TABLE `criterion` (
 
 LOCK TABLES `criterion` WRITE;
 /*!40000 ALTER TABLE `criterion` DISABLE KEYS */;
+INSERT INTO `criterion` VALUES (1,'tieu chi A','a',1,'2024-06-06 03:30:32','2024-06-18 15:22:57',1);
 /*!40000 ALTER TABLE `criterion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -463,7 +464,7 @@ CREATE TABLE `student` (
   KEY `faculty_id` (`faculty_id`),
   KEY `major_id` (`major_id`),
   KEY `class_id` (`class_id`),
-  CONSTRAINT `student_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `Account` (`id`),
+  CONSTRAINT `student_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`),
   CONSTRAINT `student_ibfk_2` FOREIGN KEY (`faculty_id`) REFERENCES `faculty` (`id`),
   CONSTRAINT `student_ibfk_3` FOREIGN KEY (`major_id`) REFERENCES `major` (`id`),
   CONSTRAINT `student_ibfk_4` FOREIGN KEY (`class_id`) REFERENCES `class` (`id`)
@@ -503,6 +504,8 @@ CREATE TABLE `thesis` (
   `created_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `active` tinyint(1) DEFAULT '1',
+  `major` varchar(255) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
+  `faculty_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `affair_id` (`affair_id`),
   KEY `critical_lecturer_id` (`critical_lecturer_id`),
@@ -519,7 +522,7 @@ CREATE TABLE `thesis` (
 
 LOCK TABLES `thesis` WRITE;
 /*!40000 ALTER TABLE `thesis` DISABLE KEYS */;
-INSERT INTO `thesis` VALUES (1,'Tên luận văn 2','https://res.cloudinary.com/dyuafq1hx/raw/upload/v1718218383/1718218380163_E_Prac.zip','2024-06-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','submitted',1,1,3,'2024-06-06 03:30:32','2024-06-12 18:53:05',1),(2,'Tên luận văn 3','https://res.cloudinary.com/dyuafq1hx/raw/upload/v1718218431/1718218428649_E_Prac.zip','2024-06-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','submitted',1,1,3,'2024-06-06 06:19:30','2024-06-12 18:53:52',1),(3,'Tên luận văn 4',NULL,'2024-06-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','in_progress',1,1,3,'2024-06-06 06:28:00','2024-06-06 06:28:00',1);
+INSERT INTO `thesis` VALUES (1,'Tên luận văn 2','https://res.cloudinary.com/dyuafq1hx/raw/upload/v1718218383/1718218380163_E_Prac.zip','2024-06-01','2024-12-31','2025-01-15',6,'Ghi chú về luận văn','submitted',1,1,3,'2024-06-06 03:30:32','2024-06-18 15:31:07',1,'1',2),(2,'Tên luận văn 3','https://res.cloudinary.com/dyuafq1hx/raw/upload/v1718218431/1718218428649_E_Prac.zip','2024-06-01','2024-12-31','2025-01-15',6,'Ghi chú về luận văn','submitted',1,1,3,'2024-06-06 06:19:30','2024-06-18 15:31:07',1,'1',2),(3,'Tên luận văn 4',NULL,'2024-06-01','2024-12-31','2025-01-15',6,'Ghi chú về luận văn','in_progress',1,1,3,'2024-06-06 06:28:00','2024-06-18 15:31:07',1,'1',2);
 /*!40000 ALTER TABLE `thesis` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -590,4 +593,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-13  2:19:46
+-- Dump completed on 2024-06-18 22:53:14

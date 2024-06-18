@@ -119,12 +119,8 @@
         <put-attribute name="content" value="/WEB-INF/pages/student/update-student.jsp" />
     </definition>
     
-    <definition name="base" template="/WEB-INF/layout/base.jsp">
-        <put-attribute name="header" value="/WEB-INF/layout/header.jsp"/>
-        <put-attribute name="content" value=""/>
-    </definition>
-
-    <definition name="home" extends="base">
-        <put-attribute name="content" value="/WEB-INF/pages/home.jsp"/>
+    <definition name="stats" extends="baseLayout">
+        <put-attribute name="title" value="Thông kê báo cáo" />
+        <put-attribute name="content" value="/WEB-INF/pages/stats.jsp" />
     </definition>
 </tiles-definitions>
