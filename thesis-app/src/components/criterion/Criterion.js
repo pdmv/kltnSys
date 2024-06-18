@@ -1,29 +1,28 @@
 import { useCallback, useContext, useEffect, useState } from "react";
-import { Col, Container, Row, Table, Alert, Spinner } from "react-bootstrap";
-import { UserContext } from "../../configs/UserContext";
-import Title from "../common/Title";
-import { authApi, endpoints } from "../../configs/APIs";
-import FormatDate from "../common/FormatDate";
-import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet";
-import ThesisStatusBadge from "../common/ThesisStatusBadge";
+import ActiveStatusBadge from "../common/ActiveStatusBadge";
 import withAuth from "../hoc/withAuth";
+import { UserContext } from "../../configs/UserContext";
+import { authApi, endpoints } from "../../configs/APIs";
+import { Alert, Col, Container, Row, Spinner, Table } from "react-bootstrap";
+import { Helmet } from "react-helmet";
+import Title from "../common/Title";
+import { Link } from "react-router-dom";
 
-const Thesis = () => {
+const Criterion = () => {
   const { user } = useContext(UserContext);
-  const [theses, setTheses] = useState([]);
+  const [criterions, setCriterions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchTheses = useCallback(async () => {
+  const fetchCriterions = useCallback(async () => {
     if (user) {
       setLoading(true);
       try {
-        let res = await authApi().get(`${endpoints.thesis}?facultyId=${user.account.facultyId}`);
-        setTheses(res.data);
+        let res = await authApi().get(`${endpoints.criterion}?facultyId=${user.account.facultyId}`);
+        setCriterions(res.data);
       } catch (error) {
         console.error(error);
-        setError("Không thể tải dữ liệu khoá luận.");
+        setError("Không thể tải dữ liệu.");
       } finally {
         setLoading(false);
       }
@@ -31,20 +30,20 @@ const Thesis = () => {
   }, [user]);
 
   useEffect(() => {
-    fetchTheses();
-  }, [fetchTheses]);
+    fetchCriterions();
+  }, [fetchCriterions]);
 
   return (
     <Container>
       <Helmet>
-        <title>Danh sách Khoá luận</title>
+        <title>Danh sách Tiêu chí</title>
       </Helmet>
       <Row>
         <Col>
-          <Title title="Danh sách" strong="Khoá luận" />
+          <Title title="Danh sách" strong="Tiêu chí" />
           <div className="d-flex justify-content-center align-items-center mb-4">
-            <Link className="btn btn-dark" to="/thesis/create">
-              <>Thêm <strong>Khoá luận</strong></>
+            <Link className="btn btn-dark" to="/criterion/create">
+              <>Thêm <strong>Tiêu chí</strong></>
             </Link>
           </div>
           {loading && (
@@ -59,31 +58,30 @@ const Thesis = () => {
             </div>
           )}
           {error && <Alert variant="danger">{error}</Alert>}
-          {!loading && !error && theses.length === 0 && <Alert variant="warning">Không có dữ liệu khoá luận.</Alert>}
-          {!loading && theses.length > 0 && (
+          {!loading && !error && criterions.length === 0 && <Alert variant="warning">Không có dữ liệu.</Alert>}
+          {!loading && criterions.length > 0 && (
             <Table hover>
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Tên khoá luận</th>
-                  <th>Ngày bắt đầu thực hiện</th>
-                  <th>Ngày kết thúc thực hiện</th>
-                  <th>Ngày hết hạn nộp</th>
+                  <th>Tên tiêu chí</th>
+                  <th>Người tạo</th>
                   <th>Trạng thái</th>
                   <th>Hành động</th>
                 </tr>
               </thead>
               <tbody>
-                {theses.map((item, index) => (
+                {criterions.map((item, index) => (
                   <tr key={index}>
                     <td>{item.id}</td>
                     <td>{item.name}</td>
-                    <td><FormatDate date={item.startDate} /></td>
-                    <td><FormatDate date={item.endDate} /></td>
-                    <td><FormatDate date={item.expDate} /></td>
-                    <td><ThesisStatusBadge status={item.status} /></td>
+                    <td>{item.affair.lastName} {item.affair.firstName}</td>
+                    <td><ActiveStatusBadge status={item.active} /></td>
                     <td>
-                      <Link to={`/thesis/${item.id}`} className="btn btn-outline-dark">Chi tiết</Link>
+                      <>
+                        <Link to={`/criterion/edit/${item.id}`} className="btn btn-outline-dark">Cập nhật</Link>
+                        <Link to={`/criterion/${item.id}`} className="btn btn-outline-dark ms-2">Chi tiết</Link>
+                      </>
                     </td>
                   </tr>
                 ))}
@@ -96,4 +94,4 @@ const Thesis = () => {
   );
 }
 
-export default withAuth(Thesis);
+export default withAuth(Criterion);

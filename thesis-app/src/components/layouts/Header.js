@@ -59,7 +59,10 @@ const Header = () => {
           {user ? (
             <>
               {user.account.role === 'AFFAIR' && (
-                <Link to="/thesis" className={location.pathname.startsWith("/thesis") ? "nav-link active-link" : "nav-link"}>Khoá luận</Link>
+                <>
+                  <Link to="/thesis" className={location.pathname.startsWith("/thesis") ? "nav-link active-link" : "nav-link"}>Khoá luận</Link>
+                  <Link to="/criterion" className={location.pathname.startsWith("/criterion") ? "nav-link active-link" : "nav-link"}>Tiêu chí</Link>
+                </>
               )}
             </>
           ) : (

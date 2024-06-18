@@ -1,7 +1,9 @@
 com/pdmv/repositories/AccountRepository.class
+com/pdmv/repositories/CriterionRepository.class
 com/pdmv/services/LecturerService.class
 com/pdmv/dto/ThesisStudentDTO.class
 com/pdmv/configs/DispatcherServletInit.class
+com/pdmv/services/impl/CriterionServiceImpl.class
 com/pdmv/repositories/LecturerRepository.class
 com/pdmv/components/StringToMajorConverter.class
 com/pdmv/configs/SpringSecurityConfig.class
@@ -39,6 +41,7 @@ com/pdmv/configs/TilesConfig.class
 com/pdmv/services/impl/MajorServiceImpl.class
 com/pdmv/filters/RestAuthenticationEntryPoint.class
 com/pdmv/repositories/FacultyRepository.class
+com/pdmv/services/CriterionService.class
 com/pdmv/pojo/Major.class
 com/pdmv/services/impl/SchoolYearServiceImpl.class
 com/pdmv/services/impl/StudentServiceImpl.class
@@ -64,8 +67,10 @@ com/pdmv/pojo/Major_.class
 com/pdmv/services/MajorService.class
 com/pdmv/services/AccountService.class
 com/pdmv/services/impl/ClassServiceImpl.class
+com/pdmv/repositories/impl/CriterionRepositoryImpl.class
 com/pdmv/services/SchoolYearService.class
 com/pdmv/pojo/Criterion_.class
+com/pdmv/controllers/ApiCriterionController.class
 com/pdmv/dto/AccountDTO.class
 com/pdmv/controllers/AdminController.class
 com/pdmv/dto/StudentDTO.class

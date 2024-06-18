@@ -38,7 +38,7 @@ const CreateThesis = () => {
 
   const fetchSchoolYears = useCallback(async () => {
     try {
-      let res = await authApi().get(endpoints["list-school-years"]);
+      let res = await authApi().get(endpoints["school-years"]);
       setSchoolYears(res.data);
     } catch (error) {
       console.error("Lỗi khi lấy danh sách năm học:", error);
@@ -48,7 +48,7 @@ const CreateThesis = () => {
 
   const fetchLecturers = useCallback(async () => {
     try {
-      let res = await authApi().get(`${endpoints["list-lecturers"]}?type=faculty&kw=${user.faculty.id}`);
+      let res = await authApi().get(`${endpoints["lecturers"]}?type=faculty&kw=${user.faculty.id}`);
       setLecturers(res.data);
     } catch (error) {
       console.error("Lỗi khi lấy danh sách giảng viên:", error);
@@ -111,7 +111,7 @@ const CreateThesis = () => {
     const newStudentId = document.getElementById("newStudentId").value;
     if (newStudentId) {
       try {
-        const res = await authApi().get(`${endpoints["list-students"]}?type=faculty&id=${newStudentId}`);
+        const res = await authApi().get(`${endpoints["students"]}?facultyId=${user.faculty.id}&id=${newStudentId}`);
         const studentData = res.data[0];
 
         if (studentData) {
@@ -122,7 +122,7 @@ const CreateThesis = () => {
           setStudents((prev) => [...prev, studentData]);
           document.getElementById("newStudentId").value = "";
         } else {
-          setError("Không tìm thấy sinh viên với ID này.");
+          setError("Không tìm thấy sinh viên với ID này. (Có thể sinh viên không thuộc khoa của bạn)");
         }
       } catch (error) {
         console.error("Lỗi khi lấy thông tin sinh viên:", error);
@@ -149,7 +149,7 @@ const CreateThesis = () => {
   const fetchStudentInfo = useCallback(async (studentId, index) => {
     if (studentId) {
       try {
-        const res = await authApi().get(`${endpoints["list-students"]}?id=${studentId}`);
+        const res = await authApi().get(`${endpoints["students"]}?id=${studentId}`);
         const studentData = res.data[0];
         const updatedStudents = [...students];
         updatedStudents[index] = studentData;

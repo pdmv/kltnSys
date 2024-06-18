@@ -9,6 +9,7 @@
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/dto/request/ChangePasswordRequest.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/repositories/StudentRepository.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/repositories/impl/ThesisRepositoryImpl.java
+/Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/repositories/impl/CriterionRepositoryImpl.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/pojo/Affair.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/services/AffairService.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/services/impl/ClassServiceImpl.java
@@ -26,6 +27,7 @@
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/dto/CreateThesisDTO.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/controllers/ApiAccountController.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/repositories/impl/AffairRepositoryImpl.java
+/Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/repositories/CriterionRepository.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/repositories/ThesisRepository.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/dto/LecturerDTO.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/dto/ClassDTO.java
@@ -40,6 +42,7 @@
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/configs/HibernateConfig.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/components/StringToFacultyConverter.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/configs/TilesConfig.java
+/Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/services/CriterionService.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/controllers/ApiThesisController.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/controllers/ApiStudentController.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/repositories/impl/MajorRepositoryImpl.java
@@ -63,6 +66,7 @@
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/repositories/AdminRepository.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/repositories/impl/AccountRepositoryImpl.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/repositories/AffairRepository.java
+/Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/services/impl/CriterionServiceImpl.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/dto/ThesisAffairDTO.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/dto/ThesisDetailsDTO.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/services/AdminService.java
@@ -97,3 +101,4 @@
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/pojo/Student.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/services/impl/AffairServiceImpl.java
 /Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/repositories/impl/LecturerRepositoryImpl.java
+/Users/phamdominhvuong/Documents/Programming/NetBeans/ThesisApp/src/main/java/com/pdmv/controllers/ApiCriterionController.java

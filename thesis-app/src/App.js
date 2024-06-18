@@ -12,6 +12,9 @@ import ChangePassword from './components/user/ChangePassword';
 import CreateThesis from './components/thesis/CreateThesis';
 import Forbiden from './components/status_pages/Forbiden';
 import NotFound from './components/status_pages/NotFound';
+import Criterion from './components/criterion/Criterion';
+import CriterionDetails from './components/criterion/CriterionDetails';
+import CriterionForm from './components/criterion/CriterionForm';
 
 function App() {
   return (
@@ -21,11 +24,18 @@ function App() {
         <Container>
           <Routes>
             <Route path="/" element={<Home />} />
+
+            <Route path="/login" element={<Login />} />
+            <Route path='/user/change-password' element={<ChangePassword />} />
+
             <Route path="/thesis" element={<Thesis />} />
             <Route path="/thesis/:id" element={<ThesisDetails />} />
             <Route path="/thesis/create" element={<CreateThesis />} />
-            <Route path="/login" element={<Login />} />
-            <Route path='/user/change-password' element={<ChangePassword />} />
+
+            <Route path="/criterion" element={<Criterion />} />
+            <Route path="/criterion/:id" element={<CriterionDetails />} />
+            <Route path="/criterion/create" element={<CriterionForm />} />
+            <Route path="/criterion/edit/:id" element={<CriterionForm />} />
 
             <Route path="/forbiden" element={<Forbiden />} />
             <Route path="*" element={<NotFound />} />

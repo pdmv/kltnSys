@@ -9,10 +9,12 @@ export const endpoints = {
   'thesis': '/api/thesis/',
   'thesis-details': (id) => `/api/thesis/${id}/`,
   'change-password': '/api/change-password/',
-  'list-majors': '/api/major/',
-  'list-school-years': '/api/school-years/',
-  'list-lecturers': '/api/lecturer/',
-  'list-students': '/api/student/',
+  'majors': '/api/major/',
+  'school-years': '/api/school-years/',
+  'lecturers': '/api/lecturer/',
+  'students': '/api/student/',
+  'criterion': '/api/criterion/',
+  'criterion-details': (id) => `/api/criterion/${id}/`,
 }
 
 export const authApi = () => {

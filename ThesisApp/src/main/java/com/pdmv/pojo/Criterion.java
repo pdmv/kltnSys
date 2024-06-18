@@ -5,6 +5,9 @@
 package com.pdmv.pojo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.pdmv.dto.ThesisAffairDTO;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -75,10 +78,13 @@ public class Criterion implements Serializable {
     private Boolean active;
     @JoinColumn(name = "affair_id", referencedColumnName = "id")
     @ManyToOne
+    @JsonIgnore
     private Affair affairId;
     @OneToMany(mappedBy = "criterionId")
+    @JsonIgnore
     private Set<CouncilCriterion> councilCriterionSet;
     @OneToMany(mappedBy = "criterionId")
+    @JsonIgnore
     private Set<Score> scoreSet;
 
     public Criterion() {
@@ -202,5 +208,20 @@ public class Criterion implements Serializable {
     @PreUpdate
     public void preUpdate() {
         updatedDate = new Date();
+    }
+    
+    @JsonProperty("affair")
+    public ThesisAffairDTO getAffairInfo() {
+        if (affairId != null) {
+            ThesisAffairDTO dto = new ThesisAffairDTO();
+            
+            dto.setId(affairId.getId());
+            dto.setFirstName(affairId.getFirstName());
+            dto.setLastName(affairId.getLastName());
+            dto.setEmail(affairId.getEmail());
+            
+            return dto;
+        }
+        return null;
     }
 }
