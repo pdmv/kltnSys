@@ -166,12 +166,16 @@ CREATE TABLE `council` (
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
   `status` enum('pending','blocked') CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT 'pending',
   `school_year_id` int DEFAULT NULL,
+  `faculty_id` int DEFAULT NULL,
+  `meeting_date` datetime DEFAULT NULL,
   `created_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `active` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `school_year_id` (`school_year_id`),
-  CONSTRAINT `council_ibfk_1` FOREIGN KEY (`school_year_id`) REFERENCES `school_year` (`id`)
+  KEY `council_ibfk_2` (`faculty_id`),
+  CONSTRAINT `council_ibfk_1` FOREIGN KEY (`school_year_id`) REFERENCES `school_year` (`id`),
+  CONSTRAINT `council_ibfk_2` FOREIGN KEY (`faculty_id`) REFERENCES `faculty` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -243,6 +247,34 @@ LOCK TABLES `council_lecturer` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `council_thesis`
+--
+
+DROP TABLE IF EXISTS `council_thesis`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `council_thesis` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `council_id` int DEFAULT NULL,
+  `thesis_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `council_id` (`council_id`),
+  KEY `thesis_id` (`thesis_id`),
+  CONSTRAINT `council_thesis_ibfk_1` FOREIGN KEY (`council_id`) REFERENCES `council` (`id`),
+  CONSTRAINT `council_thesis_ibfk_2` FOREIGN KEY (`thesis_id`) REFERENCES `thesis` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `council_thesis`
+--
+
+LOCK TABLES `council_thesis` WRITE;
+/*!40000 ALTER TABLE `council_thesis` DISABLE KEYS */;
+/*!40000 ALTER TABLE `council_thesis` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `criterion`
 --
 
@@ -254,12 +286,15 @@ CREATE TABLE `criterion` (
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci,
   `affair_id` int DEFAULT NULL,
+  `faculty_id` int DEFAULT NULL,
   `created_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `active` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `affair_id` (`affair_id`),
-  CONSTRAINT `criterion_ibfk_1` FOREIGN KEY (`affair_id`) REFERENCES `affair` (`id`)
+  KEY `criterion_ibfk_2` (`faculty_id`),
+  CONSTRAINT `criterion_ibfk_1` FOREIGN KEY (`affair_id`) REFERENCES `affair` (`id`),
+  CONSTRAINT `criterion_ibfk_2` FOREIGN KEY (`faculty_id`) REFERENCES `faculty` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -269,7 +304,7 @@ CREATE TABLE `criterion` (
 
 LOCK TABLES `criterion` WRITE;
 /*!40000 ALTER TABLE `criterion` DISABLE KEYS */;
-INSERT INTO `criterion` VALUES (1,'test 102','test create criterion',1,'2024-06-15 08:14:28','2024-06-16 17:49:39',1),(2,'test 2','test create criterion',1,'2024-06-15 08:35:02','2024-06-15 08:35:02',1),(3,'test 3','test create criterion',1,'2024-06-15 08:35:08','2024-06-15 08:35:08',1),(4,'test 4','test create criterion',1,'2024-06-15 08:35:15','2024-06-15 08:35:15',1),(5,'test ui','đây là mô tả của việc tạo tiêu chí bằng khoá luận',1,'2024-06-15 09:59:46','2024-06-15 09:59:46',1);
+INSERT INTO `criterion` VALUES (1,'test 102','test create criterion',1,2,'2024-06-15 08:14:28','2024-06-16 17:49:39',1),(2,'test 2','test create criterion',1,2,'2024-06-15 08:35:02','2024-06-15 08:35:02',1),(3,'test 3','test create criterion',1,2,'2024-06-15 08:35:08','2024-06-15 08:35:08',1),(4,'test 4','test create criterion',1,2,'2024-06-15 08:35:15','2024-06-15 08:35:15',1),(5,'test ui','đây là mô tả của việc tạo tiêu chí bằng khoá luận',1,2,'2024-06-15 09:59:46','2024-06-15 09:59:46',1);
 /*!40000 ALTER TABLE `criterion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -526,7 +561,7 @@ CREATE TABLE `thesis` (
 
 LOCK TABLES `thesis` WRITE;
 /*!40000 ALTER TABLE `thesis` DISABLE KEYS */;
-INSERT INTO `thesis` VALUES (1,'Tên luận văn 2','https://res.cloudinary.com/dyuafq1hx/raw/upload/v1718218383/1718218380163_E_Prac.zip','2024-06-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','submitted',1,1,3,2,1,'2024-06-06 03:30:32','2024-06-20 04:29:51',1),(2,'Tên luận văn 3','https://res.cloudinary.com/dyuafq1hx/raw/upload/v1718218431/1718218428649_E_Prac.zip','2024-06-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','submitted',1,1,3,2,1,'2024-06-06 06:19:30','2024-06-20 04:29:51',1),(3,'Tên luận văn 4',NULL,'2024-06-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','in_progress',1,1,3,2,1,'2024-06-06 06:28:00','2024-06-20 04:29:51',1),(9,'Tên luận văn 5',NULL,'2024-07-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','in_progress',1,1,3,2,1,'2024-06-13 06:51:15','2024-06-20 04:29:51',1),(10,'Tên luận văn 6',NULL,'2024-07-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','in_progress',1,1,3,2,1,'2024-06-13 07:02:57','2024-06-20 04:29:51',1),(11,'Tên luận văn 7',NULL,'2024-07-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','in_progress',1,1,3,2,1,'2024-06-13 07:04:40','2024-06-20 04:29:51',1),(12,'Tên luận văn 8',NULL,'2024-07-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','in_progress',1,1,3,2,1,'2024-06-13 07:12:40','2024-06-20 04:29:51',1),(13,'Tên luận văn 9',NULL,'2024-07-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','in_progress',1,1,3,2,1,'2024-06-13 07:20:27','2024-06-20 04:29:51',1),(14,'Tên luận văn 10',NULL,'2024-07-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','in_progress',1,1,3,2,1,'2024-06-13 07:23:19','2024-06-20 04:29:51',1),(15,'Tên luận văn 11',NULL,'2024-07-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','in_progress',1,1,3,2,1,'2024-06-13 08:03:11','2024-06-20 04:29:51',1),(16,'test ui',NULL,'2024-06-15','2025-03-15','2025-03-22',NULL,'test','in_progress',1,1,4,2,1,'2024-06-14 17:57:05','2024-06-20 04:29:51',1),(17,'test major',NULL,'2024-06-20','0024-12-20','2024-12-29',NULL,'test thêm thuộc tính major, faculty','in_progress',1,1,4,2,1,'2024-06-20 04:12:14','2024-06-20 04:29:51',1),(18,'test major',NULL,'2024-06-20','0024-12-20','2024-12-29',NULL,'test thêm thuộc tính major, faculty','in_progress',1,1,4,2,1,'2024-06-20 04:15:21','2024-06-20 04:29:51',1),(19,'test major',NULL,'2024-06-20','0024-12-20','2024-12-29',NULL,'test thêm thuộc tính major, faculty','in_progress',1,1,4,2,1,'2024-06-20 04:16:38','2024-06-20 04:29:51',1),(20,'test major',NULL,'2024-06-20','0024-12-20','2024-12-29',NULL,'test thêm thuộc tính major, faculty','in_progress',1,1,4,2,1,'2024-06-20 04:18:22','2024-06-20 04:29:51',1),(21,'test major',NULL,'2024-06-20','0024-12-20','2024-12-29',NULL,'test thêm thuộc tính major, faculty','in_progress',1,1,4,2,1,'2024-06-20 04:27:12','2024-06-20 04:27:12',1);
+INSERT INTO `thesis` VALUES (1,'Tên luận văn 2','https://res.cloudinary.com/dyuafq1hx/raw/upload/v1718218383/1718218380163_E_Prac.zip','2024-06-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','submitted',1,1,3,2,1,'2024-06-06 03:30:32','2024-06-20 04:29:51',1),(2,'Tên luận văn 3','https://res.cloudinary.com/dyuafq1hx/raw/upload/v1718218431/1718218428649_E_Prac.zip','2024-06-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','submitted',1,1,3,2,1,'2024-06-06 06:19:30','2024-06-20 04:29:51',1),(3,'Tên luận văn 4','https://res.cloudinary.com/dyuafq1hx/raw/upload/v1718864083/1718864080195_E_Prac.zip','2024-06-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','submitted',1,1,3,2,1,'2024-06-06 06:28:00','2024-06-20 06:14:44',1),(9,'Tên luận văn 5','https://res.cloudinary.com/dyuafq1hx/raw/upload/v1718864668/1718864665166_E_Prac.zip','2024-07-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','submitted',1,1,3,2,1,'2024-06-13 06:51:15','2024-06-20 06:24:29',1),(10,'Tên luận văn 6','https://res.cloudinary.com/dyuafq1hx/raw/upload/v1718867405/1718867401449_E_Prac.zip','2024-07-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','submitted',1,1,3,2,1,'2024-06-13 07:02:57','2024-06-20 07:10:06',1),(11,'Tên luận văn 7',NULL,'2024-07-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','in_progress',1,1,3,2,1,'2024-06-13 07:04:40','2024-06-20 04:29:51',1),(12,'Tên luận văn 8',NULL,'2024-07-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','in_progress',1,1,3,2,1,'2024-06-13 07:12:40','2024-06-20 04:29:51',1),(13,'Tên luận văn 9',NULL,'2024-07-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','in_progress',1,1,3,2,1,'2024-06-13 07:20:27','2024-06-20 04:29:51',1),(14,'Tên luận văn 10',NULL,'2024-07-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','in_progress',1,1,3,2,1,'2024-06-13 07:23:19','2024-06-20 04:29:51',1),(15,'Tên luận văn 11',NULL,'2024-07-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','in_progress',1,1,3,2,1,'2024-06-13 08:03:11','2024-06-20 04:29:51',1),(16,'test ui',NULL,'2024-06-15','2025-03-15','2025-03-22',NULL,'test','in_progress',1,1,4,2,1,'2024-06-14 17:57:05','2024-06-20 04:29:51',1),(17,'test major',NULL,'2024-06-20','0024-12-20','2024-12-29',NULL,'test thêm thuộc tính major, faculty','in_progress',1,1,4,2,1,'2024-06-20 04:12:14','2024-06-20 04:29:51',1),(18,'test major',NULL,'2024-06-20','0024-12-20','2024-12-29',NULL,'test thêm thuộc tính major, faculty','in_progress',1,1,4,2,1,'2024-06-20 04:15:21','2024-06-20 04:29:51',1),(19,'test major',NULL,'2024-06-20','0024-12-20','2024-12-29',NULL,'test thêm thuộc tính major, faculty','in_progress',1,1,4,2,1,'2024-06-20 04:16:38','2024-06-20 04:29:51',1),(20,'test major',NULL,'2024-06-20','0024-12-20','2024-12-29',NULL,'test thêm thuộc tính major, faculty','in_progress',1,1,4,2,1,'2024-06-20 04:18:22','2024-06-20 04:29:51',1),(21,'test major',NULL,'2024-06-20','0024-12-20','2024-12-29',NULL,'test thêm thuộc tính major, faculty','in_progress',1,1,4,2,1,'2024-06-20 04:27:12','2024-06-20 04:27:12',1);
 /*!40000 ALTER TABLE `thesis` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -597,4 +632,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-20 11:34:36
+-- Dump completed on 2024-06-20 15:45:19

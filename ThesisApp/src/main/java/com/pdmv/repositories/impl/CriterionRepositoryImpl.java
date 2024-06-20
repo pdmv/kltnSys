@@ -59,7 +59,7 @@ public class CriterionRepositoryImpl implements CriterionRepository {
                 String facultyId = params.get("facultyId");
                 if (facultyId != null && !facultyId.isEmpty()) {
                     int id = Integer.parseInt(facultyId);
-                    predicates.add(criteriaBuilder.equal(root.get("affairId").get("facultyId").get("id"), id));
+                    predicates.add(criteriaBuilder.equal(root.get("facultyId").get("id"), id));
                 }
             } catch (NumberFormatException e) {
                 System.err.println("Invalid facultyId: " + e.getMessage()); 

@@ -63,6 +63,7 @@ const CriterionDetails = () => {
               <ListGroup.Item><strong>ID:</strong> {c.id}</ListGroup.Item>
               <ListGroup.Item><strong>Tên tiêu chí:</strong> {c.name}</ListGroup.Item>
               <ListGroup.Item><strong>Mô tả:</strong> {c.description}</ListGroup.Item>
+              <ListGroup.Item><strong>Khoa:</strong> {c.faculty.name}</ListGroup.Item>
               <ListGroup.Item><strong>Ngày tạo:</strong> <FormatDateTime date={c.createdDate} /></ListGroup.Item>
               <ListGroup.Item><strong>Ngày cập nhật:</strong> <FormatDateTime date={c.updatedDate} /></ListGroup.Item>
               <ListGroup.Item><strong>Trạng thái:</strong> <ActiveStatusBadge status={c.active} /></ListGroup.Item>

@@ -32,6 +32,10 @@ public class CriterionServiceImpl implements CriterionService {
             criterion.setCreatedDate(old.getCreatedDate());
         }
         
+        if (criterion.getFacultyId() == null) {
+            criterion.setFacultyId(criterion.getAffairId().getFacultyId());
+        }
+        
         return this.criterionRepo.addOrUpdate(criterion);
     }
 

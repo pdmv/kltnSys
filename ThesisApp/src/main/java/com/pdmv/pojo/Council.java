@@ -5,6 +5,9 @@
 package com.pdmv.pojo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.pdmv.dto.FacultyDTO;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -41,6 +44,7 @@ import org.springframework.format.annotation.DateTimeFormat;
     @NamedQuery(name = "Council.findAll", query = "SELECT c FROM Council c"),
     @NamedQuery(name = "Council.findById", query = "SELECT c FROM Council c WHERE c.id = :id"),
     @NamedQuery(name = "Council.findByName", query = "SELECT c FROM Council c WHERE c.name = :name"),
+    @NamedQuery(name = "Council.findByMeetingDate", query = "SELECT c FROM Council c WHERE c.meetingDate = :meetingDate"),
     @NamedQuery(name = "Council.findByStatus", query = "SELECT c FROM Council c WHERE c.status = :status"),
     @NamedQuery(name = "Council.findByCreatedDate", query = "SELECT c FROM Council c WHERE c.createdDate = :createdDate"),
     @NamedQuery(name = "Council.findByUpdatedDate", query = "SELECT c FROM Council c WHERE c.updatedDate = :updatedDate"),
@@ -58,6 +62,15 @@ public class Council implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "name")
     private String name;
+    @JoinColumn(name = "faculty_id", referencedColumnName = "id")
+    @ManyToOne
+    @JsonIgnore
+    private Faculty facultyId;
+    @Column(name = "meeting_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date meetingDate;
     @Size(max = 7)
     @Column(name = "status")
     private String status;
@@ -108,6 +121,22 @@ public class Council implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+    
+    public Date getMeetingDate() {
+        return meetingDate;
+    }
+
+    public void setMeetingDate(Date meetingDatetime) {
+        this.meetingDate = meetingDatetime;
+    }
+    
+    public Faculty getFacultyId() {
+        return facultyId;
+    }
+
+    public void setFacultyId(Faculty facultyId) {
+        this.facultyId = facultyId;
     }
 
     public String getStatus() {
@@ -195,6 +224,19 @@ public class Council implements Serializable {
             return false;
         }
         return true;
+    }
+    
+    @JsonProperty("faculty") 
+    public FacultyDTO getFacultyInfo() {
+        if (facultyId != null) {
+            FacultyDTO facultyDTO = new FacultyDTO();
+            
+            facultyDTO.setId(facultyId.getId());
+            facultyDTO.setName(facultyId.getName());
+            
+            return facultyDTO;
+        }
+        return null;
     }
 
     @Override

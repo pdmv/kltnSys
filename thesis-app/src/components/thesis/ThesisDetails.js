@@ -67,13 +67,14 @@ const ThesisDetails = () => {
     formData.append("file", file);
 
     try {
-      await authApi().post(endpoints["submit-report-file"](id), formData, {
+      let res = await authApi().post(endpoints["submit-report-file"](id), formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
       setSuccess("Nộp báo cáo thành công!");
       setFile(null);
+      setThesis(res.data);
     } catch (error) {
       if (error.response && error.response.status === 403) {
         navigate("/forbidden");

@@ -7,6 +7,7 @@ package com.pdmv.pojo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.pdmv.dto.FacultyDTO;
 import com.pdmv.dto.ThesisAffairDTO;
 import java.io.Serializable;
 import java.util.Date;
@@ -80,6 +81,10 @@ public class Criterion implements Serializable {
     @ManyToOne
     @JsonIgnore
     private Affair affairId;
+    @JoinColumn(name = "faculty_id", referencedColumnName = "id")
+    @ManyToOne
+    @JsonIgnore
+    private Faculty facultyId;
     @OneToMany(mappedBy = "criterionId")
     @JsonIgnore
     private Set<CouncilCriterion> councilCriterionSet;
@@ -154,6 +159,14 @@ public class Criterion implements Serializable {
     public void setAffairId(Affair affairId) {
         this.affairId = affairId;
     }
+    
+    public Faculty getFacultyId() {
+        return facultyId;
+    }
+
+    public void setFacultyId(Faculty facultyId) {
+        this.facultyId = facultyId;
+    }
 
     @XmlTransient
     public Set<CouncilCriterion> getCouncilCriterionSet() {
@@ -221,6 +234,19 @@ public class Criterion implements Serializable {
             dto.setEmail(affairId.getEmail());
             
             return dto;
+        }
+        return null;
+    }
+    
+    @JsonProperty("faculty") 
+    public FacultyDTO getFacultyInfo() {
+        if (facultyId != null) {
+            FacultyDTO facultyDTO = new FacultyDTO();
+            
+            facultyDTO.setId(facultyId.getId());
+            facultyDTO.setName(facultyId.getName());
+            
+            return facultyDTO;
         }
         return null;
     }

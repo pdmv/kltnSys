@@ -101,12 +101,16 @@ public class ApiThesisController {
                     break;
                 case "STUDENT":
                     Student stu = this.studentService.getStudentByAccountId(acc.getId());
+                    boolean isOwner = false;
                     for (ThesisStudentDTO dto : thesisDTO.getThesisStudentSet()) {
                         if (Objects.equals(stu.getId(), dto.getStudentId())) {
-                            break;
+                            isOwner = true;
                         }
                     }
-                    return new ResponseEntity<>(new MessageResponse("Bạn không có quyền truy cập khoá luận này!"), HttpStatus.FORBIDDEN);
+                    if (!isOwner) {
+                        return new ResponseEntity<>(new MessageResponse("Bạn không có quyền truy cập khoá luận này!"), HttpStatus.FORBIDDEN);
+                    }
+                    break;
             }
             
             if (thesisDTO == null) {
@@ -152,7 +156,7 @@ public class ApiThesisController {
             }
             
             for (ThesisStudentDTO dto : thesis.getThesisStudentSet()) {
-                if (dto.getStudentId() == student.getId()) {
+                if (Objects.equals(dto.getStudentId(), student.getId())) {
                     isOwner = true;
                     break;
                 }

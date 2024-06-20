@@ -111,7 +111,7 @@ public class ApiCriterionController {
             
             if (account.getRole().equals("AFFAIR")) {
                 Affair affair = this.affairService.getAffairByAccountId(account.getId());
-                if (!Objects.equals(c.getAffairId().getFacultyId().getId(), affair.getFacultyId().getId())) {
+                if (!Objects.equals(c.getFacultyId().getId(), affair.getFacultyId().getId())) {
                     return new ResponseEntity<>(new MessageResponse("Bạn không được cập nhật tiêu chí của khoa khác!"), HttpStatus.FORBIDDEN);
                 }
             }

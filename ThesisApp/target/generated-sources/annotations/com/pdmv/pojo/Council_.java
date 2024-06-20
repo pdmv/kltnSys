@@ -2,6 +2,7 @@ package com.pdmv.pojo;
 
 import com.pdmv.pojo.CouncilCriterion;
 import com.pdmv.pojo.CouncilLecturer;
+import com.pdmv.pojo.Faculty;
 import com.pdmv.pojo.SchoolYear;
 import com.pdmv.pojo.Score;
 import java.util.Date;
@@ -10,10 +11,11 @@ import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.12.v20230209-rNA", date="2024-06-20T11:25:31")
+@Generated(value="EclipseLink-2.7.12.v20230209-rNA", date="2024-06-20T14:29:14")
 @StaticMetamodel(Council.class)
 public class Council_ { 
 
+    public static volatile SingularAttribute<Council, Faculty> facultyId;
     public static volatile SetAttribute<Council, CouncilLecturer> councilLecturerSet;
     public static volatile SingularAttribute<Council, Date> createdDate;
     public static volatile SingularAttribute<Council, String> name;
