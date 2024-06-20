@@ -19,8 +19,13 @@ const Thesis = () => {
     if (user) {
       setLoading(true);
       try {
-        let res = await authApi().get(`${endpoints.thesis}?facultyId=${user.faculty.id}`);
-        setTheses(res.data);
+        if (user.account.role === "AFFAIR") {
+          let res = await authApi().get(`${endpoints.thesis}?facultyId=${user.faculty.id}`);
+          setTheses(res.data);
+        } else if (user.account.role === "STUDENT") {
+          let res = await authApi().get(`${endpoints.thesis}?studentId=${user.id}`);
+          setTheses(res.data);
+        }
       } catch (error) {
         console.error(error);
         setError("Không thể tải dữ liệu khoá luận.");
@@ -42,11 +47,12 @@ const Thesis = () => {
       <Row>
         <Col>
           <Title title="Danh sách" strong="Khoá luận" />
-          <div className="d-flex justify-content-center align-items-center mb-4">
-            <Link className="btn btn-dark" to="/thesis/create">
-              <>Thêm <strong>Khoá luận</strong></>
-            </Link>
-          </div>
+          {user.account.role === "AFFAIR" ? 
+            <div className="d-flex justify-content-center align-items-center mb-4">
+              <Link className="btn btn-dark" to="/thesis/create">
+                <>Thêm <strong>Khoá luận</strong></>
+              </Link>
+            </div> : <></>}
           {loading && (
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
               <Spinner

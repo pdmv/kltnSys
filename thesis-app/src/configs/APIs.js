@@ -8,6 +8,7 @@ export const endpoints = {
   'current-user': '/api/current-user/',
   'thesis': '/api/thesis/',
   'thesis-details': (id) => `/api/thesis/${id}/`,
+  'submit-report-file': (id) => `/api/thesis/${id}/submit-report-file/`,
   'change-password': '/api/change-password/',
   'majors': '/api/major/',
   'school-years': '/api/school-years/',

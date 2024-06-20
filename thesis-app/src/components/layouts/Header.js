@@ -64,6 +64,11 @@ const Header = () => {
                   <Link to="/criterion" className={location.pathname.startsWith("/criterion") ? "nav-link active-link" : "nav-link"}>Tiêu chí</Link>
                 </>
               )}
+              {user.account.role === 'STUDENT' && (
+                <>
+                  <Link to="/thesis" className={location.pathname.startsWith("/thesis") ? "nav-link active-link" : "nav-link"}>Khoá luận</Link>
+                </>
+              )}
             </>
           ) : (
             <Link to="/login" className={currentPage === "/login" ? "nav-link active-link" : "nav-link"}>Đăng nhập</Link>

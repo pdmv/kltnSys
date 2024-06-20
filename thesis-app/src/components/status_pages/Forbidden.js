@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet";
 import Title from "../common/Title";
 
-const Forbiden = () => {
+const Forbidden = () => {
   return (
     <>
       <Helmet>
@@ -19,4 +19,4 @@ const Forbiden = () => {
   );
 }
 
-export default Forbiden;
+export default Forbidden;

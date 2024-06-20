@@ -1,18 +1,23 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Title from "../common/Title";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { authApi, endpoints } from "../../configs/APIs";
-import { Spinner, Alert, Card, ListGroup, Button } from "react-bootstrap";
+import { Spinner, Alert, Card, ListGroup, Button, Form } from "react-bootstrap";
 import FormatDate from "../common/FormatDate";
 import { Helmet } from "react-helmet";
 import ThesisStatusBadge from "../common/ThesisStatusBadge";
+import { UserContext } from "../../configs/UserContext";
 
 const ThesisDetails = () => {
   const { id } = useParams();
   const [thesis, setThesis] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const nav = useNavigate();
+  const [success, setSuccess] = useState(null);
+  const { user } = useContext(UserContext);
+  const navigate = useNavigate();
+  const [file, setFile] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
 
   const fetchThesis = useCallback(async () => {
     setLoading(true);
@@ -20,20 +25,91 @@ const ThesisDetails = () => {
       let res = await authApi().get(endpoints["thesis-details"](id));
       setThesis(res.data);
     } catch (error) {
-      console.error(error);
-      setError("Không thể tải dữ liệu khoá luận.");
+      if (error.response && error.response.status === 403) {
+        navigate("/forbidden");
+      } else {
+        console.error(error);
+        setError("Không thể tải dữ liệu khoá luận.");
+      }
     } finally {
       setLoading(false);
     }
-  }, [id]);
+  }, [id, navigate]);
 
   useEffect(() => {
     fetchThesis();
   }, [fetchThesis]);
 
   const handleBack = () => {
-    nav(-1);
-  }
+    navigate(-1);
+  };
+
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+    if (selectedFile && (selectedFile.type === "application/zip" || selectedFile.type === "application/x-rar-compressed" || selectedFile.name.endsWith('.zip') || selectedFile.name.endsWith('.rar'))) {
+      setFile(selectedFile);
+    } else {
+      setError("Chỉ chấp nhận tệp ZIP hoặc RAR.");
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!file) {
+      setError("Vui lòng chọn tệp để nộp.");
+      return;
+    }
+
+    setSubmitting(true);
+    setError(null);
+    setSuccess(null);
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      await authApi().post(endpoints["submit-report-file"](id), formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      setSuccess("Nộp báo cáo thành công!");
+      setFile(null);
+    } catch (error) {
+      if (error.response && error.response.status === 403) {
+        navigate("/forbidden");
+      } else {
+        setError("Có lỗi xảy ra khi nộp báo cáo.");
+      }
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleDownload = (url) => {
+    fetch(url)
+      .then(response => {
+        if (response.status === 403) {
+          navigate("/forbidden");
+          throw new Error("403 Forbidden");
+        }
+        return response.blob();
+      })
+      .then(blob => {
+        const link = document.createElement('a');
+        const objectURL = URL.createObjectURL(blob);
+        link.href = objectURL;
+        link.download = url.split('/').pop();
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(objectURL);
+      })
+      .catch(error => {
+        if (error.message !== "403 Forbidden") {
+          console.error("Error downloading the file:", error);
+        }
+      });
+  };
 
   return (
     <>
@@ -52,7 +128,10 @@ const ThesisDetails = () => {
             />
           </div>
         )}
-        {error && <Alert variant="danger">{error}</Alert>}
+        <div className="mt-4">
+          {error && <Alert variant="danger">{error}</Alert>}
+          {success && <Alert variant="success">{success}</Alert>}
+        </div>
         {thesis && (
           <Card className="thesis-card mt-4 mb-4">
             <Card.Body>
@@ -89,9 +168,25 @@ const ThesisDetails = () => {
                 <ListGroup.Item>
                   <strong>Người tạo:</strong> {thesis.affairId.lastName} {thesis.affairId.firstName} - Liên hệ: {thesis.affairId.email}
                 </ListGroup.Item>
+                {thesis.reportFile && (
+                  <ListGroup.Item>
+                    <strong>Tệp báo cáo:</strong> <Button variant="outline-dark" size="sm" onClick={() => handleDownload(thesis.reportFile)}>Tải xuống</Button>
+                  </ListGroup.Item>
+                )}
               </ListGroup>
               <div className="button-group mt-3">
-                <Button as={Link} onClick={handleBack} variant="outline-dark">Quay lại</Button>
+                {user.account.role === "STUDENT" && (thesis.status === "in_progress" || thesis.status === "submitted") && (
+                  <>
+                    <Form.Group controlId="formFile" className="mb-3">
+                      <Form.Label>Nộp Báo cáo (chỉ chấp nhận tệp ZIP hoặc RAR):</Form.Label>
+                      <Form.Control type="file" accept=".zip,.rar" onChange={handleFileChange} />
+                    </Form.Group>
+                    <Button variant="dark" type="submit" disabled={submitting} onClick={handleSubmit}>
+                      {submitting ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : <>Nộp <strong>Báo cáo</strong></>}
+                    </Button>
+                  </>
+                )}
+                <Button onClick={handleBack} variant="outline-dark" className="ms-2">Quay lại</Button>
               </div>
             </Card.Body>
           </Card>

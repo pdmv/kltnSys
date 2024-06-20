@@ -10,7 +10,7 @@ import Thesis from './components/thesis/Thesis';
 import ThesisDetails from './components/thesis/ThesisDetails';
 import ChangePassword from './components/user/ChangePassword';
 import CreateThesis from './components/thesis/CreateThesis';
-import Forbiden from './components/status_pages/Forbiden';
+import Forbidden from './components/status_pages/Forbidden';
 import NotFound from './components/status_pages/NotFound';
 import Criterion from './components/criterion/Criterion';
 import CriterionDetails from './components/criterion/CriterionDetails';
@@ -37,7 +37,7 @@ function App() {
             <Route path="/criterion/create" element={<CriterionForm />} />
             <Route path="/criterion/edit/:id" element={<CriterionForm />} />
 
-            <Route path="/forbiden" element={<Forbiden />} />
+            <Route path="/forbidden" element={<Forbidden />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Container>

@@ -10,13 +10,18 @@ import com.pdmv.dto.ThesisDetailsDTO;
 import com.pdmv.dto.ThesisStudentDTO;
 import com.pdmv.dto.response.MessageResponse;
 import com.pdmv.pojo.Account;
+import com.pdmv.pojo.Affair;
+import com.pdmv.pojo.Lecturer;
 import com.pdmv.pojo.Student;
 import com.pdmv.services.AccountService;
+import com.pdmv.services.AffairService;
+import com.pdmv.services.LecturerService;
 import com.pdmv.services.StudentService;
 import com.pdmv.services.ThesisService;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -43,7 +48,11 @@ public class ApiThesisController {
     @Autowired
     private ThesisService thesisService;
     @Autowired
+    private AffairService affairService;
+    @Autowired
     private StudentService studentService;
+    @Autowired
+    private LecturerService lecturerService;
     @Autowired
     private AccountService accountService;
     
@@ -67,10 +76,39 @@ public class ApiThesisController {
     @GetMapping(path = "/thesis/{id}/", produces = {
         MediaType.APPLICATION_JSON_VALUE
     })
-    public ResponseEntity<?> retrieve(@PathVariable(value = "id") Integer id) {
+    public ResponseEntity<?> retrieve(Principal principal, @PathVariable(value = "id") Integer id) {
         try {
             ThesisDetailsDTO thesisDTO = this.thesisService.getThesisById(id);
-
+            
+            Account acc = this.accountService.getAccountByUsername(principal.getName());
+            
+            if (acc == null) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            
+            switch (acc.getRole()) {
+                case "AFFAIR":
+                    Affair affair = this.affairService.getAffairByAccountId(acc.getId());
+                    if (!Objects.equals(affair.getFacultyId().getId(), thesisDTO.getFacultyId().getId())) {
+                        return new ResponseEntity<>(new MessageResponse("Bạn không có quyền truy cập khoá luận này!"), HttpStatus.FORBIDDEN);
+                    }
+                    break;
+                case "LECTURER":
+                    Lecturer lecturer = this.lecturerService.getLecturerByAccountId(acc.getId());
+                    if (!Objects.equals(lecturer.getFacultyId().getId(), thesisDTO.getFacultyId().getId())) {
+                        return new ResponseEntity<>(new MessageResponse("Bạn không có quyền truy cập khoá luận này!"), HttpStatus.FORBIDDEN);
+                    }
+                    break;
+                case "STUDENT":
+                    Student stu = this.studentService.getStudentByAccountId(acc.getId());
+                    for (ThesisStudentDTO dto : thesisDTO.getThesisStudentSet()) {
+                        if (Objects.equals(stu.getId(), dto.getStudentId())) {
+                            break;
+                        }
+                    }
+                    return new ResponseEntity<>(new MessageResponse("Bạn không có quyền truy cập khoá luận này!"), HttpStatus.FORBIDDEN);
+            }
+            
             if (thesisDTO == null) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
