@@ -18,7 +18,7 @@ const Criterion = () => {
     if (user) {
       setLoading(true);
       try {
-        let res = await authApi().get(`${endpoints.criterion}?facultyId=${user.account.facultyId}`);
+        let res = await authApi().get(`${endpoints.criterion}?facultyId=${user.faculty.id}`);
         setCriterions(res.data);
       } catch (error) {
         console.error(error);

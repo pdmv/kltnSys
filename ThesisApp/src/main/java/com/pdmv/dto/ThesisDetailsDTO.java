@@ -9,6 +9,7 @@ import com.pdmv.pojo.Thesis;
 import java.util.Date;
 import java.util.Set;
 import java.util.stream.Collectors;
+import javax.persistence.Transient;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -41,6 +42,8 @@ public class ThesisDetailsDTO {
     private Set<ThesisStudentDTO> thesisStudentSet;
     private CriticalLecturerDTO criticalLecturerId;
     private ThesisAffairDTO affairId;
+    private FacultyDTO facultyId;
+    private MajorDTO majorId;
     
     public static ThesisDetailsDTO toThesisDetailsDTO(Thesis thesis) {
         ThesisDetailsDTO dto = new ThesisDetailsDTO();
@@ -57,6 +60,8 @@ public class ThesisDetailsDTO {
         dto.setCreatedDate(thesis.getCreatedDate());
         dto.setUpdatedDate(thesis.getUpdatedDate());
         dto.setActive(thesis.getActive());
+        dto.setFacultyId(FacultyDTO.toFacultyDTO(thesis.getFacultyId()));
+        dto.setMajorId(MajorDTO.toMajorDTO(thesis.getMajorId()));
 
         if (thesis.getSchoolYearId() != null) {
             dto.setSchoolYearId(SchoolYearDTO.toSchoolYearDTO(thesis.getSchoolYearId()));

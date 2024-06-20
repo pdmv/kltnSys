@@ -10,14 +10,18 @@ import com.pdmv.dto.ThesisDetailsDTO;
 import com.pdmv.dto.ThesisLecturerDTO;
 import com.pdmv.dto.ThesisStudentDTO;
 import com.pdmv.pojo.Affair;
+import com.pdmv.pojo.Faculty;
 import com.pdmv.pojo.Lecturer;
+import com.pdmv.pojo.Major;
 import com.pdmv.pojo.SchoolYear;
 import com.pdmv.pojo.Student;
 import com.pdmv.pojo.Thesis;
 import com.pdmv.pojo.ThesisLecturer;
 import com.pdmv.pojo.ThesisStudent;
 import com.pdmv.repositories.AffairRepository;
+import com.pdmv.repositories.FacultyRepository;
 import com.pdmv.repositories.LecturerRepository;
+import com.pdmv.repositories.MajorRepositoty;
 import com.pdmv.repositories.SchoolYearRepository;
 import com.pdmv.repositories.StudentRepository;
 import com.pdmv.repositories.ThesisRepository;
@@ -54,6 +58,10 @@ public class ThesisRepositoryImpl implements ThesisRepository {
     private LocalSessionFactoryBean factory;
     @Autowired
     private SchoolYearRepository schoolYearRepo;
+    @Autowired
+    private FacultyRepository facultyRepo;
+    @Autowired
+    private MajorRepositoty majorRepo;
     @Autowired
     private LecturerRepository lecturerRepo;
     @Autowired
@@ -104,10 +112,14 @@ public class ThesisRepositoryImpl implements ThesisRepository {
         thesis.setActive(thesisDTO.getActive());
 
         SchoolYear schoolYear = schoolYearRepo.getSchoolYearById(thesisDTO.getSchoolYearId());
+        Faculty faculty = facultyRepo.getFacultyById(thesisDTO.getFacultyId());
+        Major major = majorRepo.getMajorById(thesisDTO.getMajorId());
         Lecturer criticalLecturer = lecturerRepo.getLecturerById(thesisDTO.getCriticalLecturerId());
         Affair affair = affairRepo.getAffairById(thesisDTO.getAffairId());
 
         thesis.setSchoolYearId(schoolYear);
+        thesis.setFacultyId(faculty);
+        thesis.setMajorId(major);
         thesis.setCriticalLecturerId(criticalLecturer);
         thesis.setAffairId(affair);
     }

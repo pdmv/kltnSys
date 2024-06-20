@@ -68,6 +68,11 @@ public class ThesisServiceImpl implements ThesisService {
             Affair affair = this.affairRepo.getAffairByAccountId(a.getId());
             
             thesis.setAffairId(affair.getId());
+            thesis.setFacultyId(affair.getFacultyId().getId());
+            
+            if (thesis.getMajorId() == null) {
+                throw new IllegalArgumentException("Ngành không được trống hoặc null!");
+            }
         }
         
         int id = this.thesisRepo.addOrUpdate(thesis);

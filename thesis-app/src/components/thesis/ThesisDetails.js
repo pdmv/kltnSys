@@ -65,6 +65,8 @@ const ThesisDetails = () => {
                 <ListGroup.Item><strong>Trạng thái:</strong> <ThesisStatusBadge status={thesis.status} /></ListGroup.Item>
                 <ListGroup.Item><strong>Ghi chú:</strong> {thesis.comment}</ListGroup.Item>
                 <ListGroup.Item><strong>Năm học:</strong> {thesis.schoolYearId.startYear} - {thesis.schoolYearId.endYear}</ListGroup.Item>
+                <ListGroup.Item><strong>Khoa:</strong> {thesis.facultyId.name}</ListGroup.Item>
+                <ListGroup.Item><strong>Ngành:</strong> {thesis.majorId.name}</ListGroup.Item>
                 <ListGroup.Item>
                   <strong>Giảng viên hướng dẫn:</strong>
                   <ul className="lecturer-list">

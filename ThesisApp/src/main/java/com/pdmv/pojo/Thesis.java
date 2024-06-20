@@ -5,6 +5,7 @@
 package com.pdmv.pojo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -117,6 +118,14 @@ public class Thesis implements Serializable {
     private SchoolYear schoolYearId;
     @OneToMany(mappedBy = "thesisId", cascade = CascadeType.ALL)
     private Set<ThesisStudent> thesisStudentSet;
+    @JoinColumn(name = "faculty_id", referencedColumnName = "id")
+    @ManyToOne
+    @JsonIgnore
+    private Faculty facultyId;
+    @JoinColumn(name = "major_id", referencedColumnName = "id")
+    @ManyToOne
+    @JsonIgnore
+    private Major majorId;
 
     public Thesis() {
     }
@@ -266,6 +275,22 @@ public class Thesis implements Serializable {
 
     public void setSchoolYearId(SchoolYear schoolYearId) {
         this.schoolYearId = schoolYearId;
+    }
+    
+    public Faculty getFacultyId() {
+        return facultyId;
+    }
+
+    public void setFacultyId(Faculty facultyId) {
+        this.facultyId = facultyId;
+    }
+
+    public Major getMajorId() {
+        return majorId;
+    }
+    
+    public void setMajorId(Major majorId) {
+        this.majorId = majorId;
     }
 
     @XmlTransient

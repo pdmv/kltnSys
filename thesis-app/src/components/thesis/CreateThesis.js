@@ -19,11 +19,13 @@ const CreateThesis = () => {
     comment: "",
     criticalLecturerId: "",
     schoolYearId: "",
+    majorId: "",
     thesisLecturerSet: [{ lecturerId: "" }],
     thesisStudentSet: []
   });
 
   const [schoolYears, setSchoolYears] = useState([]);
+  const [majors, setMajors] = useState([]);
   const [lecturers, setLecturers] = useState([]);
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -46,6 +48,16 @@ const CreateThesis = () => {
     }
   }, []);
 
+  const fetchMajors = useCallback(async () => {
+    try {
+      let res = await authApi().get(`${endpoints["majors"]}?type=faculty&kw=${user.faculty.id}`);
+      setMajors(res.data);
+    } catch (error) {
+      console.error("Lỗi khi lấy danh sách ngành:", error);
+      setError("Đã xảy ra lỗi khi lấy danh sách ngành.");
+    }
+  }, [user.faculty.id]);
+
   const fetchLecturers = useCallback(async () => {
     try {
       let res = await authApi().get(`${endpoints["lecturers"]}?type=faculty&kw=${user.faculty.id}`);
@@ -59,8 +71,9 @@ const CreateThesis = () => {
   useEffect(() => {
     checkRole();
     fetchSchoolYears();
+    fetchMajors();
     fetchLecturers();
-  }, [checkRole, fetchSchoolYears, fetchLecturers]);
+  }, [checkRole, fetchSchoolYears, fetchMajors, fetchLecturers]);
 
   const handleChange = (event, field) => {
     const { name, value } = event.target;
@@ -179,6 +192,7 @@ const CreateThesis = () => {
       comment: thesis.comment,
       criticalLecturerId: parseInt(thesis.criticalLecturerId),
       schoolYearId: parseInt(thesis.schoolYearId),
+      majorId: parseInt(thesis.majorId),
       thesisLecturerSet: thesis.thesisLecturerSet.map(lecturer => ({ lecturerId: parseInt(lecturer.lecturerId) })),
       thesisStudentSet: thesis.thesisStudentSet.map(student => ({ studentId: parseInt(student.studentId) }))
     };
@@ -194,6 +208,7 @@ const CreateThesis = () => {
         comment: "",
         criticalLecturerId: "",
         schoolYearId: "",
+        majorId: "",
         thesisLecturerSet: [{ lecturerId: "" }],
         thesisStudentSet: []
       });
@@ -282,6 +297,24 @@ const CreateThesis = () => {
               ))}
             </Form.Control>
             <Form.Label htmlFor="floatingSchoolYearId">Năm học</Form.Label>
+          </Form.Group>
+
+          <Form.Group className="form-floating mb-3">
+            <Form.Control
+              as="select"
+              value={thesis.majorId}
+              onChange={(e) => handleChange(e, "majorId")}
+              name="majorId"
+              id="floatingMajorId"
+            >
+              <option value="">Chọn ngành</option>
+              {majors.map((major) => (
+                <option key={major.id} value={major.id}>
+                  {major.name}
+                </option>
+              ))}
+            </Form.Control>
+            <Form.Label htmlFor="floatingMajorId">Ngành</Form.Label>
           </Form.Group>
 
           <Form.Group className="form-floating mb-3">

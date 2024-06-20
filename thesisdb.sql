@@ -159,12 +159,16 @@ CREATE TABLE thesis (
     affair_id INT,
     critical_lecturer_id INT,
     school_year_id INT,
+    faculty_id INT,
+    major_id INT,
     created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     active BOOLEAN DEFAULT TRUE,
     FOREIGN KEY (affair_id) REFERENCES affair(id),
     FOREIGN KEY (critical_lecturer_id) REFERENCES lecturer(id),
-    FOREIGN KEY (school_year_id) REFERENCES school_year(id)
+    FOREIGN KEY (school_year_id) REFERENCES school_year(id),
+    FOREIGN KEY (faculty_id) REFERENCES faculty(id),
+    FOREIGN KEY (major_id) REFERENCES major(id)
 );
 
 -- Tạo bảng thesis_lecturer

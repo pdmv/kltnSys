@@ -43,6 +43,8 @@ public class CreateThesisDTO {
     private Set<ThesisStudentDTO> thesisStudentSet;
     private Integer criticalLecturerId;
     private Integer affairId;
+    private Integer facultyId;
+    private Integer majorId;
     
     @JsonIgnore
     private MultipartFile file;
@@ -65,6 +67,14 @@ public class CreateThesisDTO {
 
         if (thesis.getSchoolYearId() != null) {
             thesisDTO.setSchoolYearId(thesis.getSchoolYearId().getId());
+        }
+        
+        if (thesis.getFacultyId()!= null) {
+            thesisDTO.setFacultyId(thesis.getFacultyId().getId());
+        }
+        
+        if (thesis.getMajorId()!= null) {
+            thesisDTO.setMajorId(thesis.getMajorId().getId());
         }
         
         Set<ThesisLecturerDTO> lecturerDTOs = thesis.getThesisLecturerSet().stream()

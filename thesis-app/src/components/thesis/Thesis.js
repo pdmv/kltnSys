@@ -19,7 +19,7 @@ const Thesis = () => {
     if (user) {
       setLoading(true);
       try {
-        let res = await authApi().get(`${endpoints.thesis}?facultyId=${user.account.facultyId}`);
+        let res = await authApi().get(`${endpoints.thesis}?facultyId=${user.faculty.id}`);
         setTheses(res.data);
       } catch (error) {
         console.error(error);
