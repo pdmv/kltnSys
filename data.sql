@@ -167,6 +167,7 @@ CREATE TABLE `council` (
   `status` enum('pending','blocked') CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT 'pending',
   `school_year_id` int DEFAULT NULL,
   `faculty_id` int DEFAULT NULL,
+  `affair_id` int DEFAULT NULL,
   `meeting_date` datetime DEFAULT NULL,
   `created_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -175,7 +176,8 @@ CREATE TABLE `council` (
   KEY `school_year_id` (`school_year_id`),
   KEY `council_ibfk_2` (`faculty_id`),
   CONSTRAINT `council_ibfk_1` FOREIGN KEY (`school_year_id`) REFERENCES `school_year` (`id`),
-  CONSTRAINT `council_ibfk_2` FOREIGN KEY (`faculty_id`) REFERENCES `faculty` (`id`)
+  CONSTRAINT `council_ibfk_2` FOREIGN KEY (`faculty_id`) REFERENCES `faculty` (`id`),
+  CONSTRAINT `council_ibfk_3` FOREIGN KEY (`affair_id`) REFERENCES `affair` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -228,7 +230,7 @@ CREATE TABLE `council_lecturer` (
   `id` int NOT NULL AUTO_INCREMENT,
   `council_id` int DEFAULT NULL,
   `lecturer_id` int DEFAULT NULL,
-  `position` enum('president','secretary','critical') CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT 'critical',
+  `position` enum('president','secretary','critical','member') CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT 'critical',
   PRIMARY KEY (`id`),
   KEY `council_id` (`council_id`),
   KEY `lecturer_id` (`lecturer_id`),

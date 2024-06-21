@@ -35,7 +35,7 @@ const Header = () => {
 
   const handleLogout = () => {
     cookie.remove('token');
-    dispatch({ "type": "logout" });
+    dispatch({ type: "logout" });
     nav('/');
   };
 
@@ -58,11 +58,22 @@ const Header = () => {
           <Link to="/" className={currentPage === "/" ? "nav-link active-link" : "nav-link"}>Trang chủ</Link>
           {user ? (
             <>
-              {user.account.role === 'AFFAIR' && (
+              {(user.account.role === 'AFFAIR' || user.account.role === 'LECTURER') && (
                 <>
                   <Link to="/thesis" className={location.pathname.startsWith("/thesis") ? "nav-link active-link" : "nav-link"}>Khoá luận</Link>
                   <Link to="/criterion" className={location.pathname.startsWith("/criterion") ? "nav-link active-link" : "nav-link"}>Tiêu chí</Link>
+                  <Link to="/council" className={location.pathname.startsWith("/council") ? "nav-link active-link" : "nav-link"}>Hội đồng</Link>
                 </>
+              )}
+              {user.account.role === 'AFFAIR' && (
+                <NavDropdown title="Thống kê" id="nav-dropdown" className={location.pathname.startsWith("/stats") ? "active-link" : ""}>
+                  <NavDropdown.Item as={Link} to="/stats/score-stats">
+                    Điểm khoá luận
+                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/stats/participation-frequency">
+                    Tần suất tham gia
+                  </NavDropdown.Item>
+                </NavDropdown>
               )}
               {user.account.role === 'STUDENT' && (
                 <>
@@ -77,20 +88,18 @@ const Header = () => {
         {user && (
           <NavDropdown
             title={
-              <>
-                <div className="d-flex align-items-center ms-auto">
-                  <div className="d-flex flex-column align-items-end text-end me-3">
-                    <small>{getGreeting()}</small>
-                    <strong>{user.lastName} {user.firstName}</strong>
-                  </div>
-                  <Image
-                    src={user.account.avatar}
-                    alt="user-avatar"
-                    style={{ width: '47px', cursor: 'pointer' }}
-                    className="rounded-pill"
-                  />
+              <div className="d-flex align-items-center">
+                <div className="d-flex flex-column align-items-end text-end me-3">
+                  <small>{getGreeting()}</small>
+                  <strong>{user.lastName} {user.firstName}</strong>
                 </div>
-              </>
+                <Image
+                  src={user.account.avatar}
+                  alt="user-avatar"
+                  style={{ width: '47px', cursor: 'pointer' }}
+                  className="rounded-pill"
+                />
+              </div>
             }
             id="basic-nav-dropdown"
             align="end"

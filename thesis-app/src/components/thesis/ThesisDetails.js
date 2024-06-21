@@ -139,6 +139,7 @@ const ThesisDetails = () => {
               <Card.Title className="mb-4"><Title title="Chi tiết khoá luận" strong={thesis.name} /></Card.Title>
               <ListGroup variant="flush">
                 <ListGroup.Item><strong>ID:</strong> {thesis.id}</ListGroup.Item>
+                <ListGroup.Item><strong>Tên khoá luận:</strong> {thesis.name}</ListGroup.Item>
                 <ListGroup.Item><strong>Ngày bắt đầu thực hiện:</strong> <FormatDate date={thesis.startDate} /></ListGroup.Item>
                 <ListGroup.Item><strong>Ngày kết thúc thực hiện:</strong> <FormatDate date={thesis.endDate} /></ListGroup.Item>
                 <ListGroup.Item><strong>Ngày hết hạn nộp:</strong> <FormatDate date={thesis.expDate} /></ListGroup.Item>

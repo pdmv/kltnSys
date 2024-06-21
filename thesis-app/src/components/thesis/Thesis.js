@@ -4,7 +4,7 @@ import { UserContext } from "../../configs/UserContext";
 import Title from "../common/Title";
 import { authApi, endpoints } from "../../configs/APIs";
 import FormatDate from "../common/FormatDate";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import ThesisStatusBadge from "../common/ThesisStatusBadge";
 import withAuth from "../hoc/withAuth";
@@ -14,6 +14,13 @@ const Thesis = () => {
   const [theses, setTheses] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const nav = useNavigate();
+
+  const checkRole = useCallback(() => {
+    if (user.account.role !== 'AFFAIR' && user.account.role !== 'STUDENT') {
+      nav('/forbidden');
+    }
+  }, [user.account.role, nav]);
 
   const fetchTheses = useCallback(async () => {
     if (user) {
@@ -36,8 +43,9 @@ const Thesis = () => {
   }, [user]);
 
   useEffect(() => {
+    checkRole()
     fetchTheses();
-  }, [fetchTheses]);
+  }, [checkRole, fetchTheses]);
 
   return (
     <Container>

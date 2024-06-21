@@ -1,7 +1,7 @@
 import axios from "axios";
 import cookie from "react-cookies";
 
-const BASE_URL = 'http://localhost:8080/ThesisApp/';
+const BASE_URL = 'http://localhost:8080/ThesisApp';
 
 export const endpoints = {
   'login': '/api/login/',
@@ -16,6 +16,15 @@ export const endpoints = {
   'students': '/api/student/',
   'criterion': '/api/criterion/',
   'criterion-details': (id) => `/api/criterion/${id}/`,
+  'council': '/api/council/',
+  'council-details': (id) => `/api/council/${id}/`,
+  'council-criterions': (id) => `/api/council/${id}/criterions/`,
+  'submit-scores': (id) => `/api/council/${id}/mark/`,
+  'council-marks': '/api/council/marks/',
+  'block-council': (id) => `/api/council/${id}/block/`,
+  'unblock-council': (id) => `/api/council/${id}/unblock/`,
+  'stats-by-avg-thesis-scores': "/api/stats/avg-thesis-scores/",
+  'stats-by-thesis-count-by-major': "/api/stats/thesis-count-by-major/"
 }
 
 export const authApi = () => {

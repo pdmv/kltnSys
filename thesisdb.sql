@@ -198,12 +198,14 @@ CREATE TABLE council (
     status ENUM('pending', 'blocked') DEFAULT 'pending',
     school_year_id INT,
     faculty_id INT,
+    affair_id INT,
     meeting_date DATETIME,
     created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     active BOOLEAN DEFAULT TRUE,
     FOREIGN KEY (school_year_id) REFERENCES school_year(id),
-    FOREIGN KEY (faculty_id) REFERENCES faculty(id)
+    FOREIGN KEY (faculty_id) REFERENCES faculty(id),
+    FOREIGN KEY (affair_id) REFERENCES affair(id)
 );
 
 -- Tạo bảng council_lecturer
@@ -211,7 +213,7 @@ CREATE TABLE council_lecturer (
     id INT AUTO_INCREMENT PRIMARY KEY,
     council_id INT,
     lecturer_id INT,
-    position ENUM('president', 'secretary', 'critical') DEFAULT 'critical',
+    position ENUM('president', 'secretary', 'critical', 'member') DEFAULT 'critical',
     FOREIGN KEY (council_id) REFERENCES council(id),
     FOREIGN KEY (lecturer_id) REFERENCES lecturer(id)
 );
