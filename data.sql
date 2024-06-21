@@ -175,10 +175,11 @@ CREATE TABLE `council` (
   PRIMARY KEY (`id`),
   KEY `school_year_id` (`school_year_id`),
   KEY `council_ibfk_2` (`faculty_id`),
+  KEY `council_ibfk_3` (`affair_id`),
   CONSTRAINT `council_ibfk_1` FOREIGN KEY (`school_year_id`) REFERENCES `school_year` (`id`),
   CONSTRAINT `council_ibfk_2` FOREIGN KEY (`faculty_id`) REFERENCES `faculty` (`id`),
   CONSTRAINT `council_ibfk_3` FOREIGN KEY (`affair_id`) REFERENCES `affair` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -187,6 +188,7 @@ CREATE TABLE `council` (
 
 LOCK TABLES `council` WRITE;
 /*!40000 ALTER TABLE `council` DISABLE KEYS */;
+INSERT INTO `council` VALUES (2,'test','blocked',4,2,1,'2024-07-01 16:00:00','2024-06-20 14:16:24','2024-06-21 07:26:06',1),(3,'tét','pending',3,2,1,'2024-06-30 08:11:00','2024-06-20 18:20:06','2024-06-20 18:20:06',1),(4,'tét','pending',3,2,1,'2024-06-21 08:25:00','2024-06-20 18:25:41','2024-06-20 18:25:41',1);
 /*!40000 ALTER TABLE `council` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -207,7 +209,7 @@ CREATE TABLE `council_criterion` (
   KEY `criterion_id` (`criterion_id`),
   CONSTRAINT `council_criterion_ibfk_1` FOREIGN KEY (`council_id`) REFERENCES `council` (`id`),
   CONSTRAINT `council_criterion_ibfk_2` FOREIGN KEY (`criterion_id`) REFERENCES `criterion` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -216,6 +218,7 @@ CREATE TABLE `council_criterion` (
 
 LOCK TABLES `council_criterion` WRITE;
 /*!40000 ALTER TABLE `council_criterion` DISABLE KEYS */;
+INSERT INTO `council_criterion` VALUES (3,2,1,0.5),(4,2,2,0.5),(5,3,1,100),(6,4,1,100);
 /*!40000 ALTER TABLE `council_criterion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -236,7 +239,7 @@ CREATE TABLE `council_lecturer` (
   KEY `lecturer_id` (`lecturer_id`),
   CONSTRAINT `council_lecturer_ibfk_1` FOREIGN KEY (`council_id`) REFERENCES `council` (`id`),
   CONSTRAINT `council_lecturer_ibfk_2` FOREIGN KEY (`lecturer_id`) REFERENCES `lecturer` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -245,6 +248,7 @@ CREATE TABLE `council_lecturer` (
 
 LOCK TABLES `council_lecturer` WRITE;
 /*!40000 ALTER TABLE `council_lecturer` DISABLE KEYS */;
+INSERT INTO `council_lecturer` VALUES (2,2,1,'president'),(3,3,1,'critical'),(4,3,1,'secretary'),(5,3,1,'president'),(6,4,1,'secretary'),(7,4,1,'president'),(8,4,1,'critical');
 /*!40000 ALTER TABLE `council_lecturer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -264,7 +268,7 @@ CREATE TABLE `council_thesis` (
   KEY `thesis_id` (`thesis_id`),
   CONSTRAINT `council_thesis_ibfk_1` FOREIGN KEY (`council_id`) REFERENCES `council` (`id`),
   CONSTRAINT `council_thesis_ibfk_2` FOREIGN KEY (`thesis_id`) REFERENCES `thesis` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -273,6 +277,7 @@ CREATE TABLE `council_thesis` (
 
 LOCK TABLES `council_thesis` WRITE;
 /*!40000 ALTER TABLE `council_thesis` DISABLE KEYS */;
+INSERT INTO `council_thesis` VALUES (6,2,10),(7,2,2),(8,2,3),(9,2,1),(10,2,9),(11,3,11),(12,4,12);
 /*!40000 ALTER TABLE `council_thesis` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -461,7 +466,7 @@ CREATE TABLE `score` (
   CONSTRAINT `score_ibfk_2` FOREIGN KEY (`lecturer_id`) REFERENCES `lecturer` (`id`),
   CONSTRAINT `score_ibfk_3` FOREIGN KEY (`thesis_id`) REFERENCES `thesis` (`id`),
   CONSTRAINT `score_ibfk_4` FOREIGN KEY (`criterion_id`) REFERENCES `criterion` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -470,6 +475,7 @@ CREATE TABLE `score` (
 
 LOCK TABLES `score` WRITE;
 /*!40000 ALTER TABLE `score` DISABLE KEYS */;
+INSERT INTO `score` VALUES (1,5,2,1,2,2,'2024-06-21 02:01:24','2024-06-21 02:01:24',1),(2,5,2,1,2,1,'2024-06-21 02:01:24','2024-06-21 02:01:24',1),(3,5,2,1,9,1,'2024-06-21 02:08:12','2024-06-21 02:08:12',1),(4,5,2,1,9,2,'2024-06-21 02:08:12','2024-06-21 02:08:12',1),(5,100,4,1,12,1,'2024-06-21 02:33:45','2024-06-21 02:33:45',1),(6,4,2,1,10,1,'2024-06-21 03:40:08','2024-06-21 04:00:32',1),(7,4,2,1,10,2,'2024-06-21 03:40:08','2024-06-21 04:00:32',1),(8,10,2,1,3,1,'2024-06-21 03:40:20','2024-06-21 03:40:20',1),(9,9,2,1,3,2,'2024-06-21 03:40:20','2024-06-21 03:40:20',1),(10,7,2,1,1,2,'2024-06-21 03:40:32','2024-06-21 03:40:32',1),(11,7,2,1,1,1,'2024-06-21 03:40:32','2024-06-21 03:40:32',1);
 /*!40000 ALTER TABLE `score` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -563,7 +569,7 @@ CREATE TABLE `thesis` (
 
 LOCK TABLES `thesis` WRITE;
 /*!40000 ALTER TABLE `thesis` DISABLE KEYS */;
-INSERT INTO `thesis` VALUES (1,'Tên luận văn 2','https://res.cloudinary.com/dyuafq1hx/raw/upload/v1718218383/1718218380163_E_Prac.zip','2024-06-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','submitted',1,1,3,2,1,'2024-06-06 03:30:32','2024-06-20 04:29:51',1),(2,'Tên luận văn 3','https://res.cloudinary.com/dyuafq1hx/raw/upload/v1718218431/1718218428649_E_Prac.zip','2024-06-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','submitted',1,1,3,2,1,'2024-06-06 06:19:30','2024-06-20 04:29:51',1),(3,'Tên luận văn 4','https://res.cloudinary.com/dyuafq1hx/raw/upload/v1718864083/1718864080195_E_Prac.zip','2024-06-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','submitted',1,1,3,2,1,'2024-06-06 06:28:00','2024-06-20 06:14:44',1),(9,'Tên luận văn 5','https://res.cloudinary.com/dyuafq1hx/raw/upload/v1718864668/1718864665166_E_Prac.zip','2024-07-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','submitted',1,1,3,2,1,'2024-06-13 06:51:15','2024-06-20 06:24:29',1),(10,'Tên luận văn 6','https://res.cloudinary.com/dyuafq1hx/raw/upload/v1718867405/1718867401449_E_Prac.zip','2024-07-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','submitted',1,1,3,2,1,'2024-06-13 07:02:57','2024-06-20 07:10:06',1),(11,'Tên luận văn 7',NULL,'2024-07-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','in_progress',1,1,3,2,1,'2024-06-13 07:04:40','2024-06-20 04:29:51',1),(12,'Tên luận văn 8',NULL,'2024-07-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','in_progress',1,1,3,2,1,'2024-06-13 07:12:40','2024-06-20 04:29:51',1),(13,'Tên luận văn 9',NULL,'2024-07-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','in_progress',1,1,3,2,1,'2024-06-13 07:20:27','2024-06-20 04:29:51',1),(14,'Tên luận văn 10',NULL,'2024-07-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','in_progress',1,1,3,2,1,'2024-06-13 07:23:19','2024-06-20 04:29:51',1),(15,'Tên luận văn 11',NULL,'2024-07-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','in_progress',1,1,3,2,1,'2024-06-13 08:03:11','2024-06-20 04:29:51',1),(16,'test ui',NULL,'2024-06-15','2025-03-15','2025-03-22',NULL,'test','in_progress',1,1,4,2,1,'2024-06-14 17:57:05','2024-06-20 04:29:51',1),(17,'test major',NULL,'2024-06-20','0024-12-20','2024-12-29',NULL,'test thêm thuộc tính major, faculty','in_progress',1,1,4,2,1,'2024-06-20 04:12:14','2024-06-20 04:29:51',1),(18,'test major',NULL,'2024-06-20','0024-12-20','2024-12-29',NULL,'test thêm thuộc tính major, faculty','in_progress',1,1,4,2,1,'2024-06-20 04:15:21','2024-06-20 04:29:51',1),(19,'test major',NULL,'2024-06-20','0024-12-20','2024-12-29',NULL,'test thêm thuộc tính major, faculty','in_progress',1,1,4,2,1,'2024-06-20 04:16:38','2024-06-20 04:29:51',1),(20,'test major',NULL,'2024-06-20','0024-12-20','2024-12-29',NULL,'test thêm thuộc tính major, faculty','in_progress',1,1,4,2,1,'2024-06-20 04:18:22','2024-06-20 04:29:51',1),(21,'test major',NULL,'2024-06-20','0024-12-20','2024-12-29',NULL,'test thêm thuộc tính major, faculty','in_progress',1,1,4,2,1,'2024-06-20 04:27:12','2024-06-20 04:27:12',1);
+INSERT INTO `thesis` VALUES (1,'Tên luận văn 2','https://res.cloudinary.com/dyuafq1hx/raw/upload/v1718218383/1718218380163_E_Prac.zip','2024-06-01','2024-12-31','2025-01-15',7,'Ghi chú về luận văn','defended',1,1,3,2,1,'2024-06-06 03:30:32','2024-06-21 07:01:40',1),(2,'Tên luận văn 3','https://res.cloudinary.com/dyuafq1hx/raw/upload/v1718218431/1718218428649_E_Prac.zip','2024-06-01','2024-12-31','2025-01-15',5,'Ghi chú về luận văn','defended',1,1,3,2,1,'2024-06-06 06:19:30','2024-06-21 07:01:40',1),(3,'Tên luận văn 4','https://res.cloudinary.com/dyuafq1hx/raw/upload/v1718864083/1718864080195_E_Prac.zip','2024-06-01','2024-12-31','2025-01-15',9.5,'Ghi chú về luận văn','defended',1,1,3,2,1,'2024-06-06 06:28:00','2024-06-21 07:01:40',1),(9,'Tên luận văn 5','https://res.cloudinary.com/dyuafq1hx/raw/upload/v1718864668/1718864665166_E_Prac.zip','2024-07-01','2024-12-31','2025-01-15',5,'Ghi chú về luận văn','defended',1,1,3,2,1,'2024-06-13 06:51:15','2024-06-21 07:01:40',1),(10,'Tên luận văn 6','https://res.cloudinary.com/dyuafq1hx/raw/upload/v1718867405/1718867401449_E_Prac.zip','2024-07-01','2024-12-31','2025-01-15',4,'Ghi chú về luận văn','defended',1,1,3,2,1,'2024-06-13 07:02:57','2024-06-21 07:01:40',1),(11,'Tên luận văn 7','https://res.cloudinary.com/dyuafq1hx/raw/upload/v1718906476/1718906471291_E_Prac.zip','2024-07-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','under_review',1,1,3,2,1,'2024-06-13 07:04:40','2024-06-20 18:20:06',1),(12,'Tên luận văn 8','https://res.cloudinary.com/dyuafq1hx/raw/upload/v1718907905/1718907901888_E_Prac.zip','2024-07-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','under_review',1,1,3,2,1,'2024-06-13 07:12:40','2024-06-20 18:25:41',1),(13,'Tên luận văn 9',NULL,'2024-07-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','in_progress',1,1,3,2,1,'2024-06-13 07:20:27','2024-06-20 04:29:51',1),(14,'Tên luận văn 10',NULL,'2024-07-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','in_progress',1,1,3,2,1,'2024-06-13 07:23:19','2024-06-20 04:29:51',1),(15,'Tên luận văn 11',NULL,'2024-07-01','2024-12-31','2025-01-15',NULL,'Ghi chú về luận văn','in_progress',1,1,3,2,1,'2024-06-13 08:03:11','2024-06-20 04:29:51',1),(16,'test ui',NULL,'2024-06-15','2025-03-15','2025-03-22',NULL,'test','in_progress',1,1,4,2,1,'2024-06-14 17:57:05','2024-06-20 04:29:51',1),(17,'test major',NULL,'2024-06-20','0024-12-20','2024-12-29',NULL,'test thêm thuộc tính major, faculty','in_progress',1,1,4,2,1,'2024-06-20 04:12:14','2024-06-20 04:29:51',1),(18,'test major',NULL,'2024-06-20','0024-12-20','2024-12-29',NULL,'test thêm thuộc tính major, faculty','in_progress',1,1,4,2,1,'2024-06-20 04:15:21','2024-06-20 04:29:51',1),(19,'test major',NULL,'2024-06-20','0024-12-20','2024-12-29',NULL,'test thêm thuộc tính major, faculty','in_progress',1,1,4,2,1,'2024-06-20 04:16:38','2024-06-20 04:29:51',1),(20,'test major',NULL,'2024-06-20','0024-12-20','2024-12-29',NULL,'test thêm thuộc tính major, faculty','in_progress',1,1,4,2,1,'2024-06-20 04:18:22','2024-06-20 04:29:51',1),(21,'test major',NULL,'2024-06-20','0024-12-20','2024-12-29',NULL,'test thêm thuộc tính major, faculty','in_progress',1,1,4,2,1,'2024-06-20 04:27:12','2024-06-20 04:27:12',1);
 /*!40000 ALTER TABLE `thesis` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -634,4 +640,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-20 15:45:19
+-- Dump completed on 2024-06-21 17:45:33
