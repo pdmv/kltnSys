@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react';
-import { Form, Card, Table, Spinner, Alert } from 'react-bootstrap';
+import { Form, Card, Table, Spinner, Alert, FloatingLabel } from 'react-bootstrap';
 import { Bar } from 'react-chartjs-2';
 import { authApi, endpoints } from "../../configs/APIs";
 import withAuth from '../hoc/withAuth';
@@ -68,7 +68,7 @@ const CountStats = () => {
     labels: Object.keys(statsData),
     datasets: [
       {
-        label: 'Số lượng sinh viên',
+        label: 'Tần suất tham gia',
         data: Object.values(statsData),
         backgroundColor: 'rgba(75, 192, 192, 0.6)',
         borderColor: 'rgba(75, 192, 192, 1)',
@@ -86,12 +86,13 @@ const CountStats = () => {
         <Card.Title><Title title="Thống kê " strong="tần suất tham gia" /></Card.Title>
         {error && <Alert variant="danger">{error}</Alert>}
         <Form.Group className="mb-3">
-          <Form.Label>Chọn niên khoá</Form.Label>
-          <Form.Control as="select" value={selectedYear} onChange={handleYearChange}>
-            {schoolYears.map(year => (
-              <option key={year.id} value={year.id}>{year.startYear} - {year.endYear}</option>
-            ))}
-          </Form.Control>
+          <FloatingLabel controlId="floatingSelect" label="Chọn niên khoá">
+            <Form.Control as="select" value={selectedYear} onChange={handleYearChange}>
+              {schoolYears.map(year => (
+                <option key={year.id} value={year.id}>{year.startYear} - {year.endYear}</option>
+              ))}
+            </Form.Control>
+          </FloatingLabel>
         </Form.Group>
         {loading ? (
           <div className="d-flex justify-content-center">
@@ -103,7 +104,7 @@ const CountStats = () => {
               <thead>
                 <tr>
                   <th>Ngành</th>
-                  <th>Số lượng sinh viên tham gia</th>
+                  <th>Tần suất tham gia</th>
                 </tr>
               </thead>
               <tbody>

@@ -5,6 +5,7 @@
 package com.pdmv.services.impl;
 
 import com.pdmv.dto.thesis.ThesisDetailsDTO;
+import com.pdmv.pojo.Council;
 import java.util.HashMap;
 import java.util.Map;
 import javax.mail.internet.MimeMessage;
@@ -57,6 +58,30 @@ public class EmailService {
 
         String subject = "Thông báo về khóa luận: " + thesis.getName(); 
         String templateName = "thesis-notification-email"; 
+
+        sendEmail(recipientEmail, subject, templateName, variables);
+    }
+    
+    public void sendCouncilNotificationEmail(Council council, String recipientEmail, String recipientName, String role) {
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("council", council); 
+        variables.put("recipientName", recipientName);
+        variables.put("role", role);
+
+        String subject = "Thông báo về hội đồng bảo vệ khoá luận"; 
+        String templateName = "council-notification-email"; 
+
+        sendEmail(recipientEmail, subject, templateName, variables); 
+    }
+    
+    public void sendAvgScoreNotificationEmail(ThesisDetailsDTO thesis, String recipientEmail, String recipientName) {
+        Map<String, Object> variables = new HashMap<>();
+        
+        variables.put("thesis", thesis);
+        variables.put("recipientName", recipientName); 
+
+        String subject = "Thông báo điểm khóa luận"; 
+        String templateName = "avg-score-notification-email"; 
 
         sendEmail(recipientEmail, subject, templateName, variables);
     }

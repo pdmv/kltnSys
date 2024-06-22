@@ -50,7 +50,7 @@ const CreateCouncil = () => {
 
   const fetchLecturers = useCallback(async () => {
     try {
-      let res = await authApi().get(`${endpoints["lecturers"]}?type=faculty&kw=${user.faculty.id}`);
+      let res = await authApi().get(`${endpoints["lecturers"]}?type=faculty&kw=${user.faculty.id}&pageSize=50`);
       setLecturers(res.data);
     } catch (error) {
       console.error("Lỗi khi lấy danh sách giảng viên:", error);
@@ -61,7 +61,7 @@ const CreateCouncil = () => {
   const fetchTheses = useCallback(async () => {
     if (!council.schoolYearId) return;
     try {
-      let res = await authApi().get(`${endpoints["thesis"]}?facultyId=${user.faculty.id}&schoolYearId=${council.schoolYearId}&status=submitted`);
+      let res = await authApi().get(`${endpoints["thesis"]}?facultyId=${user.faculty.id}&schoolYearId=${council.schoolYearId}&status=submitted&pageSize=50`);
       setTheses(res.data);
     } catch (error) {
       console.error("Lỗi khi lấy danh sách khoá luận:", error);
@@ -71,7 +71,7 @@ const CreateCouncil = () => {
 
   const fetchCriterions = useCallback(async () => {
     try {
-      let res = await authApi().get(`${endpoints["criterion"]}?facultyId=${user.faculty.id}`);
+      let res = await authApi().get(`${endpoints["criterion"]}?facultyId=${user.faculty.id}&pageSize=50`);
       setCriterions(res.data);
     } catch (error) {
       console.error("Lỗi khi lấy danh sách tiêu chí:", error);
@@ -393,11 +393,11 @@ const CreateCouncil = () => {
             </Form.Group>
           ))}
           <div className="d-flex justify-content-center">
-          <Button
+            <Button
               variant="outline-dark"
-            onClick={() => handleAddField("theses", 5, { id: "" })}
-          >
-            Thêm khoá luận
+              onClick={() => handleAddField("theses", 5, { id: "" })}
+            >
+              Thêm khoá luận
             </Button>
           </div>
 

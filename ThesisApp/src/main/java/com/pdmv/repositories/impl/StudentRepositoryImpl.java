@@ -103,6 +103,8 @@ public class StudentRepositoryImpl implements StudentRepository {
         if (!predicates.isEmpty()) {
             criteriaQuery.where(predicates.toArray(new Predicate[0]));
         }
+        
+        criteriaQuery.orderBy(criteriaBuilder.desc(root.get("id")));
 
         int page = Integer.parseInt(params.getOrDefault("page", "1"));
         int pageSize = Integer.parseInt(params.getOrDefault("pageSize", this.env.getProperty("pageSize"))); 

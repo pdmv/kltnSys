@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thông báo điểm khóa luận</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f9f9f9;
+        }
+        ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff; 
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 th:text="${'Thông báo điểm khóa luận: ' + thesis.name}"></h1>
+
+        <p th:utext="${'Xin chào <strong>' + recipientName + '</strong>,'}"></p>
+
+        <h2>Thông tin chi tiết:</h2>
+        <table>
+            <tr>
+                <th>Tên luận văn</th>
+                <td th:text="${thesis.name}"></td>
+            </tr>
+            <tr>
+                <th>Niên khóa</th>
+                <td th:text="${thesis.schoolYearId.startYear + '-' + thesis.schoolYearId.endYear}"></td>
+            </tr>
+            <tr>
+                <th>Điểm trung bình</th>
+                <td th:text="${thesis.avgScore}"></td>
+            </tr>
+        </table>
+        <p>Vui lòng truy cập hệ thống để xem chi tiết.</p>
+    </div>
+</body>
+</html>

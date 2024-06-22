@@ -47,25 +47,26 @@ public class StatsRepositoryImpl implements StatsRepository {
 
     @Override
     public Map<String, Long> getThesisCountByMajor(int facultyId, Integer schoolYearId) {
-        String hql = "SELECT m.name, COUNT(DISTINCT ts.studentId.id) " +
-                 "FROM Thesis t " +
-                 "JOIN Major m ON t.majorId.id = m.id " +
-                 "JOIN ThesisStudent ts ON t.id = ts.thesisId.id " +
-                 "WHERE t.facultyId.id = :facultyId " +
-                 "AND (:schoolYearId IS NULL OR t.schoolYearId.id = :schoolYearId) " +
-                 "GROUP BY m.id " +
-                 "ORDER BY m.name";
+        String hql = "SELECT m.name, COALESCE(COUNT(ts.studentId.id), 0) "
+                + "FROM Major m "
+                + "LEFT JOIN Thesis t ON m.id = t.majorId.id "
+                + "AND t.facultyId.id = :facultyId "
+                + "AND (:schoolYearId IS NULL OR t.schoolYearId.id = :schoolYearId) "
+                + "LEFT JOIN ThesisStudent ts ON t.id = ts.thesisId.id "
+                + "WHERE m.facultyId.id = :facultyId "
+                + "GROUP BY m.id "
+                + "ORDER BY m.name";
 
-    Query query = (Query) entityManager.createQuery(hql);
-    query.setParameter("facultyId", facultyId);
-    query.setParameter("schoolYearId", schoolYearId); 
+        Query query = (Query) entityManager.createQuery(hql);
+        query.setParameter("facultyId", facultyId);
+        query.setParameter("schoolYearId", schoolYearId);
 
-    List<Object[]> results = query.getResultList();
-    return results.stream()
-            .collect(Collectors.toMap(
-                    result -> (String) result[0],  // Tên ngành
-                    result -> (Long) result[1]    // Số lượng sinh viên
-            ));
+        List<Object[]> results = query.getResultList();
+        return results.stream()
+                .collect(Collectors.toMap(
+                        result -> (String) result[0],
+                        result -> (Long) result[1]
+                ));
     }
 
 }

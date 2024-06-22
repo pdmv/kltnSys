@@ -1,9 +1,9 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { UserContext } from "../../configs/UserContext";
-import { Alert, Col, Container, Row, Spinner, Table, Button } from "react-bootstrap";
+import { Alert, Col, Container, Row, Spinner, Table, Button, FloatingLabel, Form } from "react-bootstrap";
 import { Helmet } from "react-helmet";
 import Title from "../common/Title";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { authApi, endpoints } from "../../configs/APIs";
 import withAuth from "../hoc/withAuth";
 import FormatDateTime from "../common/FormatDateTime";
@@ -16,22 +16,47 @@ const Council = () => {
   const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  const [schoolYears, setSchoolYears] = useState([]);
+  const [selectedSchoolYear, setSelectedSchoolYear] = useState('');
+  const nav = useNavigate();
+
+  const checkRole = useCallback(() => {
+    if (user.account.role !== 'AFFAIR' && user.account.role !== 'LECTURER') {
+      nav('/forbidden');
+    }
+  }, [user.account.role, nav]);
+
+  const fetchSchoolYears = useCallback(async () => {
+    try {
+      const res = await authApi().get(endpoints["school-years"]);
+      setSchoolYears(res.data);
+      if (res.data.length > 0) {
+        setSelectedSchoolYear(res.data[0].id);
+      }
+    } catch (error) {
+      console.error(error);
+      setError("Không thể tải danh sách năm học.");
+    }
+  }, []);
 
   const fetchCouncils = useCallback(async () => {
-    if (user && hasMore) {
+    if (user && selectedSchoolYear) {
       setLoading(true);
       try {
-        const res = await authApi().get(`${endpoints.council}?facultyId=${user.faculty.id}&page=${page}`);
-        if (res.data.length > 0) {
-          if (page === 1) {
-            setCouncils(res.data);
-          } else {
-            setCouncils(prevCouncils => [...prevCouncils, ...res.data]);
-          }
-          if (res.data.length < 10) {
-            setHasMore(false);
-          }
+        let res;
+        if (user.account.role === "AFFAIR") {
+          res = await authApi().get(`${endpoints.council}?schoolYearId=${selectedSchoolYear}&facultyId=${user.faculty.id}&page=${page}`);
+        } else if (user.account.role === "LECTURER") {
+          res = await authApi().get(`${endpoints.council}?schoolYearId=${selectedSchoolYear}&lecturerId=${user.id}&page=${page}`);
+        }
+
+        if (page === 1) {
+          setCouncils(res.data);
         } else {
+          setCouncils(prevCouncils => [...prevCouncils, ...res.data]);
+        }
+
+        if (res.data.length < 10 || res.data.length === 0) {
           setHasMore(false);
         }
       } catch (error) {
@@ -41,14 +66,25 @@ const Council = () => {
         setLoading(false);
       }
     }
-  }, [user, page, hasMore]);
+  }, [user, page, selectedSchoolYear]);
+
+  useEffect(() => {
+    checkRole();
+    fetchSchoolYears();
+  }, [checkRole, fetchSchoolYears]);
 
   useEffect(() => {
     fetchCouncils();
-  }, [fetchCouncils]);
+  }, [fetchCouncils, selectedSchoolYear]);
 
   const handleLoadMore = () => {
     setPage(prevPage => prevPage + 1);
+  };
+
+  const handleSchoolYearChange = (e) => {
+    setSelectedSchoolYear(e.target.value);
+    setPage(1);
+    setHasMore(true);
   };
 
   return (
@@ -64,6 +100,13 @@ const Council = () => {
               <>Thêm <strong>Hội đồng</strong></>
             </Link>
           </div>
+          <FloatingLabel controlId="floatingSelect" label="Năm học" className="mb-4">
+            <Form.Select aria-label="Chọn năm học" value={selectedSchoolYear} onChange={handleSchoolYearChange}>
+              {schoolYears.map((year) => (
+                <option key={year.id} value={year.id}>{year.startYear} - {year.endYear}</option>
+              ))}
+            </Form.Select>
+          </FloatingLabel>
           {loading && page === 1 && (
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
               <Spinner

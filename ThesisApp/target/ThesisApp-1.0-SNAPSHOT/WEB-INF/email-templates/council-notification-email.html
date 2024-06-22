@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thông báo về hội đồng bảo vệ khoá luận</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f9f9f9;
+        }
+        ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff; 
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Xin chào, <strong th:text="${recipientName}"></strong>!</h1>
+        <p>Bạn đã được thêm vào hội đồng bảo vệ khoá luận với vai trò <strong th:text="${role}"></strong>.</p>
+
+        <h2>Thông tin chi tiết:</h2>
+        <table>
+            <tr>
+                <th>Tên hội đồng</th>
+                <td th:text="${council.name}"></td> 
+            </tr>
+            <tr>
+                <th>Niên khóa</th>
+                <td th:text="${council.schoolYearId.startYear + '-' + council.schoolYearId.endYear}"></td> 
+            </tr>
+            <tr>
+                <th>Khoa</th>
+                <td th:text="${council.facultyId.name}"></td> 
+            </tr>
+            <tr>
+                <th>Danh sách luận văn</th>
+                <td>
+                    <ul>
+                        <li th:each="thesis : ${council.councilThesisSet}" th:text="${thesis.thesisId.name}"></li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th>Ngày họp</th>
+                <td th:text="${#dates.format(council.meetingDate, 'dd-MM-yyyy HH:mm')}"></td> 
+            </tr>
+        </table>
+        <p>Vui lòng truy cập hệ thống để xem chi tiết.</p>
+    </div>
+</body>
+</html>

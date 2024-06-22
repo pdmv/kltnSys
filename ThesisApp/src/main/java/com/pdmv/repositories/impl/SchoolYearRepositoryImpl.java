@@ -7,6 +7,9 @@ package com.pdmv.repositories.impl;
 import com.pdmv.pojo.SchoolYear;
 import com.pdmv.repositories.SchoolYearRepository;
 import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +45,14 @@ public class SchoolYearRepositoryImpl implements SchoolYearRepository {
 
     @Override
     public List<SchoolYear> getSchoolYears() {
-        Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createNamedQuery("SchoolYear.findAll");
-        
+        Session session = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<SchoolYear> query = builder.createQuery(SchoolYear.class);
+        Root<SchoolYear> root = query.from(SchoolYear.class);
+
+        query.orderBy(builder.desc(root.get("id"))); 
+
+        Query<SchoolYear> q = session.createQuery(query);
         return q.getResultList();
     }
     

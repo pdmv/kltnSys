@@ -339,7 +339,7 @@ const CreateThesis = () => {
               <option value="">Chọn giảng viên phản biện</option>
               {lecturers.map((lecturer) => (
                 <option key={lecturer.id} value={lecturer.id}>
-                  {lecturer.firstName} {lecturer.lastName} ({lecturer.email})
+                  {lecturer.lastName} {lecturer.firstName} ({lecturer.email})
                 </option>
               ))}
             </Form.Control>

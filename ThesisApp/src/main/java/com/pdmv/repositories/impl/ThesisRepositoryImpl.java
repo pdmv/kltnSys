@@ -322,6 +322,8 @@ public class ThesisRepositoryImpl implements ThesisRepository {
         if (!predicates.isEmpty()) {
             query.where(predicates.toArray(new Predicate[0]));
         }
+        
+        query.orderBy(builder.desc(root.get("id")));
 
         int page = Integer.parseInt(params.getOrDefault("page", "1"));
         int pageSize = Integer.parseInt(params.getOrDefault("pageSize", this.env.getProperty("pageSize"))); 

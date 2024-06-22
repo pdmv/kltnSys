@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useState } from "react";
-import { Col, Container, Row, Table, Alert, Spinner, Button } from "react-bootstrap";
+import { Col, Container, Row, Table, Alert, Spinner, Button, Form, FloatingLabel } from "react-bootstrap";
 import { UserContext } from "../../configs/UserContext";
 import Title from "../common/Title";
 import { authApi, endpoints } from "../../configs/APIs";
@@ -16,6 +16,8 @@ const Thesis = () => {
   const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  const [schoolYears, setSchoolYears] = useState([]);
+  const [selectedSchoolYear, setSelectedSchoolYear] = useState('');
   const nav = useNavigate();
 
   const checkRole = useCallback(() => {
@@ -24,27 +26,38 @@ const Thesis = () => {
     }
   }, [user.account.role, nav]);
 
+  const fetchSchoolYears = useCallback(async () => {
+    try {
+      const res = await authApi().get(endpoints["school-years"]);
+      setSchoolYears(res.data);
+      if (res.data.length > 0) {
+        setSelectedSchoolYear(res.data[0].id);
+      }
+    } catch (error) {
+      console.error(error);
+      setError("Không thể tải danh sách năm học.");
+    }
+  }, []);
+
   const fetchTheses = useCallback(async () => {
-    if (user) {
+    if (user && selectedSchoolYear) {
       setLoading(true);
       try {
+        console.log(page + ' ' + selectedSchoolYear);
         let res;
         if (user.account.role === "AFFAIR") {
-          res = await authApi().get(`${endpoints.thesis}?&page=${page}&facultyId=${user.faculty.id}`);
+          res = await authApi().get(`${endpoints.thesis}?schoolYearId=${selectedSchoolYear}&facultyId=${user.faculty.id}&page=${page}`);
         } else if (user.account.role === "STUDENT") {
-          res = await authApi().get(`${endpoints.thesis}?studentId=${user.id}&page=${page}`);
+          res = await authApi().get(`${endpoints.thesis}??schoolYearId=${selectedSchoolYear}&studentId=${user.id}&page=${page}`);
         }
 
-        if (res.data.length > 0) {
-          if (page === 1) {
-            setTheses(res.data);
-          } else {
-            setTheses(prevTheses => [...prevTheses, ...res.data]);
-          }
-          if (res.data.length < 10) {
-            setHasMore(false);
-          }
+        if (page === 1) {
+          setTheses(res.data);
         } else {
+          setTheses(prevTheses => [...prevTheses, ...res.data]);
+        }
+
+        if (res.data.length < 10 || res.data.length === 0) {
           setHasMore(false);
         }
       } catch (error) {
@@ -54,15 +67,25 @@ const Thesis = () => {
         setLoading(false);
       }
     }
-  }, [user, page]);
+  }, [user, page, selectedSchoolYear]);
 
   useEffect(() => {
     checkRole();
+    fetchSchoolYears();
+  }, [checkRole, fetchSchoolYears]);
+
+  useEffect(() => {
     fetchTheses();
-  }, [checkRole, fetchTheses]);
+  }, [fetchTheses, selectedSchoolYear]);
 
   const handleLoadMore = () => {
     setPage(prevPage => prevPage + 1);
+  };
+
+  const handleSchoolYearChange = (e) => {
+    setSelectedSchoolYear(e.target.value);
+    setPage(1);
+    setHasMore(true);
   };
 
   return (
@@ -73,13 +96,21 @@ const Thesis = () => {
       <Row>
         <Col>
           <Title title="Danh sách" strong="Khoá luận" />
-          {user.account.role === "AFFAIR" ?
+          {user.account.role === "AFFAIR" ? (
             <div className="d-flex justify-content-center align-items-center mb-4">
               <Link className="btn btn-dark" to="/thesis/create">
                 <>Thêm <strong>Khoá luận</strong></>
               </Link>
-            </div> : <></>}
-          {loading && (
+            </div>
+          ) : null}
+          <FloatingLabel controlId="floatingSelect" label="Năm học" className="mb-4">
+            <Form.Select aria-label="Chọn năm học" value={selectedSchoolYear} onChange={handleSchoolYearChange}>
+              {schoolYears.map((year) => (
+                <option key={year.id} value={year.id}>{year.startYear} - {year.endYear}</option>
+              ))}
+            </Form.Select>
+          </FloatingLabel>
+          {loading && page === 1 && (
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
               <Spinner
                 as="span"
