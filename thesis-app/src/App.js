@@ -21,6 +21,7 @@ import CouncilDetails from './components/council/CouncilDetails';
 import ThesisGrading from './components/council/ThesisGrading';
 import ScoreStats from './components/stats/ScoreStats';
 import CountStats from './components/stats/CountStats';
+import Profile from './components/user/Profile';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
 
             <Route path="/login" element={<Login />} />
             <Route path='/user/change-password' element={<ChangePassword />} />
+            <Route path='/user/profile' element={<Profile />} />
 
             <Route path="/thesis" element={<Thesis />} />
             <Route path="/thesis/:id" element={<ThesisDetails />} />

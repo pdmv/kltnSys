@@ -40,7 +40,7 @@ const Header = () => {
   };
 
   const handleProfile = () => {
-    // Điều hướng đến trang thông tin người dùng
+    nav('/user/profile')
   };
 
   const handlePasswordChange = () => {
@@ -50,7 +50,7 @@ const Header = () => {
   return (
     <Navbar expand="lg" className="bg-body-tertiary" style={{ padding: '8px 20px', height: '77px' }}>
       <Navbar.Brand as={Link} to="/" className="navbar-brand">
-        Thesis Management System
+        Hệ thống quản lý khoá luận
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">

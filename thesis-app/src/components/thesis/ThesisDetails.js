@@ -143,11 +143,12 @@ const ThesisDetails = () => {
                 <ListGroup.Item><strong>Ngày bắt đầu thực hiện:</strong> <FormatDate date={thesis.startDate} /></ListGroup.Item>
                 <ListGroup.Item><strong>Ngày kết thúc thực hiện:</strong> <FormatDate date={thesis.endDate} /></ListGroup.Item>
                 <ListGroup.Item><strong>Ngày hết hạn nộp:</strong> <FormatDate date={thesis.expDate} /></ListGroup.Item>
-                <ListGroup.Item><strong>Trạng thái:</strong> <ThesisStatusBadge status={thesis.status} /></ListGroup.Item>
-                <ListGroup.Item><strong>Ghi chú:</strong> {thesis.comment}</ListGroup.Item>
                 <ListGroup.Item><strong>Năm học:</strong> {thesis.schoolYearId.startYear} - {thesis.schoolYearId.endYear}</ListGroup.Item>
                 <ListGroup.Item><strong>Khoa:</strong> {thesis.facultyId.name}</ListGroup.Item>
                 <ListGroup.Item><strong>Ngành:</strong> {thesis.majorId.name}</ListGroup.Item>
+                <ListGroup.Item><strong>Trạng thái:</strong> <ThesisStatusBadge status={thesis.status} /></ListGroup.Item>
+                {thesis.avgScore && <ListGroup.Item><strong>Điểm trung bình:</strong> {thesis.avgScore}</ListGroup.Item>}
+                <ListGroup.Item><strong>Ghi chú:</strong> {thesis.comment}</ListGroup.Item>
                 <ListGroup.Item>
                   <strong>Giảng viên hướng dẫn:</strong>
                   <ul className="lecturer-list">

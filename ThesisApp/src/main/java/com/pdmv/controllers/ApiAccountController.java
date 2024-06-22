@@ -27,7 +27,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -119,6 +121,31 @@ public class ApiAccountController {
         } catch (Exception e) {
             System.err.println(e.getMessage());
             return new ResponseEntity<>(new MessageResponse("Có lỗi xảy ra khi đổi mật khẩu."), HttpStatus.INTERNAL_SERVER_ERROR); 
+        }
+    }
+    
+    @PostMapping(path = "/change-avatar/", consumes = {
+        MediaType.MULTIPART_FORM_DATA_VALUE,
+        MediaType.APPLICATION_JSON_VALUE
+    }, produces = {
+            MediaType.APPLICATION_JSON_VALUE
+    })
+    public ResponseEntity<?> changeAvatar(Principal principal, @RequestPart MultipartFile[] file) {
+        try {
+            Account acc = this.accountService.getAccountByUsername(principal.getName());
+            
+            if (acc ==  null) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            
+            acc.setFile(file[0]);
+            
+            this.accountService.addOrUpdate(acc);
+
+            return new ResponseEntity<>(new MessageResponse("Đổi ảnh đại diện thành công!"), HttpStatus.OK);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return new ResponseEntity<>(new MessageResponse("Có lỗi xảy ra khi đổi ảnh đại diện."), HttpStatus.INTERNAL_SERVER_ERROR); 
         }
     }
 }

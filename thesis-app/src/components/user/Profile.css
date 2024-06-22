@@ -1,0 +1,5 @@
+.avatar-fixed-size {
+  width: 337px;
+  height: 337px;
+  object-fit: cover;
+}

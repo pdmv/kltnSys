@@ -24,7 +24,8 @@ export const endpoints = {
   'block-council': (id) => `/api/council/${id}/block/`,
   'unblock-council': (id) => `/api/council/${id}/unblock/`,
   'stats-by-avg-thesis-scores': "/api/stats/avg-thesis-scores/",
-  'stats-by-thesis-count-by-major': "/api/stats/thesis-count-by-major/"
+  'stats-by-thesis-count-by-major': "/api/stats/thesis-count-by-major/",
+  'change-avatar': '/api/change-avatar/'
 }
 
 export const authApi = () => {
