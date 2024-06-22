@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { UserContext } from "../../configs/UserContext";
-import { Alert, Col, Container, Row, Spinner, Table } from "react-bootstrap";
+import { Alert, Col, Container, Row, Spinner, Table, Button } from "react-bootstrap";
 import { Helmet } from "react-helmet";
 import Title from "../common/Title";
 import { Link } from "react-router-dom";
@@ -14,13 +14,26 @@ const Council = () => {
   const [councils, setCouncils] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
 
   const fetchCouncils = useCallback(async () => {
-    if (user) {
+    if (user && hasMore) {
       setLoading(true);
       try {
-        let res = await authApi().get(`${endpoints['council']}?facultyId=${user.faculty.id}`);
-        setCouncils(res.data);
+        const res = await authApi().get(`${endpoints.council}?facultyId=${user.faculty.id}&page=${page}`);
+        if (res.data.length > 0) {
+          if (page === 1) {
+            setCouncils(res.data);
+          } else {
+            setCouncils(prevCouncils => [...prevCouncils, ...res.data]);
+          }
+          if (res.data.length < 10) {
+            setHasMore(false);
+          }
+        } else {
+          setHasMore(false);
+        }
       } catch (error) {
         console.error(error);
         setError("Không thể tải dữ liệu.");
@@ -28,11 +41,15 @@ const Council = () => {
         setLoading(false);
       }
     }
-  }, [user]);
+  }, [user, page, hasMore]);
 
   useEffect(() => {
     fetchCouncils();
   }, [fetchCouncils]);
+
+  const handleLoadMore = () => {
+    setPage(prevPage => prevPage + 1);
+  };
 
   return (
     <Container>
@@ -47,7 +64,7 @@ const Council = () => {
               <>Thêm <strong>Hội đồng</strong></>
             </Link>
           </div>
-          {loading && (
+          {loading && page === 1 && (
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
               <Spinner
                 as="span"
@@ -61,34 +78,41 @@ const Council = () => {
           {error && <Alert variant="danger">{error}</Alert>}
           {!loading && !error && councils.length === 0 && <Alert variant="warning">Không có dữ liệu.</Alert>}
           {!loading && councils.length > 0 && (
-            <Table hover>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Tên hội đồng</th>
-                  <th>Năm học</th>
-                  <th>Ngày họp</th>
-                  <th>Trạng thái</th>
-                  <th>Hành động</th>
-                </tr>
-              </thead>
-              <tbody>
-                {councils.map((item, index) => (
-                  <tr key={index}>
-                    <td>{item.id}</td>
-                    <td>{item.name}</td>
-                    <td>{item.schoolYearId.startYear} - {item.schoolYearId.endYear}</td>
-                    <td><FormatDateTime date={item.meetingDate} /></td>
-                    <td><CouncilStatusBadge status={item.status} /></td>
-                    <td>
-                      <>
-                        <Link to={`/council/${item.id}`} className="btn btn-outline-dark ms-2">Chi tiết</Link>
-                      </>
-                    </td>
+            <>
+              <Table hover>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Tên hội đồng</th>
+                    <th>Năm học</th>
+                    <th>Ngày họp</th>
+                    <th>Trạng thái</th>
+                    <th>Hành động</th>
                   </tr>
-                ))}
-              </tbody>
-            </Table>
+                </thead>
+                <tbody>
+                  {councils.map((item, index) => (
+                    <tr key={index}>
+                      <td>{item.id}</td>
+                      <td>{item.name}</td>
+                      <td>{item.schoolYearId.startYear} - {item.schoolYearId.endYear}</td>
+                      <td><FormatDateTime date={item.meetingDate} /></td>
+                      <td><CouncilStatusBadge status={item.status} /></td>
+                      <td>
+                        <>
+                          <Link to={`/council/${item.id}`} className="btn btn-outline-dark ms-2">Chi tiết</Link>
+                        </>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+              <div className="mb-3 d-flex justify-content-center align-items-center">
+                <Button variant="outline-dark" onClick={handleLoadMore} disabled={!hasMore || loading}>
+                  {loading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : 'Tải thêm'}
+                </Button>
+              </div>
+            </>
           )}
         </Col>
       </Row>

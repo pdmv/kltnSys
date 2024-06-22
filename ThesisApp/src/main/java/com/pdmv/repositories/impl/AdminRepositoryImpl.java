@@ -17,6 +17,8 @@ import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,9 +29,12 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
+@PropertySource("classpath:pagination.properties")
 public class AdminRepositoryImpl implements AdminRepository {
     @Autowired
     private LocalSessionFactoryBean factory;
+    @Autowired
+    private Environment env;
 
     @Override
     public void addOrUpdate(Admin admin) {
@@ -71,8 +76,14 @@ public class AdminRepositoryImpl implements AdminRepository {
         if (!predicates.isEmpty()) {
             q.where(predicates.toArray(new Predicate[0]));
         }
+        
+        int page = Integer.parseInt(params.getOrDefault("page", "1"));
+        int pageSize = Integer.parseInt(params.getOrDefault("pageSize", this.env.getProperty("pageSize"))); 
 
         Query<Admin> query = s.createQuery(q);
+        query.setFirstResult((page - 1) * pageSize); 
+        query.setMaxResults(pageSize);
+        
         return query.getResultList();
     }
 

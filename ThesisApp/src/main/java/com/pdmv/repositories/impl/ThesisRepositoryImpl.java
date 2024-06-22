@@ -53,6 +53,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 @PropertySource("classpath:theses.properties")
+@PropertySource("classpath:pagination.properties")
 public class ThesisRepositoryImpl implements ThesisRepository {
     @Autowired
     private LocalSessionFactoryBean factory;
@@ -322,7 +323,13 @@ public class ThesisRepositoryImpl implements ThesisRepository {
             query.where(predicates.toArray(new Predicate[0]));
         }
 
+        int page = Integer.parseInt(params.getOrDefault("page", "1"));
+        int pageSize = Integer.parseInt(params.getOrDefault("pageSize", this.env.getProperty("pageSize"))); 
+
         Query<Thesis> q = s.createQuery(query);
+        q.setFirstResult((page - 1) * pageSize); 
+        q.setMaxResults(pageSize); 
+
         return q.getResultList().stream().map(ThesisDTO::toThesisDTO).collect(Collectors.toList());
     }
 

@@ -138,6 +138,7 @@ public class ApiAccountController {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
             
+            acc.setPassword(null);
             acc.setFile(file[0]);
             
             this.accountService.addOrUpdate(acc);

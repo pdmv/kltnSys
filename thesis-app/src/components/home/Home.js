@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet";
 import { Container, Row, Col, Button, Card } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './Home.css';  // Thêm đường dẫn đến file CSS tùy chỉnh
 
 const Home = () => {
   return (
@@ -16,9 +17,9 @@ const Home = () => {
       </Container>
 
       <Container className="mt-5">
-        <Row>
-          <Col md={4}>
-            <Card className="mb-4">
+        <Row className="d-flex align-items-stretch">
+          <Col md={4} className="mb-4">
+            <Card className="h-100">
               <Card.Body>
                 <Card.Title>Quản lý khoá luận</Card.Title>
                 <Card.Text>
@@ -28,8 +29,8 @@ const Home = () => {
               </Card.Body>
             </Card>
           </Col>
-          <Col md={4}>
-            <Card className="mb-4">
+          <Col md={4} className="mb-4">
+            <Card className="h-100">
               <Card.Body>
                 <Card.Title>Quản lý tiêu chí</Card.Title>
                 <Card.Text>
@@ -39,8 +40,8 @@ const Home = () => {
               </Card.Body>
             </Card>
           </Col>
-          <Col md={4}>
-            <Card className="mb-4">
+          <Col md={4} className="mb-4">
+            <Card className="h-100">
               <Card.Body>
                 <Card.Title>Quản lý hội đồng</Card.Title>
                 <Card.Text>
@@ -51,9 +52,9 @@ const Home = () => {
             </Card>
           </Col>
         </Row>
-        <Row>
-          <Col md={4}>
-            <Card className="mb-4">
+        <Row className="d-flex align-items-stretch">
+          <Col md={4} className="mb-4">
+            <Card className="h-100">
               <Card.Body>
                 <Card.Title>Thống kê và báo cáo</Card.Title>
                 <Card.Text>
@@ -63,8 +64,8 @@ const Home = () => {
               </Card.Body>
             </Card>
           </Col>
-          <Col md={4}>
-            <Card className="mb-4">
+          <Col md={4} className="mb-4">
+            <Card className="h-100">
               <Card.Body>
                 <Card.Title>Quản lý thông tin cá nhân người dùng</Card.Title>
                 <Card.Text>
@@ -74,8 +75,8 @@ const Home = () => {
               </Card.Body>
             </Card>
           </Col>
-          <Col md={4}>
-            <Card className="mb-4">
+          <Col md={4} className="mb-4">
+            <Card className="h-100">
               <Card.Body>
                 <Card.Title>Quản lý tài khoản</Card.Title>
                 <Card.Text>

@@ -17,6 +17,8 @@ import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,9 +29,12 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
+@PropertySource("classpath:pagination.properties")
 public class ClassRepositoryImpl implements ClassRepository {
     @Autowired
     private LocalSessionFactoryBean factory;
+    @Autowired
+    private Environment env;
 
     @Override
     public void addOrUpdate(Class myClass) {
@@ -96,8 +101,14 @@ public class ClassRepositoryImpl implements ClassRepository {
             criteriaQuery.where(predicates.toArray(new Predicate[0]));
         }
 
-        Query<Class> query = s.createQuery(criteriaQuery);
-        return query.getResultList();
+        int page = Integer.parseInt(params.getOrDefault("page", "1"));
+        int pageSize = Integer.parseInt(params.getOrDefault("pageSize", this.env.getProperty("pageSize"))); 
+
+        Query<Class> q = s.createQuery(criteriaQuery);
+        q.setFirstResult((page - 1) * pageSize); 
+        q.setMaxResults(pageSize);
+        
+        return q.getResultList();
     }
     
 }

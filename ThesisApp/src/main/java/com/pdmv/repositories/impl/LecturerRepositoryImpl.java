@@ -7,11 +7,8 @@ package com.pdmv.repositories.impl;
 import com.pdmv.pojo.Lecturer;
 import com.pdmv.repositories.LecturerRepository;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -21,6 +18,8 @@ import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,9 +30,12 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
+@PropertySource("classpath:pagination.properties")
 public class LecturerRepositoryImpl implements LecturerRepository {
     @Autowired
     private LocalSessionFactoryBean factory;
+    @Autowired
+    private Environment env;
 
     @Override
     public void addOrUpdate(Lecturer lecturer) {
@@ -94,8 +96,14 @@ public class LecturerRepositoryImpl implements LecturerRepository {
             criteriaQuery.where(predicates.toArray(new Predicate[0]));
         }
 
-        Query<Lecturer> query = s.createQuery(criteriaQuery);
-        return query.getResultList();
+        int page = Integer.parseInt(params.getOrDefault("page", "1"));
+        int pageSize = Integer.parseInt(params.getOrDefault("pageSize", this.env.getProperty("pageSize"))); 
+
+        Query<Lecturer> q = s.createQuery(criteriaQuery);
+        q.setFirstResult((page - 1) * pageSize); 
+        q.setMaxResults(pageSize);
+        
+        return q.getResultList();
     }
 
     @Override

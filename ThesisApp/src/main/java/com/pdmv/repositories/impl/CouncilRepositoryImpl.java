@@ -49,6 +49,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 @PropertySource("classpath:theses.properties")
+@PropertySource("classpath:pagination.properties")
 public class CouncilRepositoryImpl implements CouncilRepository {
 
     @Autowired
@@ -215,7 +216,13 @@ public class CouncilRepositoryImpl implements CouncilRepository {
             query.where(predicates.toArray(new Predicate[0]));
         }
 
+        int page = Integer.parseInt(params.getOrDefault("page", "1"));
+        int pageSize = Integer.parseInt(params.getOrDefault("pageSize", this.env.getProperty("pageSize"))); 
+
         Query<Council> q = s.createQuery(query);
+        q.setFirstResult((page - 1) * pageSize); 
+        q.setMaxResults(pageSize);
+        
         return q.getResultList().stream().map(SimpleCouncilDTO::toSimpleCouncilDTO).collect(Collectors.toList());
     }
 
