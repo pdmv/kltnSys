@@ -64,7 +64,7 @@ const Login = () => {
       <Helmet>
         <title>Đăng nhập</title>
       </Helmet>
-      <Row className="justify-content-md-center">
+      <Row className="justify-content-md-center mt-5 mb-5">
         <Col md={4}>
           <Title title="Đăng nhập" />
           {error &&

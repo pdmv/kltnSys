@@ -10,13 +10,13 @@ const Home = () => {
         <title>Trang chủ</title>
       </Helmet>
 
-      <Container fluid className="bg text-center p-5">
+      <Container fluid className="bg text-center p-5 mt-5">
         <h1 className="display-4">Hệ thống quản lý khoá luận</h1>
         <p className="lead">Nền tảng hỗ trợ quản lý và theo dõi khoá luận một cách hiệu quả và tiện lợi.</p>
         <Button variant="dark" size="lg">Bắt đầu ngay</Button>
       </Container>
 
-      <Container className="mt-5">
+      <Container className="mt-5 mb-5">
         <Row className="d-flex align-items-stretch">
           <Col md={4} className="mb-4">
             <Card className="h-100">

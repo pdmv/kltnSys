@@ -102,7 +102,7 @@ const Profile = () => {
       <Helmet>
         <title>Thông tin người dùng</title>
       </Helmet>
-      <Container className="profile-container mt-5">
+      <Container className="profile-container mt-5 mb-5">
         {/* {loading && (
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
             <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />

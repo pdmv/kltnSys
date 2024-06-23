@@ -66,7 +66,7 @@ const ChangePassword = () => {
       <Helmet>
         <title>Đổi mật khẩu</title>
       </Helmet>
-      <Row className="justify-content-md-center">
+      <Row className="justify-content-md-center mt-5 mb-5">
         <Col md={4}>
           <Title title="Đổi mật khẩu" />
           {error && <Alert variant="danger">{error}</Alert>}

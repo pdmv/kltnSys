@@ -56,7 +56,7 @@ const Header = () => {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">
           <Link to="/" className={currentPage === "/" ? "nav-link active-link" : "nav-link"}>Trang chủ</Link>
-          {user ? (
+          {user && (
             <>
               {(user.account.role === 'AFFAIR' || user.account.role === 'LECTURER') && (
                 <>
@@ -81,11 +81,9 @@ const Header = () => {
                 </>
               )}
             </>
-          ) : (
-            <Link to="/login" className={currentPage === "/login" ? "nav-link active-link" : "nav-link"}>Đăng nhập</Link>
           )}
         </Nav>
-        {user && (
+        {user ? (
           <NavDropdown
             title={
               <div className="d-flex align-items-center">
@@ -110,6 +108,8 @@ const Header = () => {
             <NavDropdown.Divider />
             <NavDropdown.Item onClick={handleLogout} className="dropdown-item-hover">Đăng xuất</NavDropdown.Item>
           </NavDropdown>
+        ) : (
+            <Link to="/login" className={currentPage === "/login" ? "nav-link active-link" : "nav-link"}>Đăng nhập</Link>
         )}
       </Navbar.Collapse>
     </Navbar>
