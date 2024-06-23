@@ -74,6 +74,25 @@ const CouncilDetails = () => {
     }
   };
 
+  const handleDownloadReport = async (thesisId) => {
+    setError(null);
+    try {
+      const response = await authApi().get(endpoints['thesis-report'](thesisId), {
+        responseType: 'blob',
+      });
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `Thesis_Report_${thesisId}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error('Error downloading the report:', error);
+      setError("Không thể tải báo cáo bảng điểm.");
+    }
+  };
+
   return (
     <>
       <Helmet>
@@ -139,10 +158,15 @@ const CouncilDetails = () => {
               <Card.Header><strong>Danh sách khoá luận</strong></Card.Header>
               <ListGroup variant="flush">
                 {council.councilThesisSet.map(thesis => (
-                  <ListGroup.Item key={thesis.id}>
+                  <ListGroup.Item key={thesis.id} className="d-flex justify-content-between align-items-center">
                     <Link to={`/council/${id}/thesis/${thesis.id}/grade`}>
                       {thesis.name}
                     </Link>
+                    {council.status === 'blocked' && (
+                      <Button variant="outline-dark" onClick={() => handleDownloadReport(thesis.id)}>
+                        Xuất bảng điểm
+                      </Button>
+                    )}
                   </ListGroup.Item>
                 ))}
               </ListGroup>

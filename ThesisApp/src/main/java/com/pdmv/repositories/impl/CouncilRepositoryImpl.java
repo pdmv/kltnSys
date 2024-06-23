@@ -7,6 +7,8 @@ import com.pdmv.dto.council.CreateCouncilDTO;
 import com.pdmv.dto.council.MarkDTO;
 import com.pdmv.dto.council.ScoreDTO;
 import com.pdmv.dto.council.SimpleCouncilDTO;
+import com.pdmv.dto.report.CriterionScore;
+import com.pdmv.dto.report.LecturerScore;
 import com.pdmv.pojo.Council;
 import com.pdmv.pojo.CouncilCriterion;
 import com.pdmv.pojo.CouncilLecturer;
@@ -404,5 +406,48 @@ public class CouncilRepositoryImpl implements CouncilRepository {
                     thesis.setStatus("defended");
                     session.update(thesis);
                 });
+    }
+    
+    @Override
+    public List<CriterionScore> getCriterionScoresByThesisId(int thesisId) {
+        Session session = this.factory.getObject().getCurrentSession();
+
+        // Lấy danh sách tiêu chí của hội đồng đã chấm cho khóa luận
+        Query<Criterion> criterionQuery = session.createQuery(
+                "SELECT DISTINCT cc.criterionId FROM CouncilCriterion cc " +
+                "JOIN CouncilThesis ct ON cc.councilId.id = ct.councilId.id " +
+                "WHERE ct.thesisId.id = :thesisId", Criterion.class);
+        criterionQuery.setParameter("thesisId", thesisId);
+        List<Criterion> criteria = criterionQuery.getResultList();
+
+        List<CriterionScore> criterionScores = new ArrayList<>();
+
+        for (Criterion criterion : criteria) {
+            CriterionScore criterionScore = new CriterionScore();
+            criterionScore.setCriterionName(criterion.getName());
+
+            // Lấy danh sách điểm của từng giảng viên cho tiêu chí hiện tại
+            Query<Object[]> scoreQuery = session.createQuery(
+                    "SELECT l.lastName || ' ' || l.firstName, s.score " +
+                    "FROM Score s " +
+                    "JOIN Lecturer l ON s.lecturerId.id = l.id " +
+                    "WHERE s.thesisId.id = :thesisId AND s.criterionId.id = :criterionId", Object[].class);
+            scoreQuery.setParameter("thesisId", thesisId);
+            scoreQuery.setParameter("criterionId", criterion.getId());
+            List<Object[]> scores = scoreQuery.getResultList();
+
+            Set<LecturerScore> lecturerScores = new HashSet<>();
+            for (Object[] scoreData : scores) {
+                LecturerScore lecturerScore = new LecturerScore();
+                lecturerScore.setLecturerFullname((String) scoreData[0]);
+                lecturerScore.setScore((float) scoreData[1]);
+                lecturerScores.add(lecturerScore);
+            }
+            criterionScore.setScore(lecturerScores);
+
+            criterionScores.add(criterionScore);
+        }
+
+        return criterionScores;
     }
 }

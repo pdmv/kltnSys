@@ -7,6 +7,7 @@ package com.pdmv.repositories;
 import com.pdmv.dto.council.CreateCouncilDTO;
 import com.pdmv.dto.council.MarkDTO;
 import com.pdmv.dto.council.SimpleCouncilDTO;
+import com.pdmv.dto.report.CriterionScore;
 import com.pdmv.pojo.Council;
 import java.util.List;
 import java.util.Map;
@@ -23,4 +24,5 @@ public interface CouncilRepository {
     MarkDTO getMarks(int councilId, int thesisId, int lecturerId);
     void blockCouncil(int councilId);
     void unblockCouncil(int councilId);
+    List<CriterionScore> getCriterionScoresByThesisId(int thesisId);
 }

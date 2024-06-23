@@ -7,6 +7,7 @@ package com.pdmv.services.impl;
 import com.pdmv.dto.council.CreateCouncilDTO;
 import com.pdmv.dto.council.MarkDTO;
 import com.pdmv.dto.council.SimpleCouncilDTO;
+import com.pdmv.dto.report.CriterionScore;
 import com.pdmv.dto.thesis.ThesisDetailsDTO;
 import com.pdmv.dto.thesis.ThesisStudentDTO;
 import com.pdmv.pojo.Council;
@@ -105,5 +106,10 @@ public class CouncilServiceImpl implements CouncilService {
         for (ThesisStudentDTO stu : thesis.getThesisStudentSet()) {
             this.emailService.sendAvgScoreNotificationEmail(thesis, stu.getEmail(), stu.getFullname());
         }
+    }
+
+    @Override
+    public List<CriterionScore> getCriterionScoresByThesisId(int thesisId) {
+        return this.councilRepo.getCriterionScoresByThesisId(thesisId);
     }
 }
