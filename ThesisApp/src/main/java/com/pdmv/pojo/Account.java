@@ -56,7 +56,7 @@ public class Account implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
-    @Pattern(regexp = "^[a-z]+$", message = "Tên đăng nhập chỉ được chứa các ký tự thường và không có khoảng trắng.")
+    @Pattern(regexp = "^[a-z0-9]+$", message = "Tên đăng nhập chỉ được chứa các ký tự thường, số và không có khoảng trắng.")
     @Column(name = "username")
     private String username;
     @Basic(optional = false)
